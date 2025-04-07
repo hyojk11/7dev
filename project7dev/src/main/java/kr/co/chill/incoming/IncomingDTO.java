@@ -1,5 +1,5 @@
 package kr.co.chill.incoming;
-//창고별 자재정보 리스트 
+//창고별 자재정보 리스트 and 입고예정 리스트DTO
 public class IncomingDTO {
 	private String material; //자재명
 	private String material_code;// 자재코드

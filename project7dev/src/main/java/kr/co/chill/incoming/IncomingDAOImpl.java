@@ -10,13 +10,32 @@ import org.springframework.stereotype.Repository;
 public class IncomingDAOImpl implements IncomingDAO{
 
 	@Autowired
-	private SqlSession sqlSession;
+	private SqlSession session;
 
 	@Override
-	public List<IncomingDTO> material_storage() {
+	public List<IncomingDTO> material_storage(IncomingDTO incomingDTO) {
 		// TODO Auto-generated method stub
-		return null;
+		return session.selectList("kr.co.chill.incomingMapper.selectAll", incomingDTO);
 	}
+
+	@Override
+	public List<IncomingDTO> expected(IncomingDTO incomingDTO) {
+		// TODO Auto-generated method stub
+		return session.selectList("kr.co.chill.incomingMapper.selectExp", incomingDTO);
+	}
+
+	@Override
+	public int inMaterial(IncomingDTO incomingDTO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int outMaterial(IncomingDTO incomingDTO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 	
 }
