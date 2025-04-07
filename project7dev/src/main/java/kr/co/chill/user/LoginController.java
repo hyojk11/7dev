@@ -29,6 +29,13 @@ public class LoginController {
 		return "sup_main";
 	}
 	
+	//관리자 메인페이지 이동
+	@GetMapping(value="admin_main")
+	public String admin_main() {
+		return "admin_main";
+	}
+	
+	
 	//로그인 처리
 	@PostMapping(value="login")
 	public String login(HttpSession session
@@ -49,6 +56,10 @@ public class LoginController {
 
 			switch(user_type) {
 			case "EMP" :
+				if("admin01".equals(user.get("user_id"))) {
+					//앞에 "admin01".equals(...)처럼 리터럴을 먼저 쓰는 걸 추천. user.get("user_id")가 null일 경우 NullPointerException이 발생할 수 있기 때문
+					return "redirect:/admin_main";
+				}
 				return "redirect:/emp_main";
 			case "SUP" :
 				return "redirect:/sup_main";

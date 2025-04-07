@@ -13,7 +13,7 @@
 		alert("${resultMsg}");
 	</script>
 </c:if>
-	<img src="${contextPath}/resources/img/7chilldevLogo_Green_Long.png">
+	<img src="${contextPath}/resources/image/7chilldevLogo_Green_Long.png" width="200" height="50">
 	<div>
 		<h2 style="display: inline;">Login</h2><span>자재조달 관리 시스템</span>
 		<form action="${contextPath}/login" method="post">

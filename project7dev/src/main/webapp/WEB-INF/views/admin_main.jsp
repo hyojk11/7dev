@@ -14,6 +14,6 @@
 		alert("${resultMsg}");
 	</script>
 </c:if>
-<h1>EMP</h1>
+<h1>ADMIN</h1>
 </body>
 </html>
