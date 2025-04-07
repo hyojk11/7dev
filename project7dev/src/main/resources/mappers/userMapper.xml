@@ -3,5 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.chill.userMapper">
-
+	
+	<!-- 로그인조회 -->
+	<select id="login" parameterType="map" resultType="map">
+		SELECT emp_id AS user_id, emp_name AS user_name, 'EMP' AS user_type
+		FROM employee
+		WHERE emp_id = #{user_id} AND emp_password = #{user_password}
+		
+		UNION ALL
+		
+		SELECT sup_id AS user_id, sup_name AS user_name, 'SUP' AS user_type
+		FROM supplier
+		WHERE sup_id = #{user_id} AND sup_password = #{user_password}
+	</select>
+	
 </mapper>

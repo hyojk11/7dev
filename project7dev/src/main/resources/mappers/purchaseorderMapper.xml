@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.chill.purchaseorderMapper">
+	
+	<!-- 발주리스트 -->
+	<select id="list" resultType="kr.co.chill.purchaseorder.PurchaseorderDTO">
+		SELECT
+			po.purc_order_code
+			, po.purc_order_reg_date
+			, sup.sup_name
+			, ct.cont_material_cnt
+			, ct.cont_material_cnt * mup.cont_mprice AS total_price
+			, mup.mprice_currency
+			, DATE_ADD(ct.cont_date, INTERVAL ct.cont_leadtime DAY) AS end_date
+			, emp.emp_name
+			, po.purc_order_status
+		FROM purchase_order po
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN employee emp ON po.employee_emp_no = emp.emp_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+	</select>
+	
+</mapper>
