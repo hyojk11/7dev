@@ -36,4 +36,22 @@ public class PurchaseorderServiceImpl implements PurchaseorderService {
 		return purchaseorderDAO.detailOrderList(purc_order_code);
 	}
 
+	@Override
+	public List<PurchaseorderDTO> listPaged(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return purchaseorderDAO.listPaged(map);
+	}
+
+	@Override
+	public List<PurchaseorderDTO> listSearchPaged(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return purchaseorderDAO.listSearchPaged(map);
+	}
+
+	@Override
+	public int listSearchCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return purchaseorderDAO.listSearchCount(map);
+	}
+
 }

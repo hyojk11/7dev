@@ -34,7 +34,25 @@ public class PurchaseorderDAOImpl implements PurchaseorderDAO {
 	@Override
 	public List<PurchaseorderDTO> detailOrderList(String purc_order_code) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("kr.co.chill.purchaseorderMapper.detailOrderList", purc_order_code);
+		return sqlSession.selectList("kr.co.chill.purchaseorderMapper.detailProgressList", purc_order_code);
+	}
+
+	@Override
+	public List<PurchaseorderDTO> listPaged(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.chill.purchaseorderMapper.listPaged", map);
+	}
+
+	@Override
+	public List<PurchaseorderDTO> listSearchPaged(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.chill.purchaseorderMapper.listSearchPaged", map);
+	}
+
+	@Override
+	public int listSearchCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.chill.purchaseorderMapper.listSearchCount", map);
 	}
 	
 	

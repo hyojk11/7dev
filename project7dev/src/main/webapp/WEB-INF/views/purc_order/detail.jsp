@@ -9,17 +9,31 @@
 <head>
 <meta charset="UTF-8">
 <title>구매발주서 보기</title>
+<style>
+	@media print {
+		button {
+			display: none;
+		}
+		#printArea {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+		}
+	}
+</style>
 </head>
 <body>
+	<div id="printArea">
 	<h2>구매발주서</h2>
 	<table border="1">
 		<tr>
-			<td colspan="3">
+			<td colspan="4">
 				작성일 : 
 				<fmt:parseDate value="${dto.purc_order_reg_date}" pattern="yyyy-MM-dd HH:mm:ss" var="regDate" />
 				<fmt:formatDate value="${regDate}" pattern="yyyy년 MM월 dd일 E요일" />
 			</td>
-			<td colspan="4">
+			<td colspan="3">
 				납기일 : ${dto.mrp_due_date}
 			</td>
 			<td colspan="3">
@@ -106,8 +120,9 @@
 			<td colspan="2"></td>
 		</tr>
 	</table>
+	</div>
 	<button onclick="location.href='${contextPath}/purc_order/list'">이전으로</button>
-	<button>인 쇄</button>
+	<button onclick="window.print()">인 쇄</button>
 	<button>계약 상세</button>
 </body>
 </html>

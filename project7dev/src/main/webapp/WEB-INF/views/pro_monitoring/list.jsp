@@ -7,31 +7,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>구매발주목록</title>
+<title>진척검수목록</title>
 </head>
 <body>
-	<h2>구매발주</h2>
+	<h2>진척검수</h2>
 	<table border="1">
 		<tr>
-			<td colspan ="8">
-			<form action="${contextPath}/purc_order/list" method="get">
+			<td colspan ="6">
+			<form action="${contextPath}/pro_monitoring/list" method="get">
 				<select id="searchType" name="searchType" onchange="changeInputType()">
 					<option value="purc_order_code" ${param.searchType == 'purc_order_code' ? 'selected' : ''}>발주번호</option>
-					<option value="purc_order_reg_date" ${param.searchType == 'purc_order_reg_date' ? 'selected' : ''}>발주일</option>
 					<option value="sup_name" ${param.searchType == 'sup_name' ? 'selected' : ''}>거래처명</option>
+					<option value="purc_order_reg_date" ${param.searchType == 'purc_order_reg_date' ? 'selected' : ''}>발주일</option>
+					<option value="next_progress_date" ${param.searchType == 'next_progress_date' ? 'selected' : ''}>다음 진척검수일</option>
 					<option value="mrp_due_date" ${param.searchType == 'mrp_due_date' ? 'selected' : ''}>납기일</option>
 					<option value="emp_name" ${param.searchType == 'emp_name' ? 'selected' : ''}>담당자</option>
-					<option value="purc_order_status" ${param.searchType == 'purc_order_status' ? 'selected' : ''}>상태</option>
+					<option value="total_progress_rate" ${param.searchType == 'total_progress_rate' ? 'selected' : ''}>진척률</option>
 				</select>
 				<span id="inputType">
 					<input type="text" name="keyword" value="${param.keyword}" placeholder="검색어">
 				</span>
 				<button>검색</button>
-				<input type="hidden" name="page" value="1">
 			</form>
 			</td>
 			<td colspan="2">
-				<form action="${contextPath}/purc_order/excel" method="get">
+				<form action="${contextPath}/pro_monitoring/excel" method="get">
 				<input type="hidden" name="searchType" value="${param.searchType}">
 				<input type="hidden" name="keyword" value="${param.keyword}">
 				<button>EXCEL 다운</button>
@@ -39,45 +39,36 @@
 			</td>
 		</tr>
 		<tr>
-			<th colspan="10">구매발주목록</th>
+			<th colspan="8">진척검수 목록</th>
 		</tr>
 		<tr>
 			<th>NO.</th>
-			<th>발주번호</th>
-			<th>발주일</th>
+			<th>구매발주 번호</th>
 			<th>거래처명</th>
-			<th>총 수량</th>
-			<th>총 금액</th>
-			<th>화폐단위</th>
+			<th>구매발주일</th>
+			<th>다음 진척검수일</th>
 			<th>납기일</th>
 			<th>담당자</th>
-			<th>상태</th>
+			<th>진척률</th>
 		</tr>
 		<c:forEach var="data" items="${list}" varStatus="status">
 		<tr>
 			<td>${status.index+1}</td>
 			<td>
-				<a href="${contextPath}/purc_order/detail?purc_order_code=${data.purc_order_code}">${data.purc_order_code}</a>
+				<a href="${contextPath}/pro_monitoring/detail?purc_order_code=${data.purc_order_code}">${data.purc_order_code}</a>
 			</td>
-			<td>${data.purc_order_reg_date}</td>
 			<td>${data.sup_name}</td>
-			<td>${data.cont_material_cnt}</td>
-			<td>${data.total_price}</td>
-			<td>${data.mprice_currency}</td>
+			<td>${data.purc_order_reg_date}</td>
+			<td>${data.next_progress_date}</td>
 			<td>${data.mrp_due_date}</td>
 			<td>${data.emp_name}</td>
 			<td>
-				<c:choose>
-					<c:when test="${data.purc_order_status == 0}">
-						<span style="color:red;">마감 전</span>
-					</c:when>
-					<c:when test="${data.purc_order_status == 1}">
-						<span style="color:blue;">마감완료</span>
-					</c:when>
-					<c:otherwise>
-						-
-					</c:otherwise>
-				</c:choose>
+				<c:if test="${data.total_progress_rate == 0}">
+					<span style="color:red;">검수예정</span>
+				</c:if>
+				<c:if test="${data.total_progress_rate != 0}">
+					<span style="color:blue;">${data.total_progress_rate}%</span>
+				</c:if>
 			</td>
 		</tr>
 		</c:forEach>
@@ -104,13 +95,14 @@
 			const searchType = document.getElementById("searchType").value;
 			const inputType = document.getElementById("inputType");
 			
-			if(searchType === "purc_order_reg_date" || searchType === "mrp_due_date") {
+			if(searchType === "purc_order_reg_date" || searchType === "next_progress_date" || searchType === "mrp_due_date") {
 				inputType.innerHTML = `<input type="date" value="${param.keyword}" name="keyword">`;
-			} else if(searchType === "purc_order_status") {
+			} else if(searchType === "total_progress_rate") {
 				inputType.innerHTML = `
 					<select name="keyword">
-						<option value="0" ${param.keyword == '0' ? 'selected' : ''}>마감 전</option>
-						<option value="1" ${param.keyword == '1' ? 'selected' : ''}>마감완료</option>
+						<option value="ready" ${param.keyword == 'ready' ? 'selected' : ''}>검수예정</option>
+						<option value="in_progress" ${param.keyword == 'in_progress' ? 'selected' : ''}>검수진행중</option>
+						<option value="complete" ${param.keyword == 'complete' ? 'selected' : ''}>검수완료</option>
 					</select>
 				`;
 			} else {
