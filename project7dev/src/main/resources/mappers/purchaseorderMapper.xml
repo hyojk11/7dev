@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.chill.purchaseorderMapper">
+	
+	
+	<!-- 발주리스트 (페이징X) -->
+	<select id="list" resultType="kr.co.chill.purchaseorder.PurchaseorderDTO">
+		SELECT
+			po.purc_order_code
+			, po.purc_order_reg_date
+			, sup.sup_name
+			, ct.cont_material_cnt
+			, ct.cont_material_cnt * mup.cont_mprice AS total_price
+			, mup.mprice_currency
+			, mrp.mrp_due_date
+			, emp.emp_name
+			, po.purc_order_status
+		FROM purchase_order po
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN employee emp ON po.employee_emp_no = emp.emp_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+	</select>
+	
+	<!-- 발주리스트 (페이징) -->
+	<select id="listPaged" resultType="kr.co.chill.purchaseorder.PurchaseorderDTO" parameterType="map">
+		SELECT
+			po.purc_order_code
+			, po.purc_order_reg_date
+			, sup.sup_name
+			, ct.cont_material_cnt
+			, ct.cont_material_cnt * mup.cont_mprice AS total_price
+			, mup.mprice_currency
+			, mrp.mrp_due_date
+			, emp.emp_name
+			, po.purc_order_status
+		FROM purchase_order po
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN employee emp ON po.employee_emp_no = emp.emp_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+	
+	
+	
+	<!-- 발주 리스트 검색 (페이징X) -->
+	<select id="listSearch" resultType="kr.co.chill.purchaseorder.PurchaseorderDTO" parameterType="map">
+		SELECT
+			po.purc_order_code
+			, po.purc_order_reg_date
+			, sup.sup_name
+			, ct.cont_material_cnt
+			, ct.cont_material_cnt * mup.cont_mprice AS total_price
+			, mup.mprice_currency
+			, mrp.mrp_due_date
+			, emp.emp_name
+			, po.purc_order_status
+		FROM purchase_order po
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN employee emp ON po.employee_emp_no = emp.emp_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+		
+		<where>
+			<choose>
+				<when test="searchType == 'purc_order_code'">
+					po.purc_order_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'purc_order_reg_date'">
+					po.purc_order_reg_date = #{keyword}
+				</when>
+				<when test="searchType == 'sup_name'">
+					sup.sup_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'mrp_due_date'">
+					mrp.mrp_due_date = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp.emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'purc_order_status'">
+					po.purc_order_status = #{keyword}
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	
+	<!-- 발주 리스트 검색 (페이징) -->
+	<select id="listSearchPaged" resultType="kr.co.chill.purchaseorder.PurchaseorderDTO" parameterType="map">
+		SELECT
+			po.purc_order_code
+			, po.purc_order_reg_date
+			, sup.sup_name
+			, ct.cont_material_cnt
+			, ct.cont_material_cnt * mup.cont_mprice AS total_price
+			, mup.mprice_currency
+			, mrp.mrp_due_date
+			, emp.emp_name
+			, po.purc_order_status
+		FROM purchase_order po
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN employee emp ON po.employee_emp_no = emp.emp_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+		
+		<where>
+			<choose>
+				<when test="searchType == 'purc_order_code'">
+					po.purc_order_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'purc_order_reg_date'">
+					po.purc_order_reg_date = #{keyword}
+				</when>
+				<when test="searchType == 'sup_name'">
+					sup.sup_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'mrp_due_date'">
+					mrp.mrp_due_date = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp.emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'purc_order_status'">
+					po.purc_order_status = #{keyword}
+				</when>
+			</choose>
+		</where>
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+	
+	
+	<!-- 검색리스트 갯수 -->
+	<select id="listSearchCount" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+		FROM purchase_order po
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN employee emp ON po.employee_emp_no = emp.emp_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+		
+		<where>
+			<choose>
+				<when test="searchType == 'purc_order_code'">
+					po.purc_order_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'purc_order_reg_date'">
+					po.purc_order_reg_date = #{keyword}
+				</when>
+				<when test="searchType == 'sup_name'">
+					sup.sup_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'mrp_due_date'">
+					mrp.mrp_due_date = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp.emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'purc_order_status'">
+					po.purc_order_status = #{keyword}
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	
+	
+	<!-- 구매발주서 상세 기본정보 -->
+	<select id="detailOrderInfo" parameterType="String" resultType="kr.co.chill.purchaseorder.PurchaseorderDTO">
+		SELECT
+			po.purc_order_reg_date
+			, mrp.mrp_due_date
+			, po.purc_order_code
+			, sup.sup_reg_no
+			, sup.sup_name
+			, sup.sup_ceo_name
+			, CONCAT(sup.sup_addr1, sup.sup_addr2) AS sup_total_addr
+			, sup.sup_cip
+			, sup.sup_cip_email
+			, comp.comp_reg_no
+			, comp.comp_name
+			, comp.comp_ceo_name
+			, CONCAT(comp.comp_addr1, comp.comp_addr2) AS comp_total_addr
+			, emp.emp_name
+			, emp.emp_email
+		FROM purchase_order po
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN employee emp ON po.employee_emp_no = emp.emp_no
+		JOIN company comp ON emp.company_comp_no = comp.comp_no
+	</select>
+	
+	
+	<!-- 구매발주서 상세 자재정보 리스트 -->
+	<select id="detailOrderList" parameterType="String" resultType="kr.co.chill.purchaseorder.PurchaseorderDTO">
+		SELECT
+			ma.material_name
+			, ma.material_code
+			, ma.material_description
+			, ct.cont_material_sku
+			, mup.cont_mprice
+			, ct.cont_material_cnt
+			, ct.cont_material_cnt * mup.cont_mprice AS total_price
+			, mup.mprice_currency
+			, po.purc_order_etc
+		FROM purchase_order po
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		JOIN material ma ON mrp.material_material_no = ma.material_no
+		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+	</select>
+	
+	
+	
+	
+</mapper>

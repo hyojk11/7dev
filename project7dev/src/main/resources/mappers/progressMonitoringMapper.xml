@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.chill.progressMonitoringMapper">
+	
+	
+	<!-- 진척검수리스트 (페이징X) -->
+	<select id="list" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO">
+		SELECT
+			po.purc_order_code
+			, sup.sup_name
+			, po.purc_order_reg_date
+			, LEAST(DATE_ADD(progress_monitoring_date, INTERVAL 7 DAY), mrp_due_date) AS next_progress_date
+			, mrp.mrp_due_date
+			, emp.emp_name
+			, ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS total_progress_rate
+		FROM progress_monitoring pm
+		JOIN purchase_order po ON pm.purchase_order_purc_order_no = po.purc_order_no
+		JOIN material ma ON pm.material_material_no = ma.material_no
+		JOIN employee emp ON pm.employee_emp_no = emp.emp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+	</select>
+	
+	<!-- 진척검수리스트 (페이징) -->
+	<select id="listPaged" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO" parameterType="map">
+		SELECT
+			po.purc_order_code
+			, sup.sup_name
+			, po.purc_order_reg_date
+			, LEAST(DATE_ADD(progress_monitoring_date, INTERVAL 7 DAY), mrp_due_date) AS next_progress_date
+			, mrp.mrp_due_date
+			, emp.emp_name
+			, ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS total_progress_rate
+		FROM progress_monitoring pm
+		JOIN purchase_order po ON pm.purchase_order_purc_order_no = po.purc_order_no
+		JOIN material ma ON pm.material_material_no = ma.material_no
+		JOIN employee emp ON pm.employee_emp_no = emp.emp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+	
+	
+	<!-- 진척검수 리스트 검색 (페이징X) -->
+	<select id="listSearch" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO" parameterType="map">
+		SELECT
+			po.purc_order_code
+			, sup.sup_name
+			, po.purc_order_reg_date
+			, LEAST(DATE_ADD(progress_monitoring_date, INTERVAL 7 DAY), mrp_due_date) AS next_progress_date
+			, mrp.mrp_due_date
+			, emp.emp_name
+			, ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS total_progress_rate
+		FROM progress_monitoring pm
+		JOIN purchase_order po ON pm.purchase_order_purc_order_no = po.purc_order_no
+		JOIN material ma ON pm.material_material_no = ma.material_no
+		JOIN employee emp ON pm.employee_emp_no = emp.emp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		
+		<where>
+			<choose>
+				<when test="searchType == 'purc_order_code'">
+					po.purc_order_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'sup_name'">
+					sup.sup_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'purc_order_reg_date'">
+					po.purc_order_reg_date = #{keyword}
+				</when>
+				<when test="searchType == 'next_progress_date'">
+					DATE(LEAST(DATE_ADD(progress_monitoring_date, INTERVAL 7 DAY), mrp_due_date)) = #{keyword}
+				</when>
+				<when test="searchType == 'mrp_due_date'">
+					mrp.mrp_due_date = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp.emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'total_progress_rate'">
+					<choose>
+						<when test="keyword == 'ready'">
+							IFNULL(pm.material_cnt,0) = 0
+						</when>
+						<when test="keyword == 'in_progress'">
+							pm.material_cnt IS NOT NULL AND pm.material_cnt &gt; 0
+							AND ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) &lt; 100
+						</when>
+						<when test="keyword == 'complete'">
+							ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) = 100
+						</when>
+					</choose>
+				</when>
+			</choose>
+		</where>
+	</select>
+
+	
+	
+	<!-- 진척검수 리스트 검색 (페이징) -->
+	<select id="listSearchPaged" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO" parameterType="map">
+		SELECT
+			po.purc_order_code
+			, sup.sup_name
+			, po.purc_order_reg_date
+			, LEAST(DATE_ADD(progress_monitoring_date, INTERVAL 7 DAY), mrp_due_date) AS next_progress_date
+			, mrp.mrp_due_date
+			, emp.emp_name
+			, ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS total_progress_rate
+		FROM progress_monitoring pm
+		JOIN purchase_order po ON pm.purchase_order_purc_order_no = po.purc_order_no
+		JOIN material ma ON pm.material_material_no = ma.material_no
+		JOIN employee emp ON pm.employee_emp_no = emp.emp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		
+		<where>
+			<choose>
+				<when test="searchType == 'purc_order_code'">
+					po.purc_order_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'sup_name'">
+					sup.sup_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'purc_order_reg_date'">
+					po.purc_order_reg_date = #{keyword}
+				</when>
+				<when test="searchType == 'next_progress_date'">
+					DATE(LEAST(DATE_ADD(progress_monitoring_date, INTERVAL 7 DAY), mrp_due_date)) = #{keyword}
+				</when>
+				<when test="searchType == 'mrp_due_date'">
+					mrp.mrp_due_date = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp.emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'total_progress_rate'">
+					<choose>
+						<when test="keyword == 'ready'">
+							IFNULL(pm.material_cnt,0) = 0
+						</when>
+						<when test="keyword == 'in_progress'">
+							pm.material_cnt IS NOT NULL AND pm.material_cnt &gt; 0
+							AND ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) &lt; 100
+						</when>
+						<when test="keyword == 'complete'">
+							ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) = 100
+						</when>
+					</choose>
+				</when>
+			</choose>
+		</where>
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+	
+	
+	<!-- 검색리스트 갯수 -->
+	<select id="listSearchCount" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+		FROM progress_monitoring pm
+		JOIN purchase_order po ON pm.purchase_order_purc_order_no = po.purc_order_no
+		JOIN material ma ON pm.material_material_no = ma.material_no
+		JOIN employee emp ON pm.employee_emp_no = emp.emp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		<where>
+			<choose>
+				<when test="searchType == 'purc_order_code'">
+					po.purc_order_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'sup_name'">
+					sup.sup_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'purc_order_reg_date'">
+					po.purc_order_reg_date = #{keyword}
+				</when>
+				<when test="searchType == 'next_progress_date'">
+					DATE(LEAST(DATE_ADD(progress_monitoring_date, INTERVAL 7 DAY), mrp_due_date)) = #{keyword}
+				</when>
+				<when test="searchType == 'mrp_due_date'">
+					mrp.mrp_due_date = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp.emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'total_progress_rate'">
+					(ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1)) LIKE CONCAT('%',#{keyword},'%')
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	
+	
+	<!-- 진척검수 상세 기본정보 -->
+	<select id="detailOrderInfo" parameterType="String" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO">
+		SELECT
+			po.purc_order_code
+			, po.purc_order_reg_date
+			, emp.emp_name
+			, sup.sup_name
+			, sup.sup_reg_no
+			, sup.sup_ceo_name
+			, sup.sup_phone
+			, (sup.sup_addr1 + sup.sup_addr2) AS sup_total_addr
+			, sup.sup_cip
+			, sup.sup_cip_phone
+			, sup.sup_cip_email
+			, pm.progress_monitoring_ver
+			, ma.material_name
+			, ma.material_code
+			, ct.cont_material_cnt
+			, mrp.mrp_due_date
+			, pm.progress_monitoring_date
+			, pm.material_cnt
+			, ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS progress_rate
+			, ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS total_progress_rate
+			, 
+	</select>
+	
+	
+	<!-- 진척검수 상세 자재정보 리스트 -->
+	<select id="detailProgressList" parameterType="String" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO">
+		
+	</select>
+	
+	
+	
+	
+</mapper>
