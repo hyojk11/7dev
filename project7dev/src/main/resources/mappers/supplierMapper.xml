@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.chill.supplierMapper">
+	<!-- 거래처정보 불러오기(기본셋) -->
+	<select id="readSupplier" resultType="SupplierDTO">
+		select * from supplier	
+	</select>
+	<!-- 거래처정보 상세보기(선택) -->
+	<select id="readSupplierBySupNo" resultType="SupplierDTO">
+		select * from supplier
+		where sup_no=#{supNo}
+	</select>
+	
+	<!-- 거래처정보 검색조회(거래처명,사업자번호) -->
+	<select id="searchSupplier" parameterType="map" resultType="SupplierDTO">
+		select * from supplier 	
+		<where>
+       		<if test="searchType == 'supName' and searchValue != null and searchValue != ''">
+            	AND sup_name LIKE CONCAT('%', #{searchValue}, '%')
+        	</if>
+        	<if test="searchType == 'supRegNo' and searchValue != null and searchValue != ''">
+        	    AND sup_reg_no LIKE CONCAT('%', #{searchValue}, '%')
+        	</if>
+    	</where>
+	</select>
+	
+	<!-- 거래처 신규등록 -->
+	<insert id="createSupplier" parameterType="SupplierDTO">
+		insert into supplier(sup_category, sup_reg_no, sup_name, sup_ceo_name, sup_phone, sup_email, 
+		sup_addr1, sup_addr2, sup_cip, sup_cip_phone, sup_cip_email, sup_id, sup_password, sup_etc)
+		values(#{supCategory},#{supRegNo},#{supName},#{supCeoName},#{supPhone},#{supEmail},
+		#{supAddr1},#{supAddr2},#{supCip},#{supCipPhone},#{supCipEmail},#{supId},#{supPassword},#{supEtc})
+	</insert>
+	
+	<!-- 거래처 정보 수정 -->
+	<update id="updateSupplier" parameterType="SupplierDTO">
+		update supplier 
+		set sup_category=#{supCategory}, sup_reg_no=#{supRegNo}, sup_name=#{supName}, sup_ceo_name=#{supCeoName}, 
+		sup_phone=#{supPhone}, sup_email=#{supEmail}, sup_addr1=#{supAddr1}, sup_addr2=#{supAddr2}, sup_cip=#{supCip}, 
+		sup_cip_phone=#{supCipPhone}, sup_cip_email=#{supCipEmail}, sup_id=#{supId}, sup_password=#{supPassword}, sup_etc=#{supEtc} 
+		where sup_no=#{supNo}
+	</update>
+	
+	<!-- 거래처 삭제 -->
+	<delete id="deleteSupplier" parameterType="int">
+		delete supplier
+		where sup_no=#{supNo}
+	</delete>
+
+
+</mapper>
