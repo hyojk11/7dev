@@ -18,6 +18,9 @@ public class IssuingDTO {
 	private int mstorage_stock;
 	private String mstorage_code;
 	
+//	other
+	private int material_produce;
+	
 	public IssuingDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -109,6 +112,14 @@ public class IssuingDTO {
 
 	public void setMstorage_code(String mstorage_code) {
 		this.mstorage_code = mstorage_code;
+	}
+
+	public int getMaterial_produce() {
+		return material_produce;
+	}
+
+	public void setMaterial_produce(int material_produce) {
+		this.material_produce = material_produce;
 	}
 	
 	
