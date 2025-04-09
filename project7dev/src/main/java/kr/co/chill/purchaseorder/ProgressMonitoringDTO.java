@@ -1,27 +1,40 @@
 package kr.co.chill.purchaseorder;
 
-public class PurchaseorderDTO {
+public class ProgressMonitoringDTO {
+	
+	//progress_monitoring table
+	private int progress_monitoring_no;
+	private int progress_monitoring_ver;
+	private String progress_monitoring_code;
+	private int material_cnt; //검수완료 수량
+	private String progress_monitoring_date; //검수날짜
+	private String progress_monitoring_etc; //검수별 비고
+	
+	private int progress_rate; //** 자재별 진척률 별칭
+	private int total_progress_rate; //** 총 진척률 별칭
+	private String next_progress_date; //** 다음 진척검수일 별칭
+//	private String total_progress_cnt; //** 총 검수완료 수량 별칭
+//	private String
 	
 	//purchase_order table
 	private int purc_order_no;
 	private String purc_order_code; //시리얼코드
 	private String purc_order_reg_date; //발주일
 	private String purc_order_dterms; //인도조건
-	private String purc_order_status; //발주진행중1, 마감0
-	private String purc_order_etc; //비고
 	
-	private int total_price; //**총 금액 별칭
 	private String end_date; //**납기일 별칭
 	
 	//supplier table
 	private int sup_no;
 	private String sup_name;
-	private String sup_ceo_name;
 	private String sup_reg_no; //사업자번호
+	private String sup_ceo_name;
+	private String sup_phone;
 	private String sup_addr1;
 	private String sup_addr2; //상세주소
 	private String sup_cip; //담당자
-	private String sup_cip_email; //담당자
+	private String sup_cip_phone; //담당자 연락처
+	private String sup_cip_email; //담당자 이메일
 	
 	private String sup_total_addr; //**전체주소 별칭
 	
@@ -39,14 +52,7 @@ public class PurchaseorderDTO {
 	private int cont_no;
 	private int cont_material_cnt; //자재수량
 	private String cont_date; //계약일
-	private int cont_leadtime; //납기일수
-	private String cont_material_sku; //자재포장단위
 	
-	//material_unit_price table
-	private int mprice_no;
-	private int cont_mprice; //계약단가
-	private String mprice_currency; //화폐단위
-
 	//employee table
 	private int emp_no;
 	private String emp_name;
@@ -60,42 +66,49 @@ public class PurchaseorderDTO {
 	private int material_no;
 	private String material_name;
 	private String material_code;
-	private String material_description; //규격
-	private String material_sku; //포장단위
 	
 	
 	
-	public PurchaseorderDTO() {
+	public ProgressMonitoringDTO() {
 		super();
 	}
 
 
 
-	public PurchaseorderDTO(int purc_order_no, String purc_order_code, String purc_order_reg_date,
-			String purc_order_dterms, String purc_order_status, String purc_order_etc, int total_price, String end_date,
-			int sup_no, String sup_name, String sup_ceo_name, String sup_reg_no, String sup_addr1, String sup_addr2,
-			String sup_cip, String sup_cip_email, String sup_total_addr, int comp_no, String comp_name,
-			String comp_ceo_name, String comp_reg_no, String comp_addr1, String comp_addr2, String comp_total_addr,
-			int cont_no, int cont_material_cnt, String cont_date, int cont_leadtime, String cont_material_sku,
-			int mprice_no, int cont_mprice, String mprice_currency, int emp_no, String emp_name, String emp_email,
-			int mrp_no, String mrp_due_date, int material_no, String material_name, String material_code,
-			String material_description, String material_sku) {
+	public ProgressMonitoringDTO(int progress_monitoring_no, int progress_monitoring_ver,
+			String progress_monitoring_code, int material_cnt, String progress_monitoring_date,
+			String progress_monitoring_etc, int progress_rate, int total_progress_rate, String next_progress_date,
+			int purc_order_no, String purc_order_code, String purc_order_reg_date, String purc_order_dterms,
+			String end_date, int sup_no, String sup_name, String sup_reg_no, String sup_ceo_name, String sup_phone,
+			String sup_addr1, String sup_addr2, String sup_cip, String sup_cip_phone, String sup_cip_email,
+			String sup_total_addr, int comp_no, String comp_name, String comp_ceo_name, String comp_reg_no,
+			String comp_addr1, String comp_addr2, String comp_total_addr, int cont_no, int cont_material_cnt,
+			String cont_date, int emp_no, String emp_name, String emp_email, int mrp_no, String mrp_due_date,
+			int material_no, String material_name, String material_code) {
 		super();
+		this.progress_monitoring_no = progress_monitoring_no;
+		this.progress_monitoring_ver = progress_monitoring_ver;
+		this.progress_monitoring_code = progress_monitoring_code;
+		this.material_cnt = material_cnt;
+		this.progress_monitoring_date = progress_monitoring_date;
+		this.progress_monitoring_etc = progress_monitoring_etc;
+		this.progress_rate = progress_rate;
+		this.total_progress_rate = total_progress_rate;
+		this.next_progress_date = next_progress_date;
 		this.purc_order_no = purc_order_no;
 		this.purc_order_code = purc_order_code;
 		this.purc_order_reg_date = purc_order_reg_date;
 		this.purc_order_dterms = purc_order_dterms;
-		this.purc_order_status = purc_order_status;
-		this.purc_order_etc = purc_order_etc;
-		this.total_price = total_price;
 		this.end_date = end_date;
 		this.sup_no = sup_no;
 		this.sup_name = sup_name;
-		this.sup_ceo_name = sup_ceo_name;
 		this.sup_reg_no = sup_reg_no;
+		this.sup_ceo_name = sup_ceo_name;
+		this.sup_phone = sup_phone;
 		this.sup_addr1 = sup_addr1;
 		this.sup_addr2 = sup_addr2;
 		this.sup_cip = sup_cip;
+		this.sup_cip_phone = sup_cip_phone;
 		this.sup_cip_email = sup_cip_email;
 		this.sup_total_addr = sup_total_addr;
 		this.comp_no = comp_no;
@@ -108,11 +121,6 @@ public class PurchaseorderDTO {
 		this.cont_no = cont_no;
 		this.cont_material_cnt = cont_material_cnt;
 		this.cont_date = cont_date;
-		this.cont_leadtime = cont_leadtime;
-		this.cont_material_sku = cont_material_sku;
-		this.mprice_no = mprice_no;
-		this.cont_mprice = cont_mprice;
-		this.mprice_currency = mprice_currency;
 		this.emp_no = emp_no;
 		this.emp_name = emp_name;
 		this.emp_email = emp_email;
@@ -121,8 +129,114 @@ public class PurchaseorderDTO {
 		this.material_no = material_no;
 		this.material_name = material_name;
 		this.material_code = material_code;
-		this.material_description = material_description;
-		this.material_sku = material_sku;
+	}
+
+
+
+	public int getProgress_monitoring_no() {
+		return progress_monitoring_no;
+	}
+
+
+
+	public void setProgress_monitoring_no(int progress_monitoring_no) {
+		this.progress_monitoring_no = progress_monitoring_no;
+	}
+
+
+
+	public int getProgress_monitoring_ver() {
+		return progress_monitoring_ver;
+	}
+
+
+
+	public void setProgress_monitoring_ver(int progress_monitoring_ver) {
+		this.progress_monitoring_ver = progress_monitoring_ver;
+	}
+
+
+
+	public String getProgress_monitoring_code() {
+		return progress_monitoring_code;
+	}
+
+
+
+	public void setProgress_monitoring_code(String progress_monitoring_code) {
+		this.progress_monitoring_code = progress_monitoring_code;
+	}
+
+
+
+	public int getMaterial_cnt() {
+		return material_cnt;
+	}
+
+
+
+	public void setMaterial_cnt(int material_cnt) {
+		this.material_cnt = material_cnt;
+	}
+
+
+
+	public String getProgress_monitoring_date() {
+		return progress_monitoring_date;
+	}
+
+
+
+	public void setProgress_monitoring_date(String progress_monitoring_date) {
+		this.progress_monitoring_date = progress_monitoring_date;
+	}
+
+
+
+	public String getProgress_monitoring_etc() {
+		return progress_monitoring_etc;
+	}
+
+
+
+	public void setProgress_monitoring_etc(String progress_monitoring_etc) {
+		this.progress_monitoring_etc = progress_monitoring_etc;
+	}
+
+
+
+	public int getProgress_rate() {
+		return progress_rate;
+	}
+
+
+
+	public void setProgress_rate(int progress_rate) {
+		this.progress_rate = progress_rate;
+	}
+
+
+
+	public int getTotal_progress_rate() {
+		return total_progress_rate;
+	}
+
+
+
+	public void setTotal_progress_rate(int total_progress_rate) {
+		this.total_progress_rate = total_progress_rate;
+	}
+
+
+
+	public String getNext_progress_date() {
+		return next_progress_date;
+	}
+
+
+
+	public void setNext_progress_date(String next_progress_date) {
+		this.next_progress_date = next_progress_date;
 	}
 
 
@@ -175,42 +289,6 @@ public class PurchaseorderDTO {
 
 
 
-	public String getPurc_order_status() {
-		return purc_order_status;
-	}
-
-
-
-	public void setPurc_order_status(String purc_order_status) {
-		this.purc_order_status = purc_order_status;
-	}
-
-
-
-	public String getPurc_order_etc() {
-		return purc_order_etc;
-	}
-
-
-
-	public void setPurc_order_etc(String purc_order_etc) {
-		this.purc_order_etc = purc_order_etc;
-	}
-
-
-
-	public int getTotal_price() {
-		return total_price;
-	}
-
-
-
-	public void setTotal_price(int total_price) {
-		this.total_price = total_price;
-	}
-
-
-
 	public String getEnd_date() {
 		return end_date;
 	}
@@ -247,6 +325,18 @@ public class PurchaseorderDTO {
 
 
 
+	public String getSup_reg_no() {
+		return sup_reg_no;
+	}
+
+
+
+	public void setSup_reg_no(String sup_reg_no) {
+		this.sup_reg_no = sup_reg_no;
+	}
+
+
+
 	public String getSup_ceo_name() {
 		return sup_ceo_name;
 	}
@@ -259,14 +349,14 @@ public class PurchaseorderDTO {
 
 
 
-	public String getSup_reg_no() {
-		return sup_reg_no;
+	public String getSup_phone() {
+		return sup_phone;
 	}
 
 
 
-	public void setSup_reg_no(String sup_reg_no) {
-		this.sup_reg_no = sup_reg_no;
+	public void setSup_phone(String sup_phone) {
+		this.sup_phone = sup_phone;
 	}
 
 
@@ -303,6 +393,18 @@ public class PurchaseorderDTO {
 
 	public void setSup_cip(String sup_cip) {
 		this.sup_cip = sup_cip;
+	}
+
+
+
+	public String getSup_cip_phone() {
+		return sup_cip_phone;
+	}
+
+
+
+	public void setSup_cip_phone(String sup_cip_phone) {
+		this.sup_cip_phone = sup_cip_phone;
 	}
 
 
@@ -451,66 +553,6 @@ public class PurchaseorderDTO {
 
 
 
-	public int getCont_leadtime() {
-		return cont_leadtime;
-	}
-
-
-
-	public void setCont_leadtime(int cont_leadtime) {
-		this.cont_leadtime = cont_leadtime;
-	}
-
-
-
-	public String getCont_material_sku() {
-		return cont_material_sku;
-	}
-
-
-
-	public void setCont_material_sku(String cont_material_sku) {
-		this.cont_material_sku = cont_material_sku;
-	}
-
-
-
-	public int getMprice_no() {
-		return mprice_no;
-	}
-
-
-
-	public void setMprice_no(int mprice_no) {
-		this.mprice_no = mprice_no;
-	}
-
-
-
-	public int getCont_mprice() {
-		return cont_mprice;
-	}
-
-
-
-	public void setCont_mprice(int cont_mprice) {
-		this.cont_mprice = cont_mprice;
-	}
-
-
-
-	public String getMprice_currency() {
-		return mprice_currency;
-	}
-
-
-
-	public void setMprice_currency(String mprice_currency) {
-		this.mprice_currency = mprice_currency;
-	}
-
-
-
 	public int getEmp_no() {
 		return emp_no;
 	}
@@ -607,51 +649,27 @@ public class PurchaseorderDTO {
 
 
 
-	public String getMaterial_description() {
-		return material_description;
-	}
-
-
-
-	public void setMaterial_description(String material_description) {
-		this.material_description = material_description;
-	}
-
-
-
-	public String getMaterial_sku() {
-		return material_sku;
-	}
-
-
-
-	public void setMaterial_sku(String material_sku) {
-		this.material_sku = material_sku;
-	}
-
-
-
 	@Override
 	public String toString() {
-		return "PurchaseorderDTO [purc_order_no=" + purc_order_no + ", purc_order_code=" + purc_order_code
-				+ ", purc_order_reg_date=" + purc_order_reg_date + ", purc_order_dterms=" + purc_order_dterms
-				+ ", purc_order_status=" + purc_order_status + ", purc_order_etc=" + purc_order_etc + ", total_price="
-				+ total_price + ", end_date=" + end_date + ", sup_no=" + sup_no + ", sup_name=" + sup_name
-				+ ", sup_ceo_name=" + sup_ceo_name + ", sup_reg_no=" + sup_reg_no + ", sup_addr1=" + sup_addr1
-				+ ", sup_addr2=" + sup_addr2 + ", sup_cip=" + sup_cip + ", sup_cip_email=" + sup_cip_email
+		return "ProgressMonitoringDTO [progress_monitoring_no=" + progress_monitoring_no + ", progress_monitoring_ver="
+				+ progress_monitoring_ver + ", progress_monitoring_code=" + progress_monitoring_code + ", material_cnt="
+				+ material_cnt + ", progress_monitoring_date=" + progress_monitoring_date + ", progress_monitoring_etc="
+				+ progress_monitoring_etc + ", progress_rate=" + progress_rate + ", total_progress_rate="
+				+ total_progress_rate + ", next_progress_date=" + next_progress_date + ", purc_order_no="
+				+ purc_order_no + ", purc_order_code=" + purc_order_code + ", purc_order_reg_date="
+				+ purc_order_reg_date + ", purc_order_dterms=" + purc_order_dterms + ", end_date=" + end_date
+				+ ", sup_no=" + sup_no + ", sup_name=" + sup_name + ", sup_reg_no=" + sup_reg_no + ", sup_ceo_name="
+				+ sup_ceo_name + ", sup_phone=" + sup_phone + ", sup_addr1=" + sup_addr1 + ", sup_addr2=" + sup_addr2
+				+ ", sup_cip=" + sup_cip + ", sup_cip_phone=" + sup_cip_phone + ", sup_cip_email=" + sup_cip_email
 				+ ", sup_total_addr=" + sup_total_addr + ", comp_no=" + comp_no + ", comp_name=" + comp_name
 				+ ", comp_ceo_name=" + comp_ceo_name + ", comp_reg_no=" + comp_reg_no + ", comp_addr1=" + comp_addr1
 				+ ", comp_addr2=" + comp_addr2 + ", comp_total_addr=" + comp_total_addr + ", cont_no=" + cont_no
-				+ ", cont_material_cnt=" + cont_material_cnt + ", cont_date=" + cont_date + ", cont_leadtime="
-				+ cont_leadtime + ", cont_material_sku=" + cont_material_sku + ", mprice_no=" + mprice_no
-				+ ", cont_mprice=" + cont_mprice + ", mprice_currency=" + mprice_currency + ", emp_no=" + emp_no
+				+ ", cont_material_cnt=" + cont_material_cnt + ", cont_date=" + cont_date + ", emp_no=" + emp_no
 				+ ", emp_name=" + emp_name + ", emp_email=" + emp_email + ", mrp_no=" + mrp_no + ", mrp_due_date="
 				+ mrp_due_date + ", material_no=" + material_no + ", material_name=" + material_name
-				+ ", material_code=" + material_code + ", material_description=" + material_description
-				+ ", material_sku=" + material_sku + "]";
+				+ ", material_code=" + material_code + "]";
 	}
 
 
-	
-	
+
 }

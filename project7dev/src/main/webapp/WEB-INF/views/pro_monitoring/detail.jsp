@@ -7,14 +7,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>진척검수 현황</title>
 </head>
 <body>
-<c:if test="${not empty resultMsg}">
-	<script>
-		alert("${resultMsg}");
-	</script>
-</c:if>
-<h1>ADMIN</h1>
-</body>
+	<h2>진척검수 현황</h2>
+	<table border="1">
+		<tr>
+			<td>발주번호</td>
+			<td></td>
+		</tr>
+	</table>
 </html>
