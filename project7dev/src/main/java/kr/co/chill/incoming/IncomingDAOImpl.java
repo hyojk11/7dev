@@ -18,6 +18,7 @@ public class IncomingDAOImpl implements IncomingDAO{
 		return session.selectList("kr.co.chill.incomingMapper.selectAll", incomingDTO);
 	}
 
+
 	@Override
 	public List<IncomingDTO> expected(IncomingDTO incomingDTO) {
 		// TODO Auto-generated method stub
@@ -25,9 +26,9 @@ public class IncomingDAOImpl implements IncomingDAO{
 	}
 
 	@Override
-	public int inMaterial(IncomingDTO incomingDTO) {
+	public int MaterialIn(IncomingDTO incomingDTO) {
 		// TODO Auto-generated method stub
-		return 0;
+		return session.update("kr.co.chill.incomingMapper.materialIn", incomingDTO);
 	}
 
 	@Override
@@ -35,6 +36,8 @@ public class IncomingDAOImpl implements IncomingDAO{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 	
 	
