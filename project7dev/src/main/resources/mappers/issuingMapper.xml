@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.chill.issuingMapper">
+	<!-- 상품목록 불러오기 -->
+	<select id="productlist" resultType="kr.co.chill.issuing.IssuingDTO">
+		select product_no, product_name from product
+	</select>
+	
+	<!-- 상품정보 불러오기 -->
+	<select id="productOne" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="kr.co.chill.issuing.IssuingDTO">
+		select product_no, product_name
+		from product where product_no = #{product_no}
+	</select>
+	<!-- 부품목록 불러오기 -->
+	<select id="materiallist" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="kr.co.chill.issuing.IssuingDTO">
+		select material_no, product_no, material_name, material_code, material_quantity, material_unit, material_raw_material
+		from material where product_no = #{product_no}
+	</select>
+	<!-- 창고위치 불러오기 -->
+	<select id="mstorageOne" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="kr.co.chill.issuing.IssuingDTO">
+		select mstorage_no, mstorage_stock, mstorage_code
+		from material_storage where material_no = #{material_no}
+	</select>
+	
+	<!-- 부품 출고일시 작성 -->
+	<insert id="materialOut" parameterType="kr.co.chill.issuing.IssuingDTO">
+		insert into material_out (mstorage_no, material_no, material_out_date, material_out_cnt)
+		values (#{mstorage_no}, #{material_no}, now(), #{material_produce})
+	</insert>
+	<!-- 부품 출고일시 불러오기 -->
+	<select id="materialOutOne" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="kr.co.chill.issuing.InoutStorageDTO">
+		select * from material_out
+		where mstorage_no = #{mstorage_no} and material_no = #{material_no} and material_out_cnt = #{material_produce}
+		order by material_out_no desc limit 1
+	</select>
+	<!-- 라인위치 불러오기 -->
+	<select id="lineOne" parameterType="kr.co.chill.issuing.InoutStorageDTO" resultType="int">
+		select line_no from line
+		where material_no = #{material_no}
+	</select>
+	<!-- 라인 입고일시 작성 -->
+	<insert id="lineIn" parameterType="kr.co.chill.issuing.InoutStorageDTO">
+		insert into line_in (line_no, material_no, line_in_date, line_in_cnt)
+		values (#{line_no}, #{material_no}, now(), #{material_out_cnt})
+	</insert>
+	<!-- 라인 입고일시 불러오기 -->
+	<select id="lineInOne" parameterType="kr.co.chill.issuing.InoutStorageDTO" resultType="kr.co.chill.issuing.InoutStorageDTO">
+		select * from line_in
+		where line_no = #{line_no} and material_no = #{material_no} and line_in_cnt = #{material_out_cnt}
+		order by line_in_no desc limit 1
+	</select>
+</mapper>
