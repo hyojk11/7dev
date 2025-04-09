@@ -17,9 +17,12 @@
 	<form action="produce" method="post">
 		<div>
 			<div>
-				<label>제품 번호</label>
-				<input type="text" name="product_no" 
-				placeholder="1~3 사이의 수를 입력하세요" required>
+				<label>제품 이름</label>
+				<select name="product_no">
+					<c:forEach var="productlist" items="${productlist }">
+						<option value="${productlist.product_no}">${productlist.product_name }
+					</c:forEach>
+				</select>
 			</div>
 			<div>
 				<label>생산 수량</label>
@@ -27,7 +30,7 @@
 				placeholder="생산할 수량을 입력하세요" required>개
 			</div>
 			<div>
-				<button type="submit">정보보내기</button>
+				<button type="submit">창고확인</button>
 			</div>
 		</div>
 	</form>
