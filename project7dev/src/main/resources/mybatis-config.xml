@@ -3,5 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-  
+  <typeAliases>
+		<typeAlias alias="ProductDTO" type="kr.co.dong.board.ProductDTO"/>
+		<typeAlias alias="MaterialDTO" type="kr.co.dong.board.MaterialDTO"/>
+		<typeAlias alias="SupplierDTO" type="kr.co.dong.user.SupplierDTO"/>
+		<typeAlias alias="QuotationDTO" type="kr.co.dong.calendar.QuotationDTO"/>
+		<typeAlias alias="ContractDTO" type="kr.co.dong.calendar.ContractDTO"/>
+		<typeAlias alias="ProductionPlanningDTO" type="kr.co.dong.calendar.ProductionPlanningDTO"/>
+		<typeAlias alias="MrpDTO" type="kr.co.dong.calendar.MrpDTO"/>
+		<typeAlias alias="ProcurementDTO" type="kr.co.dong.calendar.ProcurementDTO"/>
+	</typeAliases>
 </configuration>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.chill.materialMapper">
+	<!-- 자재정보 불러오기(기본셋) -->
+	<select id="readMaterial" resultType="MaterialDTO">
+		select * from material
+	</select>
+	<!-- 자재정보 검색조회(자재코드,자재명) -->
+	<select id="searchMaterial" parameterType="map" resultType="MaterialDTO">
+		select * from material 	
+		<where>
+       		<if test="searchType == 'materialCode' and searchValue != null and searchValue != ''">
+            	AND material_code LIKE CONCAT('%', #{searchValue}, '%')
+        	</if>
+        	<if test="searchType == 'materialName' and searchValue != null and searchValue != ''">
+        	    AND material_name LIKE CONCAT('%', #{searchValue}, '%')
+        	</if>
+    	</where>
+	</select>
+	<!-- 부품코드로 부품조회용 -->
+	<select id="getMaterialByMaterialCode" parameterType="map" resultType="MaterialDTO">
+		select * from material
+		where material_code LIKE CONCAT('%', #{searchValue}, '%')
+	</select>
+	
+	<!-- 자재정보 추가(1차 - 부품등록 시 작성) -->
+	<insert id="createMaterial" parameterType="MaterialDTO">
+		insert into material(material_name, material_code, material_description, material_unit,material_file, product_no, sup_no)
+		values(#{materialName}, #{materialCode}, #{materialDescription}, #{materialUnit}, #{materialFile}, 0, 0)
+	</insert>	
+	
+	<!-- 자재정보 내 제품번호 수정(제품 bom 작성 시 사용) -->
+	<update id="updateMaterialProductRef" parameterType="map">
+		update material
+		set product_no=#{productNo}	
+		where material_no=#{materialNo}
+	</update>
+	<!-- 자재정보 수정(2차추가 - 계약 시 작성) -->
+	<update id="updateMaterialContract" parameterType="MaterialDTO">
+		update material
+		set material_quantity=#{materialQuantity}, material_sku=#{materialSku}, material_leadtime=#{materialLeadtime},
+		material_moq=#{materialMoq}, material_sku_quantity=#{materialSkuQuantity}, material_etc=#{materialEtc}, sup_no=#{supNo}	
+		where material_no=#{materialNo}
+	</update>
+	<!-- 자재정보 수정(전체수정) -->
+	<update id="updateMaterial" parameterType="MaterialDTO">
+		update material
+		set material_name=#{materialName}, material_code=#{materialCode}, material_description=#{materialDescription},
+		material_unit=#{materialUnit}, material_raw_material=#{materialRawMaterial}, material_file=#{materialFile},
+		material_quantity=#{materialQuantity}, material_sku=#{materialSku}, material_leadtime=#{materialLeadtime},
+		material_moq=#{materialMoq}, material_sku_quantity=#{materialSkuQuantity}, material_etc=#{materialEtc}
+		where material_no=#{materialNo}
+	</update>
+	
+	<!-- 자재정보 삭제 -->
+	<delete id="deleteMaterial" parameterType="int">
+		delete material 
+		where material_no=#{materialNo}	
+	</delete>
+	
+</mapper>
