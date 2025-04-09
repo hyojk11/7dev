@@ -3,6 +3,60 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.chill.quotationMapper">
-
-
+	<!-- 견적정보 불러오기(기본셋) -->
+	<select id="readQuotation" resultType="QuotationDTO">
+		select supplier.sup_name, supplier.sup_reg_no, material.material_name 
+		from quotation
+		join supplier on quotation.sup_no = supplier.sup_no
+		join material on quotation.material_no = material.material_no
+	</select>
+	<!-- 견적정보 상세조회(선택) -->
+	<select id="readQuotationByQuotNo" resultType="QuotationDTO">
+		select quotation.*, supplier.sup_name, supplier.sup_reg_no, material.material_name, material.material_code, 
+		material.material_raw_material, material.material_description, material.material_unit 
+		from quotation
+		join supplier on quotation.sup_no = supplier.sup_no
+		join material on quotation.material_no = material.material_no
+		where quot_no=#{quotNo}
+	</select>	
+	<!-- 견적정보 검색조회(견적코드 사용, 견적관리 전용) -->
+	<select id="searchQuotation" parameterType="map" resultType="QuotationDTO">
+		select * from quotation 	
+		<where>
+       		<if test="searchType == 'quotCode' and searchValue != null and searchValue != ''">
+            	AND quot_code LIKE CONCAT('%', #{searchValue}, '%')
+        	</if>
+    	</where>
+	</select>
+	
+	<!-- 견적정보 추가하기 -->
+	<!-- 참고: sup_no, material_no로 정보 조회하여 불러오는 매퍼는 각 항목의 매퍼에 적혀있음 -->
+	<insert id="createQuotation" parameterType="QuotationDTO">
+		insert into quotation(quot_code, sup_no, quot_file, quot_dterms, quot_pterms, material_no, quot_price, quot_price_currency, 
+		quot_material_cnt, quot_material_sku, quot_due_date, quot_etc, quot_date, quot_state)
+		values(#{quotCode},#{supNo},#{quotFile},#{quotDterms},#{quotPterms},#{materialNo},#{quotPrice},#{quotPriceCurrency},
+		#{quotMaterialCnt},#{quotMaterialSku},#{quotDueDate},#{quotEtc},now(),0)
+	</insert>
+	
+	<!-- 견적정보 수정하기 -->
+	<update id="updateQuotation" parameterType="QuotationDTO">
+		update quotation 
+		set quot_code=#{quotCode}, sup_no=#{supNo}, quot_file=#{quotFile}, quot_dterms=#{quotDterms}, quot_pterms=#{quotPterms}, 
+		material_no=#{materialNo}, quot_price=#{quotPrice}, quot_price_currency=#{quotPriceCurrency}, quot_material_cnt=#{quotMaterialCnt}, 
+		quot_material_sku=#{quotMaterialSku}, quot_due_date=#{quotDueDate}, quot_etc=#{quotEtc}, quot_state=#{quotState} 
+		where quot_no=#{quotNo}
+	</update>
+	<!-- 견적 확정시(계약서에 견적서가 첨부되어 작성 완료 시) -->
+	<update id="updateQuotState" parameterType="map">
+		update quotation
+		set quot_state = quot_state + 1
+		where quot_no=#{quotNo}
+	</update>
+	
+	<!-- 견적 삭제 -->
+	<delete id="deleteQuotation" parameterType="int">
+		delete quotation
+		where quot_no=#{quotNo}	
+	</delete>	
+	
 </mapper>

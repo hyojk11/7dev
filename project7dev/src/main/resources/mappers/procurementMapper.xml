@@ -3,6 +3,40 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.chill.mrpMapper">
-
-
+	<!-- 부품조달계획 불러오기(전체) -->
+	<select id="readMpp" resultType="ProcurementDTO">
+		select material_procurement_plan.*, product.product_name, product.product_code, material.material_code, material.material_name,
+		material_resource_plan.mstorage_no, material_storage.mstorage_code, material_storage.mstorage_stock, material_resource_plan.mrp_leadtime
+		from material_procurement_plan
+		join product on material_procurement_plan.product_no = product.product_no
+		join material on material_procurement_plan.material_no = material.material_no
+		join material_resource_plan on material_procurement_plan.mrp_no = material_resource_plan.mrp_no
+		join material_storage on material_resource_plan.mstorage_no = material_storage.mstorage_no
+	</select>
+	<!-- 부품조달계획 상세보기(선택) -->
+	<select id="readMppByMppNo" resultType="ProcurementDTO">
+		select material_procurement_plan.*, product.product_name, product.product_code, material.material_code, material.material_name,
+		material_resource_plan.mstorage_no, material_storage.mstorage_code, material_storage.mstorage_stock, material_resource_plan.mrp_leadtime
+		from material_procurement_plan
+		join product on material_procurement_plan.product_no = product.product_no
+		join material on material_procurement_plan.material_no = material.material_no
+		join material_resource_plan on material_procurement_plan.mrp_no = material_resource_plan.mrp_no
+		join material_storage on material_resource_plan.mstorage_no = material_storage.mstorage_no
+		where mpp_no=#{mppNo}
+	</select>
+	
+	<!-- 부품조달계획 등록 -->
+	<insert id="createMpp" parameterType="ProcurementDTO">
+		insert into material_procurement_plan(mpp_code, mpp_reg_date, mpp_ver, mpp_file, prpl_no, mrp_no, emp_no, mpp_etc)
+		values(#{mppCode}, #{mppRegDate}, #{mppVer}, #{mppFile}, #{prplNo}, #{mrpNo}, #{empNo}, #{mppEtc})
+	</insert>
+	
+	<!-- 부품조달계획 수정 --><!-- ProcurementServiceImpl 파일에서 차수 1씩 올라가게하기 -->
+	<update id="updateMpp" parameterType="ProcurementDTO">
+		update material_procurement_plan
+		set mpp_code=#{mppCode}, mpp_reg_date=#{mppRegDate}, mpp_ver=#{mppVer}, mpp_file=#{mppFile}, prpl_no=#{prplNo}, 
+		mrp_no=#{mrpNo}, emp_no=#{empNO}, mpp_etc=#{mppEtc}
+		where mpp_no=#{mppNO}
+	</update>
+	
 </mapper>
