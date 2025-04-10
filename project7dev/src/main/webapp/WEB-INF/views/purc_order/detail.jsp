@@ -95,9 +95,9 @@
 		<c:set var="totalCnt" value="0" />
 		<c:set var="totalPrice" value="0" />
 		
-		<c:forEach var="data" items="${list}" varStatus="status">
+		<c:forEach var="data" items="${list}" varStatus="i">
 		<tr>
-			<td>${status.index+1}</td>
+			<td>${i.index+1}</td>
 			<td>${data.material_name}</td>
 			<td>${data.material_code}</td>
 			<td>${data.material_description}</td>

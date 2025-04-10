@@ -14,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -67,18 +68,21 @@ public class ProgressMonitoringController {
 	public ModelAndView detail(@RequestParam("purc_order_code")String purc_order_code) {
 		
 		ProgressMonitoringDTO dto = progressMonitoringService.detailOrderInfo(purc_order_code);
-		List<ProgressMonitoringDTO> list = progressMonitoringService.detailProgressList(purc_order_code);
+		List<ProgressMonitoringDTO> summaryList = progressMonitoringService.detailSummaryList(purc_order_code);
+		List<ProgressMonitoringDTO> progressList = progressMonitoringService.detailProgressList(purc_order_code);
+		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
-		mav.addObject("list", list);
+		mav.addObject("summaryList", summaryList);
+		mav.addObject("progressList", progressList);
 		mav.setViewName("pro_monitoring/detail");
 		
 		return mav;
 	}
 	
 	
-	//발주리스트 엑셀 다운로드
+	//검수리스트 엑셀 다운로드
 	@GetMapping(value="pro_monitoring/excel") //required=false로 하면 null값을 오류없이 받아올 수 있음. 검색전 엑셀눌렀을 때 오류방지
 	public void excel(@RequestParam(required = false) String searchType
 			,@RequestParam(required = false) String keyword
@@ -129,6 +133,52 @@ public class ProgressMonitoringController {
 	}
 	
 	
+	//검수등록처리
+	@PostMapping(value="pro_monitoring/register")
+	public String register(
+			@RequestParam String purc_order_code
+			, @RequestParam int purc_order_no
+			, @RequestParam int emp_no
+			, @RequestParam int progress_monitoring_ver
+			, @RequestParam String progress_monitoring_date
+			, @RequestParam("material_nos") int[] materialNos
+			, @RequestParam("material_cnts") int[] materialCnts
+			, @RequestParam("progress_monitoring_etcs") String[] progressEtcs) {
+		
+		System.out.println("등록 po.no" + purc_order_no);
+		
+		for(int i = 0; i < materialNos.length; i++) {
+			ProgressMonitoringDTO dto = new ProgressMonitoringDTO();
+			dto.setPurc_order_code(purc_order_code);
+			dto.setPurc_order_no(purc_order_no);
+			dto.setEmp_no(emp_no);
+			dto.setProgress_monitoring_ver(progress_monitoring_ver);
+			dto.setProgress_monitoring_date(progress_monitoring_date);
+			dto.setMaterial_no(materialNos[i]);
+			dto.setMaterial_cnt(materialCnts[i]);
+			dto.setProgress_monitoring_etc(progressEtcs[i]);
+
+			String code = progressMonitoringService.codemaker(progress_monitoring_date);
+			dto.setProgress_monitoring_code(code);
+			
+			progressMonitoringService.register(dto);
+		}
+		
+		return "redirect:/pro_monitoring/detail?purc_order_code=" + purc_order_code;
+	}
 	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

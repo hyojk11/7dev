@@ -34,7 +34,7 @@ public class PurchaseorderDAOImpl implements PurchaseorderDAO {
 	@Override
 	public List<PurchaseorderDTO> detailOrderList(String purc_order_code) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("kr.co.chill.purchaseorderMapper.detailProgressList", purc_order_code);
+		return sqlSession.selectList("kr.co.chill.purchaseorderMapper.detailOrderList", purc_order_code);
 	}
 
 	@Override

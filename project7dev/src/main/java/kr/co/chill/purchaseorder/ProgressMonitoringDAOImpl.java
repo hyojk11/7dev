@@ -54,6 +54,24 @@ public class ProgressMonitoringDAOImpl implements ProgressMonitoringDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.chill.progressMonitoringMapper.listSearchCount", map);
 	}
+
+	@Override
+	public List<ProgressMonitoringDTO> detailSummaryList(String purc_order_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.chill.progressMonitoringMapper.detailSummaryList", purc_order_code);
+	}
+
+	@Override
+	public void register(ProgressMonitoringDTO dto) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("kr.co.chill.progressMonitoringMapper.register", dto);
+	}
+
+	@Override
+	public int codemaker(String progress_monitoring_date) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.chill.progressMonitoringMapper.codemaker", progress_monitoring_date);
+	}
 	
 	
 }

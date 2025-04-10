@@ -203,18 +203,58 @@
 	<!-- 진척검수 상세 기본정보 -->
 	<select id="detailOrderInfo" parameterType="String" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO">
 		SELECT
-			po.purc_order_code
+			po.purc_order_no
+			, po.purc_order_code
 			, po.purc_order_reg_date
+			, emp.emp_no
 			, emp.emp_name
 			, sup.sup_name
 			, sup.sup_reg_no
 			, sup.sup_ceo_name
 			, sup.sup_phone
-			, (sup.sup_addr1 + sup.sup_addr2) AS sup_total_addr
+			, CONCAT(sup.sup_addr1, sup.sup_addr2) AS sup_total_addr
 			, sup.sup_cip
 			, sup.sup_cip_phone
 			, sup.sup_cip_email
-			, pm.progress_monitoring_ver
+			, ct.cont_material_cnt
+			
+		FROM progress_monitoring pm
+		JOIN purchase_order po ON pm.purchase_order_purc_order_no = po.purc_order_no
+		JOIN employee emp ON pm.employee_emp_no = emp.emp_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
+		
+		WHERE po.purc_order_code = #{purc_order_code}
+	</select>
+	
+	
+	<!-- 진척검수 상세 자재정보 리스트(자재별 누적) -->
+	<select id="detailSummaryList" parameterType="String" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO">
+		SELECT
+			ma.material_no
+			, ma.material_name
+			, ma.material_code
+			, ct.cont_material_cnt
+			, mrp.mrp_due_date
+			, SUM(pm.material_cnt) AS total_material_cnt
+			, ROUND((IFNULL(SUM(pm.material_cnt),0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS total_progress_rate
+			
+		FROM progress_monitoring pm
+		JOIN purchase_order po ON pm.purchase_order_purc_order_no = po.purc_order_no
+		JOIN material ma ON pm.material_material_no = ma.material_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
+		
+		WHERE po.purc_order_code = #{purc_order_code}
+		GROUP BY ma.material_no, ma.material_code, ma.material_name, ct.cont_material_cnt, mrp.mrp_due_date
+		ORDER BY ma.material_code
+	</select>
+		
+	
+	<!-- 진척검수 상세 자재정보 리스트(차수별) -->
+	<select id="detailProgressList" parameterType="String" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO">
+		SELECT
+			pm.progress_monitoring_ver
 			, ma.material_name
 			, ma.material_code
 			, ct.cont_material_cnt
@@ -222,14 +262,62 @@
 			, pm.progress_monitoring_date
 			, pm.material_cnt
 			, ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS progress_rate
-			, ROUND((IFNULL(pm.material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS total_progress_rate
-			, 
-	</select>
-	
-	
-	<!-- 진척검수 상세 자재정보 리스트 -->
-	<select id="detailProgressList" parameterType="String" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO">
+			, ROUND((IFNULL(total_pm.total_material_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS total_progress_rate
+			, ct.cont_material_cnt - IFNULL(total_pm.total_material_cnt, 0) AS rest_progress_cnt
+			
+		FROM progress_monitoring pm
+		JOIN purchase_order po ON pm.purchase_order_purc_order_no = po.purc_order_no
+		JOIN material ma ON pm.material_material_no = ma.material_no
+		JOIN contract ct ON po.contract_cont_no = ct.cont_no
+		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
 		
+		LEFT JOIN (
+			SELECT
+				purchase_order_purc_order_no
+				, material_material_no
+				, SUM(material_cnt) AS total_material_cnt
+			FROM progress_monitoring
+			GROUP BY purchase_order_purc_order_no, material_material_no
+		) AS total_pm
+		ON pm.purchase_order_purc_order_no = total_pm.purchase_order_purc_order_no
+		AND pm.material_material_no = total_pm.material_material_no
+		
+		WHERE po.purc_order_code = #{purc_order_code}
+		ORDER BY pm.progress_monitoring_ver ASC, ma.material_code ASC
+	</select>
+
+	
+	<!-- 진척검수 등록 -->
+	<insert id="register" parameterType="kr.co.chill.purchaseorder.ProgressMonitoringDTO">
+		INSERT INTO progress_monitoring (
+			progress_monitoring_code
+			, progress_monitoring_ver
+			, material_cnt
+			, progress_monitoring_date
+			, progress_monitoring_etc
+			, purchase_order_purc_order_no
+			, material_material_no
+			, employee_emp_no
+		)
+		VALUES (
+			#{progress_monitoring_code}
+			, #{progress_monitoring_ver}
+			, #{material_cnt}
+			, #{progress_monitoring_date}
+			, #{progress_monitoring_etc}
+			, #{purc_order_no}
+			, #{material_no}
+			, #{emp_no}
+		)
+	</insert>
+	
+	
+	
+	<!-- 진척검수 코드생성 조회 및 추출 -->
+	<select id="codemaker" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM progress_monitoring
+		WHERE DATE(progress_monitoring_date) = STR_TO_DATE(#{progress_monitoring_date}, '%Y-%m-%d')
 	</select>
 	
 	

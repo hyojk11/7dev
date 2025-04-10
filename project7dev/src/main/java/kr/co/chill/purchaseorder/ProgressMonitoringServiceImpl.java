@@ -1,4 +1,4 @@
-package kr.co.chill.purchaseorder;
+ package kr.co.chill.purchaseorder;
 
 import java.util.List;
 import java.util.Map;
@@ -52,6 +52,26 @@ public class ProgressMonitoringServiceImpl implements ProgressMonitoringService 
 	public int listSearchCount(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return progressMonitoringDAO.listSearchCount(map);
+	}
+
+	@Override
+	public List<ProgressMonitoringDTO> detailSummaryList(String purc_order_code) {
+		// TODO Auto-generated method stub
+		return progressMonitoringDAO.detailSummaryList(purc_order_code);
+	}
+
+	@Override
+	public void register(ProgressMonitoringDTO dto) {
+		// TODO Auto-generated method stub
+		progressMonitoringDAO.register(dto);
+	}
+
+	@Override
+	public String codemaker(String progress_monitoring_date) {
+		String datePart = progress_monitoring_date.replace("-","");
+		int count = progressMonitoringDAO.codemaker(progress_monitoring_date);
+		String serial = String.format("%02d", count + 1);
+		return "PM" + datePart + serial;
 	}
 
 }

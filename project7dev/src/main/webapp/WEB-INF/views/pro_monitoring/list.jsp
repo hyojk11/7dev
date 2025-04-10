@@ -51,9 +51,9 @@
 			<th>담당자</th>
 			<th>진척률</th>
 		</tr>
-		<c:forEach var="data" items="${list}" varStatus="status">
+		<c:forEach var="data" items="${list}" varStatus="i">
 		<tr>
-			<td>${status.index+1}</td>
+			<td>${i.index+1}</td>
 			<td>
 				<a href="${contextPath}/pro_monitoring/detail?purc_order_code=${data.purc_order_code}">${data.purc_order_code}</a>
 			</td>
