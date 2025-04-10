@@ -15,6 +15,11 @@ public class InoutStorageDTO {
 	private String line_in_date; 
 	private int line_in_cnt;
 	
+//	other
+	private String material_name;
+	private String mstorage_code;
+	private String line_code;
+	
 	public InoutStorageDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -99,5 +104,31 @@ public class InoutStorageDTO {
 	public void setLine_in_cnt(int line_in_cnt) {
 		this.line_in_cnt = line_in_cnt;
 	}
+
+	public String getMaterial_name() {
+		return material_name;
+	}
+
+	public void setMaterial_name(String material_name) {
+		this.material_name = material_name;
+	}
+
+	public String getMstorage_code() {
+		return mstorage_code;
+	}
+
+	public void setMstorage_code(String mstorage_code) {
+		this.mstorage_code = mstorage_code;
+	}
+
+	public String getLine_code() {
+		return line_code;
+	}
+
+	public void setLine_code(String line_code) {
+		this.line_code = line_code;
+	}
 		
+	
+	
 }
