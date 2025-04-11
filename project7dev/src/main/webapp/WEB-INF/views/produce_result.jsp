@@ -29,17 +29,23 @@
 			<table>
 			<tr>
 				<td>창고번호</td>
+				<td>창고코드</td>
 				<td>부품번호</td>
 				<td>부품코드</td>
+				<td>부품이름</td>
 				<td>출고수량</td>
+				<td>출고단위</td>
 				<td>출고일시</td>
 			</tr>
 		<c:forEach var="storageIO" items="${storageIO }">
 			<tr>
 				<td>${storageIO.mstorage_no}</td>
+				<td>${storageIO.mstorage_code}</td>
 				<td>${storageIO.material_no}</td>
 				<td>${storageIO.material_code}</td>
+				<td>${storageIO.material_name}</td>
 				<td>${storageIO.material_out_cnt}</td>
+				<td>EA</td>
 				<td>${storageIO.material_out_date}</td>
 			</tr>
 		</c:forEach>
@@ -51,17 +57,23 @@
 			<table>
 			<tr>
 				<td>라인번호</td>
+				<td>라인코드</td>
 				<td>부품번호</td>
 				<td>부품코드</td>
+				<td>부품이름</td>
 				<td>입고수량</td>
+				<td>입고단위</td>
 				<td>입고일시</td>
 			</tr>
 		<c:forEach var="storageIO" items="${storageIO }">
 			<tr>
 				<td>${storageIO.line_no}</td>
+				<td>${storageIO.line_code}</td>
 				<td>${storageIO.material_no}</td>
 				<td>${storageIO.material_code}</td>
+				<td>${storageIO.material_name}</td>
 				<td>${storageIO.line_in_cnt}</td>
+				<td>EA</td>
 				<td>${storageIO.line_in_date}</td>
 			</tr>
 		</c:forEach>

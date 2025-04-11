@@ -33,6 +33,7 @@ public class IssuingController {
 	public String produce(HttpSession session) {
 		logger.info("prodece view 이동");
 		
+		// 제품 선택지 생성을 위한 제품 목록 불러오기 
 		List<IssuingDTO> productlist = issuingService.productlist();
 		
 		session.setAttribute("productlist",productlist);
@@ -48,7 +49,9 @@ public class IssuingController {
 		int product_no = Integer.parseInt((String) produce.get("product_no"));
 		int product_cnt = Integer.parseInt((String) produce.get("product_cnt"));
 		
+		// 선택한 제품의 제품 정보 불러오기
 		IssuingDTO productOne = issuingService.productOne(product_no);
+		// 선택한 제품에 사용되는 부품 종류, 부품창고 위치, 생산시 필요한 수량 불러오기
 		List<IssuingDTO> materialstock = issuingService.materialstock(product_no, product_cnt);
 		
 		model.addAttribute("materialstock", materialstock);
@@ -66,11 +69,14 @@ public class IssuingController {
 		int product_no = Integer.parseInt((String) produce.get("product_no"));
 		int product_cnt = Integer.parseInt((String) produce.get("product_cnt"));
 		
+		// 제품 정보 불러온 후, 필요한 부품 정보 목록 불러오기
 		IssuingDTO productOne = issuingService.productOne(product_no);
 		List<IssuingDTO> materialstock = issuingService.materialstock(product_no, product_cnt);
 		
+		// 부품창고 출고 - 라인 입고 처리 후 목록 불러오기
 		List<InoutStorageDTO> storageIO = issuingService.storageIO(materialstock);		
 		
+		// 주소가 바뀌는 redirect 사용했으니, model 대신 RedirectAttributes 사용
 		redirrect.addFlashAttribute("storageIO", storageIO);
 		redirrect.addFlashAttribute("selected", productOne);
 		redirrect.addFlashAttribute("product_cnt", product_cnt);

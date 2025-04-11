@@ -17,6 +17,7 @@ public class IssuingDTO {
 	private int mstorage_no;
 	private int mstorage_stock;
 	private String mstorage_code;
+	private String mstorage_snapshot_month;
 	
 //	other
 	private int material_produce;
@@ -120,6 +121,14 @@ public class IssuingDTO {
 
 	public void setMaterial_produce(int material_produce) {
 		this.material_produce = material_produce;
+	}
+
+	public String getMstorage_snapshot_month() {
+		return mstorage_snapshot_month;
+	}
+
+	public void setMstorage_snapshot_month(String mstorage_snapshot_month) {
+		this.mstorage_snapshot_month = mstorage_snapshot_month;
 	}
 	
 	

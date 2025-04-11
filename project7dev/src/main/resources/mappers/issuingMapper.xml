@@ -20,8 +20,21 @@
 	</select>
 	<!-- 창고위치 불러오기 -->
 	<select id="mstorageOne" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="kr.co.chill.issuing.IssuingDTO">
-		select mstorage_no, mstorage_stock, mstorage_code
+		select mstorage_no, mstorage_stock, mstorage_code, mstorage_snapshot_month
 		from material_storage where material_no = #{material_no}
+	</select>
+	
+	<!-- 부품 스냅샷입고수량 가져오기 -->
+	<select id="materialSnapIn" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
+		select material_in_cnt from material_in
+		where material_no = #{material_no} and mstorage_no = #{mstorage_no} 
+		and date_format(material_in_date, '%Y-%m') = #{mstorage_snapshot_month}
+	</select>
+	<!-- 부품 스냅샷출고수량 가져오기 -->
+	<select id="materialSnapOut" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
+		select material_out_cnt from material_out
+		where material_no = #{material_no} and mstorage_no = #{mstorage_no} 
+		and date_format(material_out_date, '%Y-%m') = #{mstorage_snapshot_month}
 	</select>
 	
 	<!-- 부품 출고일시 작성 -->
@@ -50,5 +63,21 @@
 		select * from line_in
 		where line_no = #{line_no} and material_no = #{material_no} and line_in_cnt = #{material_out_cnt}
 		order by line_in_no desc limit 1
+	</select>
+	
+	<!-- 부품이름 가져오기 -->
+	<select id="materialName" parameterType="kr.co.chill.issuing.InoutStorageDTO" resultType="String">
+		select material_name from material
+		where material_no = #{material_no}
+	</select>
+	<!-- 창고코드 가져오기 -->
+	<select id="mstorageCode" parameterType="kr.co.chill.issuing.InoutStorageDTO" resultType="String">
+		select mstorage_code from material_storage
+		where mstorage_no = #{mstorage_no}
+	</select>
+	<!-- 라인코드 가져오기 -->
+	<select id="lineCode" parameterType="kr.co.chill.issuing.InoutStorageDTO" resultType="String">
+		select line_code from line
+		where line_no = #{line_no}
 	</select>
 </mapper>
