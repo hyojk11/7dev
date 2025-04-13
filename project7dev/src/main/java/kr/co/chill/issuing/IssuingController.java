@@ -91,6 +91,68 @@ public class IssuingController {
 		return "produce_result";
 	}
 	
+	@GetMapping(value = "issuing/lineout")
+	public String lineout(HttpSession session) {
+		logger.info("lineout view 이동");
+		
+		// 제품 선택지 생성을 위한 제품 목록 불러오기 
+		List<IssuingDTO> productlist = issuingService.productlist();
+		
+		session.setAttribute("productlist",productlist);
+		
+		return "lineout";
+	}
+	
+	@RequestMapping(value = "issuing/lineout", method = RequestMethod.POST)
+	public String lineout_check(@RequestParam Map<String, Object> lineout
+			, Model model) {
+		logger.info("라인 확인하기");
+		
+		int product_no = Integer.parseInt((String) lineout.get("product_no"));
+		int product_cnt = Integer.parseInt((String) lineout.get("product_cnt"));
+		
+		// 선택한 제품의 제품 정보 불러오기
+		IssuingDTO productOne = issuingService.productOne(product_no);
+		// 선택한 제품에 사용되는 부품 종류, 부품라인 위치, 생산시 필요한 수량 불러오기
+		List<IssuingDTO> linestock = issuingService.linestock(product_no, product_cnt);
+		
+		model.addAttribute("linestock", linestock);
+		model.addAttribute("selected", productOne);
+		model.addAttribute("product_cnt", product_cnt);
+		
+		return "lineout_check";
+	}
+	
+	@RequestMapping(value = "issuing/lineout_process")
+	public String lineout_process(@RequestParam Map<String, Object> lineout
+			, RedirectAttributes redirrect) {
+		logger.info("생산라인으로 부품 출고하기");
+		
+		int product_no = Integer.parseInt((String) lineout.get("product_no"));
+		int product_cnt = Integer.parseInt((String) lineout.get("product_cnt"));
+		
+		// 제품 정보 불러온 후, 필요한 부품 정보 목록 불러오기
+		IssuingDTO productOne = issuingService.productOne(product_no);
+		List<IssuingDTO> linestock = issuingService.linestock(product_no, product_cnt);
+		
+		// 생산라인 출고 - 라인 출고 처리 후 목록 불러오기
+		int[] product_info = {product_no, product_cnt};
+		List<InoutLineDTO> lineIO = issuingService.lineIO(linestock, product_info);		
+		
+		// 주소가 바뀌는 redirect 사용했으니, model 대신 RedirectAttributes 사용
+		redirrect.addFlashAttribute("lineIO", lineIO);
+		redirrect.addFlashAttribute("selected", productOne);
+		redirrect.addFlashAttribute("product_cnt", product_cnt);
+		
+		return "redirect:/issuing/lineout_result";
+	}
+	
+	@GetMapping(value = "issuing/lineout_result")
+	public String lineout_result() {
+		logger.info("lineout_result view 이동");
+		
+		return "lineout_result";
+	}
 
 
 }

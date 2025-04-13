@@ -8,6 +8,7 @@
 		select product_no, product_name from product
 	</select>
 	
+	
 	<!-- 상품정보 불러오기 -->
 	<select id="productOne" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="kr.co.chill.issuing.IssuingDTO">
 		select product_no, product_name
@@ -24,6 +25,7 @@
 		from material_storage where material_no = #{material_no}
 	</select>
 	
+	
 	<!-- 부품 스냅샷입고수량 가져오기 -->
 	<select id="materialSnapIn" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
 		select material_in_cnt from material_in
@@ -36,6 +38,7 @@
 		where material_no = #{material_no} and mstorage_no = #{mstorage_no} 
 		and date_format(material_out_date, '%Y-%m') = #{mstorage_snapshot_month}
 	</select>
+	
 	
 	<!-- 부품 출고일시 작성 -->
 	<insert id="materialOut" parameterType="kr.co.chill.issuing.IssuingDTO">
@@ -65,6 +68,7 @@
 		order by line_in_no desc limit 1
 	</select>
 	
+	
 	<!-- 부품이름 가져오기 -->
 	<select id="materialName" parameterType="kr.co.chill.issuing.InoutStorageDTO" resultType="String">
 		select material_name from material
@@ -80,4 +84,66 @@
 		select line_code from line
 		where line_no = #{line_no}
 	</select>
+	
+	
+	<!-- 부품정보 및 라인위치 불러오기 -->
+	<select id="linelist" parameterType="int" resultType="kr.co.chill.issuing.IssuingDTO">
+		select m.material_no, m.material_name, m.material_code, m.material_quantity, m.material_unit, m.material_raw_material,
+		l.line_no, l.line_stock, l.line_code
+		from material m
+		join line l on m.material_no = l.material_no
+		where m.product_no = #{product_no}
+	</select>
+	
+	
+	<!-- 라인 스냅샷입고수량 가져오기 -->
+	<select id="materialSnapIn" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
+		select line_in_cnt from line_in
+		where material_no = #{material_no} and line_no = #{line_no}
+	</select>
+	<!-- 라인 스냅샷출고수량 가져오기 -->
+	<select id="materialSnapOut" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
+		select line_out_cnt from line_out
+		where product_no = #{product_no} and line_no = #{line_no}
+	</select>
+	
+	
+	<!-- 라인 출고일시 작성 -->
+	<insert id="lineOut" parameterType="kr.co.chill.issuing.IssuingDTO">
+		insert into line_out (line_no, product_no, line_out_date, line_out_cnt)
+		values (#{line_no}, #{product_no}, now(), #{product_cnt})
+	</insert>
+	<!-- 라인 출고일시 불러오기 -->
+	<select id="lineOutOne" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="kr.co.chill.issuing.InoutLineDTO">
+	    select * from line_out
+	    where line_no = #{line_no} and product_no = #{product_no} and line_out_cnt = #{product_cnt}
+	    order by line_out_no desc limit 1
+	</select>	
+	<!-- 제품창고 위치 불러오기 -->
+	<select id="pstorageOne" parameterType="kr.co.chill.issuing.InoutLineDTO" resultType="int">
+	    select pstorage_no from product_storage
+	    where product_no = #{product_no}
+	</select>	
+	<!-- 제품 입고일시 작성 -->
+	<insert id="productIn" parameterType="kr.co.chill.issuing.InoutLineDTO">
+	    insert into product_in (pstorage_no, product_no, product_in_date, product_in_cnt)
+	    values (#{pstorage_no}, #{product_no}, now(), #{line_out_cnt})
+	</insert>	
+	<!-- 제품 입고일시 불러오기 -->
+	<select id="productInOne" parameterType="kr.co.chill.issuing.InoutLineDTO" resultType="kr.co.chill.issuing.InoutLineDTO">
+	    select * from product_in
+	    where pstorage_no = #{pstorage_no} and product_no = #{product_no} and product_in_cnt = #{line_out_cnt}
+	    order by product_in_no desc limit 1
+	</select>
+	
+	
+	<!-- 라인 출고 + 입고 세부정보 조회 -->
+	<select id="lineIODetail" parameterType="kr.co.chill.issuing.InoutLineDTO" resultType="kr.co.chill.issuing.InoutLineDTO">
+	    select p.product_name, p.product_code, l.line_code, ps.pstorage_code
+	    from product p
+	    join line l on l.line_no = #{line_no}
+	    join product_storage ps on ps.pstorage_no = #{pstorage_no}
+	    where p.product_no = #{product_no}
+	</select>
+	
 </mapper>

@@ -78,11 +78,11 @@ public class IssuingDAOImpl implements IssuingDAO{
 			
 			// 3. 개별 라인 입고내역 저장하기
 			sqlSession.insert(nameSpace+".lineIn", oneIO);
-			InoutStorageDTO oneLineOut = sqlSession.selectOne(nameSpace+".lineInOne", oneIO);
+			InoutStorageDTO oneLineIn = sqlSession.selectOne(nameSpace+".lineInOne", oneIO);
 			
-			oneIO.setLine_in_no(oneLineOut.getLine_in_no());
-			oneIO.setLine_in_date(oneLineOut.getLine_in_date());
-			oneIO.setLine_in_cnt(oneLineOut.getLine_in_cnt());
+			oneIO.setLine_in_no(oneLineIn.getLine_in_no());
+			oneIO.setLine_in_date(oneLineIn.getLine_in_date());
+			oneIO.setLine_in_cnt(oneLineIn.getLine_in_cnt());
 			
 			// 4. 외래키 이용하여 부품이름, 부품창고코드, 라인코드 불러오기
 			oneIO.setMaterial_name(sqlSession.selectOne(nameSpace+".materialName", oneIO));
@@ -93,6 +93,74 @@ public class IssuingDAOImpl implements IssuingDAO{
 		}
 		
 		return storageIO;
+	}
+
+	@Override
+	public List<IssuingDTO> linestock(int product_no, int product_cnt) {
+		// 부품 및 라인내 재고현황 불러오기
+		// 1. 선택한 제품에 사용되는 부품 정보로 라인 재고 리스트 불러오기
+		List<IssuingDTO> linestock = sqlSession.selectList(nameSpace+".linelist", product_no);
+		
+		for(IssuingDTO i : linestock) {
+			// 2. 입출고에 따라 실제재고 저장하기
+			i.setProduct_no(product_no);
+			List<Integer>lineSnapIn = sqlSession.selectList(nameSpace+".lineSnapIn", i); 
+			List<Integer> lineSnapOut = sqlSession.selectList(nameSpace+".lineSnapOut", i);
+			int realStock = i.getLine_stock();
+			
+			for(int j : lineSnapIn) {
+				realStock += j;
+			}
+			for(int j : lineSnapOut) {
+				j = i.getMaterial_quantity() * j;
+				realStock -= j;
+			}
+			
+			i.setLine_stock(realStock);
+			
+			// 3. 제품 생산에 필요한 총 부품수 저장하기
+			i.setMaterial_produce(product_cnt * i.getMaterial_quantity());
+		}
+		
+		return linestock;
+	}
+
+	@Override
+	public List<InoutLineDTO> lineIO(List<IssuingDTO> linestock, int[] product_info) {
+		// 제품 생산에 필요한 부품들 부품창고출고-라인입고 처리후 목록 저장하기
+		List<InoutLineDTO> lineIO = new ArrayList<InoutLineDTO>();
+		
+		for(IssuingDTO i : linestock) {
+			// 1. 라인 출고내역 저장하기
+			i.setProduct_no(product_info[0]);
+			i.setProduct_cnt(product_info[1]);
+			sqlSession.insert(nameSpace+".lineOut", i);
+			InoutLineDTO oneIO = sqlSession.selectOne(nameSpace+".lineOutOne", i);
+			
+			// 2. 입고처리할 제품창고위치 불러오기
+			int pstorage_no = sqlSession.selectOne(nameSpace+".pstorageOne", oneIO);
+			oneIO.setPstorage_no(pstorage_no);
+			
+			// 3. 개별 라인 입고내역 저장하기
+			sqlSession.insert(nameSpace+".productIn", oneIO);
+			InoutLineDTO oneProductIn = sqlSession.selectOne(nameSpace+".productInOne", oneIO);
+			
+			oneIO.setProduct_in_no(oneProductIn.getProduct_in_no());
+			oneIO.setProduct_in_date(oneProductIn.getProduct_in_date());
+			oneIO.setProduct_in_cnt(oneProductIn.getProduct_in_cnt());
+			
+			// 4. 외래키 이용하여 제품이름, 제품코드, 라인코드 제품창고코드 불러오기
+			InoutLineDTO details = sqlSession.selectOne(nameSpace+".lineIODetail", oneIO);
+			
+			oneIO.setProduct_name(details.getProduct_name());
+			oneIO.setProduct_code(details.getProduct_code());
+			oneIO.setLine_code(details.getLine_code());
+			oneIO.setPstorage_code(details.getPstorage_code());
+			
+			lineIO.add(oneIO);
+		}
+		
+		return lineIO;
 	}
 	
 }
