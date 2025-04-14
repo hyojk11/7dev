@@ -97,12 +97,12 @@
 	
 	
 	<!-- 라인 스냅샷입고수량 가져오기 -->
-	<select id="materialSnapIn" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
+	<select id="lineSnapIn" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
 		select line_in_cnt from line_in
 		where material_no = #{material_no} and line_no = #{line_no}
 	</select>
 	<!-- 라인 스냅샷출고수량 가져오기 -->
-	<select id="materialSnapOut" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
+	<select id="lineSnapOut" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
 		select line_out_cnt from line_out
 		where product_no = #{product_no} and line_no = #{line_no}
 	</select>
