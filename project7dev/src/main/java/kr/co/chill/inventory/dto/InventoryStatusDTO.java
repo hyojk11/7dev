@@ -1,4 +1,4 @@
-package kr.co.chill.inventory;
+package kr.co.chill.inventory.dto;
 
 import lombok.Data; // Lombok 사용 (Getter, Setter, toString 등 자동 생성)
 

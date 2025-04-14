@@ -32,6 +32,21 @@
 		<level value="info" />
 	</logger>
 
+	<logger name="org.mybatis">
+	    <level value="DEBUG"/>
+	</logger>
+		
+	<logger name="kr.co.chill.inventory">
+	    <level value="DEBUG"/>
+	</logger>
+	
+	<logger name="org.springframework.web.servlet.mvc.method.annotation">
+		<level value="DEBUG"/>
+	</logger>
+	<logger name="org.springframework.http.converter">
+		<level value="DEBUG"/>
+	</logger>
+	
 	<!-- Root Logger -->
 	<root>
 		<priority value="warn" />

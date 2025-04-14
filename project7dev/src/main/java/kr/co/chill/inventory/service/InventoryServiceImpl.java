@@ -1,4 +1,4 @@
-package kr.co.chill.inventory;
+package kr.co.chill.inventory.service;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -9,11 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Data;
 import javax.inject.Inject;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+
+import kr.co.chill.inventory.dto.InventoryParamDTO;
+import kr.co.chill.inventory.dto.InventoryReportDTO;
+import kr.co.chill.inventory.dto.InventoryStatusDTO;
+import kr.co.chill.inventory.dto.MaterialDocumentDTO;
+import kr.co.chill.inventory.mapper.InventoryMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,6 +123,10 @@ public class InventoryServiceImpl implements InventoryService{
         if (params.getStorageCodeTo() != null) map.put("storageCodeTo", params.getStorageCodeTo());
         if (params.getMaterialTypeFrom() != null) map.put("materialTypeFrom", params.getMaterialTypeFrom());
         if (params.getMaterialTypeTo() != null) map.put("materialTypeTo", params.getMaterialTypeTo());
+        if (params.getMaterialCodeFrom() != null) map.put("materialCodeFrom", params.getMaterialCodeFrom());
+ 
+        if (params.getQueryMonthFrom() != null) map.put("queryMonthFrom", params.getQueryMonthFrom());
+        if (params.getQueryMonthTo() != null) map.put("queryMonthTo", params.getQueryMonthTo());
         // queryMonthFrom/To는 날짜 계산에 사용되었으므로 Map에 직접 넣지 않음 (매퍼에서 관련 조건 제거됨)
     }
 

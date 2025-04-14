@@ -1,10 +1,12 @@
-package kr.co.chill.inventory;
+package kr.co.chill.inventory.service;
 
 import java.util.List;
-import kr.co.chill.inventory.InventoryParamDTO; // 파라미터 DTO 사용
-import kr.co.chill.inventory.InventoryReportDTO;
-import kr.co.chill.inventory.InventoryStatusDTO;
-import kr.co.chill.inventory.MaterialDocumentDTO;
+
+import kr.co.chill.inventory.dto.InventoryParamDTO;
+import kr.co.chill.inventory.dto.InventoryReportDTO;
+import kr.co.chill.inventory.dto.InventoryStatusDTO;
+import kr.co.chill.inventory.dto.MaterialDocumentDTO;
+
 
 	public interface InventoryService {
 		

@@ -1,12 +1,14 @@
-package kr.co.chill.inventory;
+package kr.co.chill.inventory.mapper;
 
 import java.util.List;
-import kr.co.chill.inventory.InventoryStatusDTO;
-import kr.co.chill.inventory.MaterialDocumentDTO;
-import kr.co.chill.inventory.InventoryReportDTO;
+
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper; // MyBatis-Spring 사용 시
+
+import kr.co.chill.inventory.dto.InventoryReportDTO;
+import kr.co.chill.inventory.dto.InventoryStatusDTO;
+import kr.co.chill.inventory.dto.MaterialDocumentDTO;
 
 @Mapper // MyBatis-Spring 연동 시 사용 (@Repository 대신)
 public interface InventoryMapper {

@@ -39,6 +39,7 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-	<mybatis-spring:scan base-package="kr.co.chill.inventory"/>
+	<mybatis-spring:scan base-package="kr.co.chill.inventory.mapper"/>
+	<context:component-scan base-package="kr.co.chill.inventory.service"/>
 	
 </beans>

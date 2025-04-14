@@ -2,16 +2,18 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.chill.inventory.InventoryMapper"> <resultMap id="inventoryStatusResultMap" type="kr.co.chill.inventory.InventoryStatusDTO">
+<mapper namespace="kr.co.chill.inventory.mapper.InventoryMapper">
+    <resultMap id="inventoryStatusResultMap" type="kr.co.chill.inventory.dto.InventoryStatusDTO">
         <result property="materialCode" column="materialCode"/>
         <result property="materialDesc" column="materialDesc"/>
         <result property="plantCode" column="plantCode"/>
         <result property="stockLocation" column="stockLocation"/>
         <result property="openingStock" column="openingStock"/>
         <result property="periodNetChange" column="periodNetChange"/>
-        <result property="stockQty" column="stockQty"/> </resultMap>
+        <result property="stockQty" column="stockQty"/>
+    </resultMap>
 
-    <resultMap id="materialDocumentResultMap" type="kr.co.chill.inventory.MaterialDocumentDTO">
+    <resultMap id="materialDocumentResultMap" type="kr.co.chill.inventory.dto.MaterialDocumentDTO">
         <result property="documentNo" column="document_no"/>
         <result property="materialCode" column="materialCode"/>
         <result property="materialDesc" column="materialDesc"/>
@@ -22,18 +24,20 @@
         <result property="documentType" column="document_type"/>
     </resultMap>
 
-    <resultMap id="inventoryReportResultMap" type="kr.co.chill.inventory.InventoryReportDTO">
+    <resultMap id="inventoryReportResultMap" type="kr.co.chill.inventory.dto.InventoryReportDTO">
         <result property="materialType" column="materialType"/>
         <result property="plantCode" column="plantCode"/>
         <result property="stockLocation" column="stockLocation"/>
         <result property="openingStockQty" column="openingStockQty"/>
         <result property="periodNetChangeQty" column="periodNetChangeQty"/>
-        <result property="stockQty" column="stockQty"/> <result property="openingStockAmount" column="openingStockAmount"/>
-        <result property="inventoryAmount" column="inventoryAmount"/> <result property="periodNetChangeAmount" column="periodNetChangeAmount"/>
+        <result property="stockQty" column="stockQty"/>
+        <result property="openingStockAmount" column="openingStockAmount"/>
+        <result property="inventoryAmount" column="inventoryAmount"/>
+        <result property="periodNetChangeAmount" column="periodNetChangeAmount"/>
     </resultMap>
 
     <select id="selectInventoryStatus" parameterType="map" resultMap="inventoryStatusResultMap">
-    /* [수정] id 변경 (동사+명사 형태 권장), parameterType 명확화 (map), resultMap 사용 */
+    <!-- [수정] id 변경 (동사+명사 형태 권장), parameterType 명확화 (map), resultMap 사용 -->
     <![CDATA[
         WITH
         OpeningSnapshot AS (
@@ -74,69 +78,89 @@
         LEFT JOIN PeriodDelta delta on snap.material_no = delta.material_no
                 AND snap.plant_code = delta.plant_code
                 AND snap.mstorage_code = delta.mstorage_code
-        <where>
-            <if test = "materialCodeFrom != null and materialCodeFrom !=''"> AND mm.material_code >= #{materialCodeFrom} </if>
-            <if test = "materialCodeTo != null and materialCodeTo != ''"> AND mm.material_code <= #{materialCodeTo} </if>
-            <if test = "plantCodeFrom != null and plantCodeFrom != ''"> AND snap.plant_code >= #{plantCodeFrom} </if>
-            <if test = "plantCodeTo != null and plantCodeTo != ''"> AND snap.plant_code <= #{plantCodeTo} </if>
-            <if test = "storageCodeFrom != null and storageCodeFrom != ''"> AND snap.mstorage_code >= #{storageCodeFrom} </if>
-            <if test = "storageCodeTo != null and storageCodeTo != ''"> AND snap.mstorage_code <= #{storageCodeTo} </if>
-            /* [수정] queryMonth 관련 필터 제거: Java 서비스에서 snapshotDate, startDate, endDate를 계산하여 전달하므로 중복 */
-            /*
-            <if test = "queryMonthFrom != null"> AND DATE_FORMAT(snap.snapshot_month, '%Y-%m') >= #{queryMonthFrom} </if>
-            <if test = "queryMonthTo != null"> AND DATE_FORMAT(snap.snapshot_month, '%Y-%m') <= #{queryMonthTo} </if>
-            */
-        </where>
+    ]]>
+    <where>
+        <if test="materialCodeFrom != null and materialCodeFrom !=''">
+            <![CDATA[ AND mm.material_code >= #{materialCodeFrom} ]]>
+        </if>
+        <if test="materialCodeTo != null and materialCodeTo != ''">
+            <![CDATA[ AND mm.material_code <= #{materialCodeTo} ]]>
+        </if>
+        <if test="plantCodeFrom != null and plantCodeFrom != ''">
+            <![CDATA[ AND snap.plant_code >= #{plantCodeFrom} ]]>
+        </if>
+        <if test="plantCodeTo != null and plantCodeTo != ''">
+            <![CDATA[ AND snap.plant_code <= #{plantCodeTo} ]]>
+        </if>
+        <if test="storageCodeFrom != null and storageCodeFrom != ''">
+            <![CDATA[ AND snap.mstorage_code >= #{storageCodeFrom} ]]>
+        </if>
+        <if test="storageCodeTo != null and storageCodeTo != ''">
+            <![CDATA[ AND snap.mstorage_code <= #{storageCodeTo} ]]>
+        </if>
+    </where>
+    <![CDATA[
         ORDER BY mm.material_code, snap.plant_code, snap.mstorage_code
-        ]]>
+    ]]>
     </select>
 
-    <select id="selectMaterialDocuments" parameterType="map" resultMap="materialDocumentResultMap">
-    /* [수정] id 변경, resultMap 사용 */
+	<select id="selectMaterialDocuments" parameterType="map" resultMap="materialDocumentResultMap">
     <![CDATA[
         SELECT
-            inout.document_no,
+            mat_io.document_no,
             mm.material_code AS materialCode,
             mm.material_name AS materialDesc,
-            inout.quantity,
-            inout.plant_code AS plantCode,
-            inout.mstorage_code AS stockLocation,
-            inout.document_date,
-            inout.document_type
+            mat_io.quantity,
+            mat_io.plant_code AS plantCode,
+            mat_io.mstorage_code AS stockLocation,
+            mat_io.document_date,
+            mat_io.document_type
         FROM (
             SELECT mi.material_in_no AS document_no, mi.material_no, mi.material_in_cnt AS quantity,
                    mi.plant_code, mi.mstorage_code, mi.material_in_date AS document_date, 'IN' AS document_type
             FROM chill.material_in mi
-            /* [수정] 동적 조건 WHERE 절을 UNION ALL 바깥으로 이동 (가독성 및 일부 DB 최적화 고려) */
-
+            
             UNION ALL
 
             SELECT mo.material_out_no AS document_no, mo.material_no, mo.material_out_cnt AS quantity,
                    mo.plant_code, mo.mstorage_code, mo.material_out_date AS document_date, 'OUT' AS document_type
             FROM chill.material_out mo
-            /* [수정] 동적 조건 WHERE 절을 UNION ALL 바깥으로 이동 */
-
-        ) inout
-        JOIN chill.material mm ON inout.material_no = mm.material_no
-        <where>
-             /* 기간 필터 */
-             inout.document_date >= #{startDate} AND inout.document_date < DATE_ADD(#{endDate}, INTERVAL 1 DAY)
-             /* 자재 코드 필터 */
-            <if test = "materialCodeFrom != null and materialCodeFrom != ''"> AND mm.material_code >= #{materialCodeFrom} </if>
-            <if test = "materialCodeTo != null and materialCodeTo != ''"> AND mm.material_code <= #{materialCodeTo} </if>
-            /* 플랜트 필터 */
-            <if test = "plantCodeFrom != null and plantCodeFrom != ''"> AND inout.plant_code >= #{plantCodeFrom} </if>
-            <if test = "plantCodeTo != null and plantCodeTo != ''"> AND inout.plant_code <= #{plantCodeTo} </if>
-            /* 저장 위치 필터 */
-            <if test = "storageCodeFrom != null and storageCodeFrom != ''"> AND inout.mstorage_code >= #{storageCodeFrom} </if>
-            <if test = "storageCodeTo != null and storageCodeTo != ''"> AND inout.mstorage_code <= #{storageCodeTo} </if>
-        </where>
-        ORDER BY inout.document_date, inout.document_type
-        ]]>
-    </select>
+            
+        ) mat_io
+        JOIN chill.material mm ON mat_io.material_no = mm.material_no
+    ]]>
+    <where>
+        <!-- 기간 필터 -->
+        <![CDATA[ mat_io.document_date >= #{startDate} AND mat_io.document_date < DATE_ADD(#{endDate}, INTERVAL 1 DAY) ]]>
+        <!-- 자재 코드 필터 -->
+        <if test="materialCodeFrom != null and materialCodeFrom != ''">
+            <![CDATA[ AND mm.material_code >= #{materialCodeFrom} ]]>
+        </if>
+        <if test="materialCodeTo != null and materialCodeTo != ''">
+            <![CDATA[ AND mm.material_code <= #{materialCodeTo} ]]>
+        </if>
+        <!-- 플랜트 필터 -->
+        <if test="plantCodeFrom != null and plantCodeFrom != ''">
+            <![CDATA[ AND mat_io.plant_code >= #{plantCodeFrom} ]]>
+        </if>
+        <if test="plantCodeTo != null and plantCodeTo != ''">
+            <![CDATA[ AND mat_io.plant_code <= #{plantCodeTo} ]]>
+        </if>
+        <!-- 저장 위치 필터 -->
+        <if test="storageCodeFrom != null and storageCodeFrom != ''">
+            <![CDATA[ AND mat_io.mstorage_code >= #{storageCodeFrom} ]]>
+        </if>
+        <if test="storageCodeTo != null and storageCodeTo != ''">
+            <![CDATA[ AND mat_io.mstorage_code <= #{storageCodeTo} ]]>
+        </if>
+    </where>
+    <![CDATA[
+        ORDER BY mat_io.document_date, mat_io.document_type
+    ]]>
+</select>
 
     <select id="selectInventoryReport" parameterType="map" resultMap="inventoryReportResultMap">
-    /* [수정] id 변경, resultMap 사용 */
+    <!-- [수정] id 변경, resultMap 사용 -->
     <![CDATA[
         WITH
         UnitPrice AS (
@@ -182,22 +206,31 @@
                 AND DATE_FORMAT(snap.snapshot_month, '%Y-%m') = delta.transaction_month
         JOIN MaterialType mt ON snap.material_no = mt.material_no
         LEFT JOIN UnitPrice up ON snap.material_no = up.material_no
-        <where>
-            <if test = "materialTypeFrom != null and materialTypeFrom != ''"> AND mt.material_type >= #{materialTypeFrom} </if>
-            <if test = "materialTypeTo != null and materialTypeTo != ''"> AND mt.material_type <= #{materialTypeTo} </if>
-            <if test = "materialCodeFrom != null and materialCodeFrom != ''"> AND mt.material_code >= #{materialCodeFrom} </if>
-            <if test = "materialCodeTo != null and materialCodeTo != ''"> AND mt.material_code <= #{materialCodeTo} </if>
-            <if test = "storageCodeFrom != null and storageCodeFrom != ''"> AND snap.mstorage_code >= #{storageCodeFrom} </if>
-            <if test = "storageCodeTo != null and storageCodeTo != ''"> AND snap.mstorage_code <= #{storageCodeTo} </if>
-             /* [수정] queryMonth 관련 필터 제거: Java 서비스에서 snapshotDate, startDate, endDate를 계산하여 전달하므로 중복 */
-             /*
-            <if test = "queryMonthFrom != null"> AND DATE_FORMAT(snap.snapshot_month, '%Y-%m') >= #{queryMonthFrom} </if>
-            <if test = "queryMonthTo != null"> AND DATE_FORMAT(snap.snapshot_month, '%Y-%m') <= #{queryMonthTo} </if>
-            */
-        </where>
+    ]]>
+<where>
+    <if test="materialTypeFrom != null and materialTypeFrom != ''">
+        <![CDATA[ AND mt.material_type >= #{materialTypeFrom} ]]>
+    </if>
+    <if test="materialTypeTo != null and materialTypeTo != ''">
+        <![CDATA[ AND mt.material_type <= #{materialTypeTo} ]]>
+    </if>
+    <if test="materialCodeFrom != null and materialCodeFrom != ''">
+        <![CDATA[ AND mt.material_code >= #{materialCodeFrom} ]]>
+    </if>
+    <if test="materialCodeTo != null and materialCodeTo != ''">
+        <![CDATA[ AND mt.material_code <= #{materialCodeTo} ]]>
+    </if>
+    <if test="storageCodeFrom != null and storageCodeFrom != ''">
+        <![CDATA[ AND snap.mstorage_code >= #{storageCodeFrom} ]]>
+    </if>
+    <if test="storageCodeTo != null and storageCodeTo != ''">
+        <![CDATA[ AND snap.mstorage_code <= #{storageCodeTo} ]]>
+    </if>
+    <!-- [수정] queryMonth 관련 필터 제거: Java 서비스에서 snapshotDate, startDate, endDate를 계산하여 전달하므로 중복 -->
+</where>
+    <![CDATA[
         GROUP BY mt.material_type, snap.plant_code, snap.mstorage_code
         ORDER BY mt.material_type, snap.plant_code, snap.mstorage_code
-        ]]>
+    ]]>
     </select>
-
 </mapper>

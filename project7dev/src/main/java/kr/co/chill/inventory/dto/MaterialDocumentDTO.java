@@ -1,4 +1,4 @@
-package kr.co.chill.inventory;
+package kr.co.chill.inventory.dto;
 
 import java.util.Date;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package kr.co.chill.inventory;
+package kr.co.chill.inventory.controller;
 
 import java.util.List;
 
@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import kr.co.chill.inventory.dto.InventoryParamDTO;
+import kr.co.chill.inventory.dto.InventoryReportDTO;
+import kr.co.chill.inventory.dto.InventoryStatusDTO;
+import kr.co.chill.inventory.dto.MaterialDocumentDTO;
+import kr.co.chill.inventory.service.InventoryService;
 
 @RestController
 @RequestMapping("/api/inventory/")
