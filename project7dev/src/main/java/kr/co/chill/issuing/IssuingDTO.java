@@ -19,8 +19,14 @@ public class IssuingDTO {
 	private String mstorage_code;
 	private String mstorage_snapshot_month;
 	
+//	chill.line
+	private int line_no;
+	private int line_stock;
+	private String line_code;
+	
 //	other
 	private int material_produce;
+	private int product_cnt;
 	
 	public IssuingDTO() {
 		super();
@@ -129,6 +135,38 @@ public class IssuingDTO {
 
 	public void setMstorage_snapshot_month(String mstorage_snapshot_month) {
 		this.mstorage_snapshot_month = mstorage_snapshot_month;
+	}
+
+	public int getLine_no() {
+		return line_no;
+	}
+
+	public void setLine_no(int line_no) {
+		this.line_no = line_no;
+	}
+
+	public int getLine_stock() {
+		return line_stock;
+	}
+
+	public void setLine_stock(int line_stock) {
+		this.line_stock = line_stock;
+	}
+
+	public String getLine_code() {
+		return line_code;
+	}
+
+	public void setLine_code(String line_code) {
+		this.line_code = line_code;
+	}
+
+	public int getProduct_cnt() {
+		return product_cnt;
+	}
+
+	public void setProduct_cnt(int product_cnt) {
+		this.product_cnt = product_cnt;
 	}
 	
 	

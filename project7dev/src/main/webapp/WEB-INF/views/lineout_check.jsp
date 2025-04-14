@@ -5,16 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>부품 출고</title>
+<title>라인 출고</title>
 </head>
 <body>
 
 <section>
 	<div>
-		<h3>부품 재고 확인 후 출고하기</h3>
+		<h3>라인 재고 확인 후 생산하기</h3>
 	</div>
 	
-	<c:set var="canProduce" value="true" />
+	<c:set var="canLineout" value="true" />
 	
 	<section>
 		<div>
@@ -28,31 +28,31 @@
 				<td>부품이름</td>
 				<td>부품코드</td>
 				<td>부품원자재</td>
-				<td>부품창고코드</td>
-				<td>부품창고재고</td>
+				<td>생산라인코드</td>
+				<td>생산라인재고</td>
 				<td>필요수량</td>
 				<td>충분여부</td>
 			</tr>
-		<c:forEach var="materialstock" items="${materialstock }">
+		<c:forEach var="linestock" items="${linestock }">
 			<c:set var="haveMaterial" value="true" />
-			<c:if test="${materialstock.mstorage_stock < materialstock.material_produce }">
-				<c:set var="canProduce" value="false" />
+			<c:if test="${linestock.line_stock < linestock.material_produce }">
+				<c:set var="canLineout" value="false" />
 				<c:set var="haveMaterial" value="false" />
 			</c:if>
 			<tr>
-				<td>${materialstock.material_no}</td>
-				<td>${materialstock.material_name}</td>
-				<td>${materialstock.material_code}</td>
-				<td>${materialstock.material_raw_material}</td>
-				<td>${materialstock.mstorage_code}</td>
-				<td>${materialstock.mstorage_stock}EA</td>
-				<td>${materialstock.material_produce}EA</td>
+				<td>${linestock.material_no}</td>
+				<td>${linestock.material_name}</td>
+				<td>${linestock.material_code}</td>
+				<td>${linestock.material_raw_material}</td>
+				<td>${linestock.line_code}</td>
+				<td>${linestock.line_stock}EA</td>
+				<td>${linestock.material_produce}EA</td>
 				<c:choose>
 					<c:when test="${haveMaterial eq 'true' }">
 						<td>충분</td>
 					</c:when>
 					<c:otherwise>
-						<td>부족(${materialstock.material_produce - materialstock.mstorage_stock }EA)
+						<td>부족(${linestock.material_produce - linestock.line_stock }EA)
 					</c:otherwise>
 				</c:choose>
 			</tr>
@@ -64,19 +64,19 @@
 	</section>
 		<div>
 		<c:choose>
-			<c:when test="${canProduce eq 'true' }">
-				<p>창고 내 재고가 충분히 있습니다</p><br>
+			<c:when test="${canLineout eq 'true' }">
+				<p>라인 내 재고가 충분히 있습니다</p><br>
 				
-				<form action="${contextPath }/issuing/produce_process">
+				<form action="${contextPath }/issuing/lineout_process">
 					<input type="hidden" name="product_no" value="${selected.product_no }">
 					<input type="hidden" name="product_cnt" value="${product_cnt }">
 				
-					<button type="submit">출고하기</button>
+					<button type="submit">생산하기</button>
 					<button type="button" onclick="location.href='${contextPath }/issuing/testview_issuing'">취소하기</button>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<p>재고가 부족한 부품이 있어 정상적으로 출고할 수 없습니다</p><br>
+				<p>재고가 부족한 부품이 있어 정상적으로 생산할 수 없습니다</p><br>
 				<button type="button" onclick="history.back();">뒤로가기</button>
 			</c:otherwise>
 		</c:choose>

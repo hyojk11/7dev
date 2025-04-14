@@ -12,4 +12,8 @@ public interface IssuingDAO {
 
 	List<InoutStorageDTO> storageIO(List<IssuingDTO> materialstock);
 
+	List<IssuingDTO> linestock(int product_no, int product_cnt);
+
+	List<InoutLineDTO> lineIO(List<IssuingDTO> linestock, int[] product_info);
+
 }

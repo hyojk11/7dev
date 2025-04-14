@@ -34,4 +34,16 @@ public class IssuingServiceImpl implements IssuingService{
 		return issuingDAO.storageIO(materialstock);
 	}
 
+	@Override
+	public List<IssuingDTO> linestock(int product_no, int product_cnt) {
+		// TODO Auto-generated method stub
+		return issuingDAO.linestock(product_no, product_cnt);
+	}
+
+	@Override
+	public List<InoutLineDTO> lineIO(List<IssuingDTO> linestock, int[] product_info) {
+		// TODO Auto-generated method stub
+		return issuingDAO.lineIO(linestock, product_info);
+	}
+
 }

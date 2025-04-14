@@ -9,6 +9,7 @@
 <title>출고테스트뷰</title>
 </head>
 <body>
-	<a href="${contextPath }/issuing/produce">제품생산 페이지 이동</a><br>
+	<a href="${contextPath }/issuing/produce">부품출고 페이지 이동</a><br>
+	<a href="${contextPath }/issuing/lineout">라인출고 페이지 이동</a><br>
 </body>
 </html>
