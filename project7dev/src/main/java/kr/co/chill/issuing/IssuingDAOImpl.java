@@ -129,6 +129,7 @@ public class IssuingDAOImpl implements IssuingDAO{
 	public List<InoutLineDTO> lineIO(List<IssuingDTO> linestock, int[] product_info) {
 		// 제품 생산에 필요한 부품들 부품창고출고-라인입고 처리후 목록 저장하기
 		List<InoutLineDTO> lineIO = new ArrayList<InoutLineDTO>();
+		int outCnt = 0;
 		
 		for(IssuingDTO i : linestock) {
 			// 1. 라인 출고내역 저장하기
@@ -141,14 +142,17 @@ public class IssuingDAOImpl implements IssuingDAO{
 			int pstorage_no = sqlSession.selectOne(nameSpace+".pstorageOne", oneIO);
 			oneIO.setPstorage_no(pstorage_no);
 			
-			// 3. 개별 라인 입고내역 저장하기
-			sqlSession.insert(nameSpace+".productIn", oneIO);
-			InoutLineDTO oneProductIn = sqlSession.selectOne(nameSpace+".productInOne", oneIO);
-			
-			oneIO.setProduct_in_no(oneProductIn.getProduct_in_no());
-			oneIO.setProduct_in_date(oneProductIn.getProduct_in_date());
-			oneIO.setProduct_in_cnt(oneProductIn.getProduct_in_cnt());
-			
+			if(outCnt < 1) {
+				// 3. 제품 창고 입고내역 저장하기
+				sqlSession.insert(nameSpace+".productIn", oneIO);
+				InoutLineDTO oneProductIn = sqlSession.selectOne(nameSpace+".productInOne", oneIO);
+				
+				oneIO.setProduct_in_no(oneProductIn.getProduct_in_no());
+				oneIO.setProduct_in_date(oneProductIn.getProduct_in_date());
+				oneIO.setProduct_in_cnt(oneProductIn.getProduct_in_cnt());
+				
+				outCnt++;
+			}
 			// 4. 외래키 이용하여 제품이름, 제품코드, 라인코드 제품창고코드 불러오기
 			InoutLineDTO details = sqlSession.selectOne(nameSpace+".lineIODetail", oneIO);
 			

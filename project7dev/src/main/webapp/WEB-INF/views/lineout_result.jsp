@@ -63,7 +63,8 @@
 				<td>입고단위</td>
 				<td>입고일시</td>
 			</tr>
-		<c:forEach var="lineIO" items="${lineIO }">
+		<c:forEach var="lineIO" items="${lineIO }" varStatus="status">
+		<c:if test="${status.first}">
 			<tr>
 				<td>${lineIO.pstorage_no}</td>
 				<td>${lineIO.pstorage_code}</td>
@@ -74,6 +75,7 @@
 				<td>EA</td>
 				<td>${lineIO.product_in_date}</td>
 			</tr>
+		</c:if>
 		</c:forEach>
 			</table>
 		</div>
