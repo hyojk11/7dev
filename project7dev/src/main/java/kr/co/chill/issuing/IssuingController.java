@@ -26,7 +26,7 @@ public class IssuingController {
 	public String testview_issuing() {
 		logger.info("issuing testview 이동");
 		
-		return "testview_issuing";
+		return "issuing/testview_issuing";
 	}
 	
 	@GetMapping(value = "issuing/produce")
@@ -38,7 +38,7 @@ public class IssuingController {
 		
 		session.setAttribute("productlist",productlist);
 		
-		return "produce";
+		return "issuing/produce";
 	}
 	
 	@RequestMapping(value = "issuing/produce", method = RequestMethod.POST)
@@ -58,7 +58,7 @@ public class IssuingController {
 		model.addAttribute("selected", productOne);
 		model.addAttribute("product_cnt", product_cnt);
 		
-		return "produce_check";
+		return "issuing/produce_check";
 	}
 	
 	@RequestMapping(value = "issuing/produce_process")
@@ -88,7 +88,7 @@ public class IssuingController {
 	public String produce_result() {
 		logger.info("produce_result view 이동");
 		
-		return "produce_result";
+		return "issuing/produce_result";
 	}
 	
 	@GetMapping(value = "issuing/lineout")
@@ -100,7 +100,7 @@ public class IssuingController {
 		
 		session.setAttribute("productlist",productlist);
 		
-		return "lineout";
+		return "issuing/lineout";
 	}
 	
 	@RequestMapping(value = "issuing/lineout", method = RequestMethod.POST)
@@ -120,7 +120,7 @@ public class IssuingController {
 		model.addAttribute("selected", productOne);
 		model.addAttribute("product_cnt", product_cnt);
 		
-		return "lineout_check";
+		return "issuing/lineout_check";
 	}
 	
 	@RequestMapping(value = "issuing/lineout_process")
@@ -151,7 +151,7 @@ public class IssuingController {
 	public String lineout_result() {
 		logger.info("lineout_result view 이동");
 		
-		return "lineout_result";
+		return "issuing/lineout_result";
 	}
 
 
