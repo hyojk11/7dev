@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>제품 생산</title>
+<title>부품 출고</title>
 </head>
 <body>
 
@@ -14,8 +14,6 @@
 	<div>
 		<h3>부품 출고완료</h3>
 	</div>
-	
-	<c:set var="canProduce" value="true" />
 	
 	<section>
 		<div>

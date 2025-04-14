@@ -5,16 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>제품 생산</title>
+<title>라인 출고</title>
 </head>
 <body>
 
 <section>
 	<div>
-		<h3>제품 생산하기</h3>
+		<h3>라인 출고하기</h3>
 	</div>
 	
-	<form action="produce" method="post">
+	<form action="lineout" method="post">
 		<div>
 			<div>
 				<label>제품 이름</label>
@@ -30,7 +30,7 @@
 				placeholder="생산할 수량을 입력하세요" required>개
 			</div>
 			<div>
-				<button type="submit">창고확인</button>
+				<button type="submit">생산라인 확인</button>
 			</div>
 		</div>
 	</form>
