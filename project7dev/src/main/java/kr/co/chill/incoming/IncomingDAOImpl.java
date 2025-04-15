@@ -25,20 +25,32 @@ public class IncomingDAOImpl implements IncomingDAO{
 		return session.selectList("kr.co.chill.incomingMapper.selectExp", incomingDTO);
 	}
 
-	@Override
-	public int MaterialIn(IncomingDTO incomingDTO) {
-		// TODO Auto-generated method stub
-		return session.update("kr.co.chill.incomingMapper.materialIn", incomingDTO);
-	}
 
 	@Override
-	public int outMaterial(IncomingDTO incomingDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int checkMaterialStorage(IncomingDTO incomingDTO) {
+		System.out.println("DAO로 넘어온 자재정보:" + incomingDTO);
+		return session.selectOne("kr.co.chill.incomingMapper.checkMaterialInStorage", incomingDTO);
 	}
 
 
+	@Override
+	public int insertMaterialStorage(IncomingDTO incomingDTO) {
+		// TODO Auto-generated method stub
+		return session.insert("kr.co.chill.incomingMapper.insertMaterialStorage", incomingDTO);
+	}
 
-	
-	
+
+	@Override
+	public int updateMaterialStorage(IncomingDTO incomingDTO) {
+		// TODO Auto-generated method stub
+		return session.update("kr.co.chill.incomingMapper.updateMaterialStorage", incomingDTO);
+	}
+
+
+	@Override
+	public int updateMaterialState(IncomingDTO incomingDTO) {
+		// TODO Auto-generated method stub
+		return session.update("kr.co.chill.incomingMapper.updateMaterialState", incomingDTO);
+	}
+
 }

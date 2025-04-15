@@ -10,11 +10,6 @@ public interface IncomingService {
 		// 자재 입고예정
 		List<IncomingDTO> expected(IncomingDTO incomingDTO);
 	
-		//자재 창고로 입고
-		int MaterialIn(List<Integer> materialNOList);
-		
-		//자재 반품
-		int outMaterial(IncomingDTO incomingDTO);
-	
+		void materialInProcess(List<IncomingDTO> list);
 	
 }
