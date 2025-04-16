@@ -3,21 +3,257 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.chill.productionPlanningMapper">
+
+
+	<!-- 생산계획 리스트 검색 (페이징) -->
+	<select id="listSearchPaged" resultType="ProductionPlanningDTO" parameterType="map">
+		SELECT
+			prpl.prpl_no
+			, prpl.prpl_code
+			, prd.product_code
+			, prd.product_name
+			, prpl.prpl_plant
+			, prpl.prpl_line
+			, prpl.product_cnt
+			, ps.pstorage_stock
+			, DATE(prpl.prpl_due_date) AS prpl_due_date
+			, emp.emp_name
+		FROM production_planning prpl
+		JOIN product prd ON prpl.product_no = prd.product_no
+		JOIN product_storage ps ON prpl.pstorage_no = ps.pstorage_no
+		JOIN employee emp ON prpl.emp_no = emp.emp_no
+		<where>
+			<choose>
+				<when test="searchType == 'prpl_code'">
+					prpl.prpl_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'product_code'">
+					prd.product_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'product_name'">
+					prd.product_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'prpl_plant'">
+					prpl.prpl_plant = #{keyword}
+				</when>
+				<when test="searchType == 'prpl_line'">
+					prpl.prpl_line = #{keyword}
+				</when>
+				<when test="searchType == 'product_cnt'">
+					prpl.product_cnt = #{keyword}
+				</when>
+				<when test="searchType == 'prpl_due_date'">
+					prpl.prpl_due_date = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp.emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+			</choose>
+		</where>
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+	
+	
+	<!-- 생산계획 리스트 검색 (페이징X.엑셀출력용) -->
+	<select id="listSearch" resultType="ProductionPlanningDTO" parameterType="map">
+		SELECT
+			prpl.prpl_no
+			, prpl.prpl_code
+			, prd.product_code
+			, prd.product_name
+			, prpl.prpl_plant
+			, prpl.prpl_line
+			, prpl.product_cnt
+			, DATE(prpl.prpl_due_date) AS prpl_due_date_only
+			, ps.pstorage_stock
+			, emp.emp_name
+		FROM production_planning prpl
+		JOIN product prd ON prpl.product_no = prd.product_no
+		JOIN product_storage ps ON prpl.pstorage_no = ps.pstorage_no
+		JOIN employee emp ON prpl.emp_no = emp.emp_no
+		<where>
+			<choose>
+				<when test="searchType == 'prpl_code'">
+					prpl.prpl_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'product_code'">
+					prd.product_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'product_name'">
+					prd.product_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'prpl_plant'">
+					prpl.prpl_plant = #{keyword}
+				</when>
+				<when test="searchType == 'prpl_line'">
+					prpl.prpl_line = #{keyword}
+				</when>
+				<when test="searchType == 'product_cnt'">
+					prpl.product_cnt = #{keyword}
+				</when>
+				<when test="searchType == 'prpl_due_date'">
+					prpl.prpl_due_date = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp.emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	<!-- 검색리스트 갯수 (페이징용) -->
+	<select id="listSearchCount" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+		FROM production_planning prpl
+		JOIN product prd ON prpl.product_no = prd.product_no
+		JOIN product_storage ps ON prpl.pstorage_no = ps.pstorage_no
+		JOIN employee emp ON prpl.emp_no = emp.emp_no
+		<where>
+			<choose>
+				<when test="searchType == 'prpl_code'">
+					prpl.prpl_no LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'product_code'">
+					prd.product_code LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'product_name'">
+					prd.product_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'prpl_plant'">
+					prpl.prpl_plant = #{keyword}
+				</when>
+				<when test="searchType == 'prpl_line'">
+					prpl.prpl_line = #{keyword}
+				</when>
+				<when test="searchType == 'product_cnt'">
+					prpl.product_cnt = #{keyword}
+				</when>
+				<when test="searchType == 'prpl_due_date'">
+					prpl.prpl_due_date = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp.emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	<!-- 제품검색조회(제품생산계획 전용) -->
+	<select id="searchProduct" parameterType="map" resultType="ProductionPlanningDTO">
+		select * from product
+		<where>
+      		<if test="searchType == 'product_code'">
+	           	product_code LIKE CONCAT('%', #{keyword}, '%')
+	       	</if>
+	       	<if test="searchType == 'product_name'">
+	           	product_name LIKE CONCAT('%', #{keyword}, '%')
+	       	</if>
+	   	</where>
+	</select>	
+	
+	<!-- 생산계획 등록 시 창고번호로 창고정보(재고) 불러오기 -->
+	<select id="searchStock" parameterType="int" resultType="ProductionPlanningDTO">
+		select * from product_storage
+		where product_no = #{product_no}
+	</select>
+	
+	<!-- 생산계획 코드생성 조회 및 추출 -->
+	<select id="codemaker" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM production_planning
+		WHERE prpl_code LIKE CONCAT('PP',#{reg_date}, '%')
+	</select>
+	
 	<!-- 제품생산계획 불러오기(전체) -->
 	<select id="readProductionPlanning" resultType="ProductionPlanningDTO">
-		select production_planning.*, product.product_code, product.product_name
-		from production_planning
-		join product on production_planning.product_no = product.product_no
-	</select>
-	<!-- 제품생산계획 상세보기(선택) -->
-	<select id="readProductionPlanningByPrplNo" resultType="ProductionPlanningDTO">
-		select production_planning.*, product.product_code, product.product_name, employee.emp_no, 
-		employee.emp_name, employee.emp_phone, employee.emp_email
+		select
+			production_planning.*
+			, DATE(production_planning.prpl_due_date) AS prpl_due_date_only
+			, product.product_code
+			, product.product_name
+			, employee.emp_name
 		from production_planning
 		join product on production_planning.product_no = product.product_no
 		join employee on production_planning.emp_no = employee.emp_no
-		where prpl_no=#{prplNo}
 	</select>
+	
+	<!-- 제품생산계획 상세보기(선택) -->
+	<select id="readProductionPlanningByPrplNo" resultType="ProductionPlanningDTO">
+		select
+			production_planning.*
+			, DATE(production_planning.prpl_due_date) AS prpl_due_date_only
+			, product.product_no
+			, product.product_code
+			, product.product_name
+			, employee.emp_no
+			, employee.emp_name
+			, employee.emp_phone
+			, employee.emp_email
+			, product_storage.pstorage_stock
+		from production_planning
+		join product on production_planning.product_no = product.product_no
+		join employee on production_planning.emp_no = employee.emp_no
+		join product_storage on production_planning.pstorage_no = product_storage.pstorage_no
+		where prpl_no=#{prpl_no}
+	</select>
+	
+	<!-- 제품생산계획 등록하기 -->
+	<insert id="createProductionPlanning" parameterType="ProductionPlanningDTO">
+		insert into production_planning(
+			product_no
+			, prpl_code, prpl_plant
+			, prpl_line, product_cnt
+			, pstorage_no
+			, prpl_leadtime
+			, prpl_due_date
+			, emp_no
+			, prpl_etc
+			)
+		values(
+			#{product_no}
+			, #{prpl_code}
+			, #{prpl_plant}
+			, #{prpl_line}
+			, #{product_cnt}
+			, #{pstorage_no}
+			, #{prpl_leadtime}
+			, #{prpl_due_date}
+			, #{emp_no}
+			, #{prpl_etc})
+	</insert>
+	
+	<!-- 생산계획 등록 시 사원번호로 사원정보 불러오기 -->
+	<select id="getEmployeeByEmpNo" resultType="ProductionPlanningDTO">
+		select * 
+		from employee
+		where emp_no=#{emp_no}
+	</select>	
+	
+	<!-- 제품생산계획 수정 -->
+	<update id="updateProductionPlanning" parameterType="ProductionPlanningDTO">
+		update production_planning set
+			product_no=#{product_no}
+			, prpl_plant=#{prpl_plant}
+			, prpl_line=#{prpl_line}
+			, product_cnt=#{product_cnt}
+			, prpl_due_date=#{prpl_due_date}
+			, prpl_leadtime=#{prpl_leadtime}
+			, emp_no=#{emp_no}
+			, prpl_etc=#{prpl_etc}
+		where prpl_no=#{prpl_no}
+	</update>
+	
+	<!-- 제품생산계획 삭제 -->
+	<delete id="deleteProductionPlanning" parameterType="int">
+		delete from production_planning
+		where prpl_no=#{prpl_no}
+	</delete>
+	
+	
+	
+	
+	
+	
 	<!-- 제품생산계획 검색조회(제품코드 사용, 제품생산계획 전용) --> <!-- _no로 안하고 _code로 하는게 맞는지..? -->
 	<select id="searchProductionPlanning" parameterType="map" resultType="ProductionPlanningDTO">
 		select * from production_planning	
@@ -28,34 +264,12 @@
     	</where>
 	</select>	
 	
-	<!-- 제품생산계획 등록하기 -->
-	<insert id="createProductionPlanning" parameterType="ProductionPlanningDTO">
-		insert into production_planning(product_no, prpl_plant, prpl_line, product_cnt, pstorage_no, prpl_leadtime, prpl_due_date, emp_no, prpl_etc)
-		values(#{productNo}, #{prplPlant}, #{prplLine}, #{productCnt}, #{pstorageNo}, #{prplLeadtime}, #{prplDueDate}, #{empNo}, #{prplEtc})
-	</insert>
-	<!-- 생산계획 등록 시 사원번호로 사원정보 불러오기(emp관련 파일이 없음..) -->
-	<select id="getEmployeeByEmpNo" resultType="ProductionPlanningDTO">
-		select * from employee
-		where emp_no=#{empNO}
-	</select>	
 	<!-- 생산계획 등록 시 창고번호로 창고정보(재고) 불러오기 -->
 	<select id="getPstorageByPstorageNo" resultType="ProductionPlanningDTO">
 		select * from product_storage
 		where pstorage_no=#{pstorageNo}
 	</select>
 	
-	<!-- 제품생산계획 수정 -->
-	<update id="updateProductionPlanning" parameterType="ProductionPlanningDTO">
-		update production_planning
-		set product_no=#{productNo}, prpl_plant=#{prplPlant}, prpl_line=#{prplLine}, product_cnt=#{productCnt}, pstorage_no=#{pstorageNo}, 
-		prpl_leadtime=#{prplLeadtime}, emp_no=#{empNo}, prpl_etc=#{prplEtc}
-		where prpl_no=#{prplNo}
-	</update>
 	
-	<!-- 제품생산계획 삭제 -->
-	<delete id="deleteProductionPlanning" parameterType="int">
-		delete production_planning
-		where prpl_no=#{prplNo}
-	</delete>
 
 </mapper>

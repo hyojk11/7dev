@@ -15,6 +15,9 @@ public class ProgressMonitoringDTO {
 	private String next_progress_date; //** 다음 진척검수일 별칭
 	private int total_material_cnt; //** 총 검수된 수량 별칭
 	private int rest_progress_cnt; //** 검수할 남은 수량 별칭
+	private String progress_eval; //** 평가 등급 R0~R3
+	private double expected_progress_rate; //** 예상 진척률
+	private String pm_date_only; //**검수일 날짜만 별칭
 	
 	//purchase_order table
 	private int purc_order_no;
@@ -23,6 +26,7 @@ public class ProgressMonitoringDTO {
 	private String purc_order_dterms; //인도조건
 	
 	private String end_date; //**납기일 별칭
+	private String po_date_only; //**발주일 날짜만 별칭
 	
 	//supplier table
 	private int sup_no;
@@ -78,8 +82,9 @@ public class ProgressMonitoringDTO {
 	public ProgressMonitoringDTO(int progress_monitoring_no, int progress_monitoring_ver,
 			String progress_monitoring_code, int material_cnt, String progress_monitoring_date,
 			String progress_monitoring_etc, int progress_rate, int total_progress_rate, String next_progress_date,
-			int total_material_cnt, int rest_progress_cnt, int purc_order_no, String purc_order_code,
-			String purc_order_reg_date, String purc_order_dterms, String end_date, int sup_no, String sup_name,
+			int total_material_cnt, int rest_progress_cnt, String progress_eval, double expected_progress_rate,
+			String pm_date_only, int purc_order_no, String purc_order_code, String purc_order_reg_date,
+			String purc_order_dterms, String end_date, String po_date_only, int sup_no, String sup_name,
 			String sup_reg_no, String sup_ceo_name, String sup_phone, String sup_addr1, String sup_addr2,
 			String sup_cip, String sup_cip_phone, String sup_cip_email, String sup_total_addr, int comp_no,
 			String comp_name, String comp_ceo_name, String comp_reg_no, String comp_addr1, String comp_addr2,
@@ -98,11 +103,15 @@ public class ProgressMonitoringDTO {
 		this.next_progress_date = next_progress_date;
 		this.total_material_cnt = total_material_cnt;
 		this.rest_progress_cnt = rest_progress_cnt;
+		this.progress_eval = progress_eval;
+		this.expected_progress_rate = expected_progress_rate;
+		this.pm_date_only = pm_date_only;
 		this.purc_order_no = purc_order_no;
 		this.purc_order_code = purc_order_code;
 		this.purc_order_reg_date = purc_order_reg_date;
 		this.purc_order_dterms = purc_order_dterms;
 		this.end_date = end_date;
+		this.po_date_only = po_date_only;
 		this.sup_no = sup_no;
 		this.sup_name = sup_name;
 		this.sup_reg_no = sup_reg_no;
@@ -268,6 +277,42 @@ public class ProgressMonitoringDTO {
 
 
 
+	public String getProgress_eval() {
+		return progress_eval;
+	}
+
+
+
+	public void setProgress_eval(String progress_eval) {
+		this.progress_eval = progress_eval;
+	}
+
+
+
+	public double getExpected_progress_rate() {
+		return expected_progress_rate;
+	}
+
+
+
+	public void setExpected_progress_rate(double expected_progress_rate) {
+		this.expected_progress_rate = expected_progress_rate;
+	}
+
+
+
+	public String getPm_date_only() {
+		return pm_date_only;
+	}
+
+
+
+	public void setPm_date_only(String pm_date_only) {
+		this.pm_date_only = pm_date_only;
+	}
+
+
+
 	public int getPurc_order_no() {
 		return purc_order_no;
 	}
@@ -324,6 +369,18 @@ public class ProgressMonitoringDTO {
 
 	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
+	}
+
+
+
+	public String getPo_date_only() {
+		return po_date_only;
+	}
+
+
+
+	public void setPo_date_only(String po_date_only) {
+		this.po_date_only = po_date_only;
 	}
 
 
@@ -683,18 +740,19 @@ public class ProgressMonitoringDTO {
 				+ material_cnt + ", progress_monitoring_date=" + progress_monitoring_date + ", progress_monitoring_etc="
 				+ progress_monitoring_etc + ", progress_rate=" + progress_rate + ", total_progress_rate="
 				+ total_progress_rate + ", next_progress_date=" + next_progress_date + ", total_material_cnt="
-				+ total_material_cnt + ", rest_progress_cnt=" + rest_progress_cnt + ", purc_order_no=" + purc_order_no
-				+ ", purc_order_code=" + purc_order_code + ", purc_order_reg_date=" + purc_order_reg_date
-				+ ", purc_order_dterms=" + purc_order_dterms + ", end_date=" + end_date + ", sup_no=" + sup_no
-				+ ", sup_name=" + sup_name + ", sup_reg_no=" + sup_reg_no + ", sup_ceo_name=" + sup_ceo_name
-				+ ", sup_phone=" + sup_phone + ", sup_addr1=" + sup_addr1 + ", sup_addr2=" + sup_addr2 + ", sup_cip="
-				+ sup_cip + ", sup_cip_phone=" + sup_cip_phone + ", sup_cip_email=" + sup_cip_email
-				+ ", sup_total_addr=" + sup_total_addr + ", comp_no=" + comp_no + ", comp_name=" + comp_name
-				+ ", comp_ceo_name=" + comp_ceo_name + ", comp_reg_no=" + comp_reg_no + ", comp_addr1=" + comp_addr1
-				+ ", comp_addr2=" + comp_addr2 + ", comp_total_addr=" + comp_total_addr + ", cont_no=" + cont_no
-				+ ", cont_material_cnt=" + cont_material_cnt + ", cont_date=" + cont_date + ", emp_no=" + emp_no
-				+ ", emp_name=" + emp_name + ", emp_email=" + emp_email + ", mrp_no=" + mrp_no + ", mrp_due_date="
-				+ mrp_due_date + ", material_no=" + material_no + ", material_name=" + material_name
+				+ total_material_cnt + ", rest_progress_cnt=" + rest_progress_cnt + ", progress_eval=" + progress_eval
+				+ ", expected_progress_rate=" + expected_progress_rate + ", pm_date_only=" + pm_date_only
+				+ ", purc_order_no=" + purc_order_no + ", purc_order_code=" + purc_order_code + ", purc_order_reg_date="
+				+ purc_order_reg_date + ", purc_order_dterms=" + purc_order_dterms + ", end_date=" + end_date
+				+ ", po_date_only=" + po_date_only + ", sup_no=" + sup_no + ", sup_name=" + sup_name + ", sup_reg_no="
+				+ sup_reg_no + ", sup_ceo_name=" + sup_ceo_name + ", sup_phone=" + sup_phone + ", sup_addr1="
+				+ sup_addr1 + ", sup_addr2=" + sup_addr2 + ", sup_cip=" + sup_cip + ", sup_cip_phone=" + sup_cip_phone
+				+ ", sup_cip_email=" + sup_cip_email + ", sup_total_addr=" + sup_total_addr + ", comp_no=" + comp_no
+				+ ", comp_name=" + comp_name + ", comp_ceo_name=" + comp_ceo_name + ", comp_reg_no=" + comp_reg_no
+				+ ", comp_addr1=" + comp_addr1 + ", comp_addr2=" + comp_addr2 + ", comp_total_addr=" + comp_total_addr
+				+ ", cont_no=" + cont_no + ", cont_material_cnt=" + cont_material_cnt + ", cont_date=" + cont_date
+				+ ", emp_no=" + emp_no + ", emp_name=" + emp_name + ", emp_email=" + emp_email + ", mrp_no=" + mrp_no
+				+ ", mrp_due_date=" + mrp_due_date + ", material_no=" + material_no + ", material_name=" + material_name
 				+ ", material_code=" + material_code + "]";
 	}
 

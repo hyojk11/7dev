@@ -18,4 +18,11 @@ public class LoginServiceImpl implements LoginService {
 		return loginDAO.login(map);
 	}
 
+	//사원,관리자 구분위한 emp_no조회
+	@Override
+	public int searchEmpNo(String user_id) {
+		// TODO Auto-generated method stub
+		return loginDAO.searchEmpNo(user_id);
+	}
+
 }

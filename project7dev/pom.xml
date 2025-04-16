@@ -173,6 +173,14 @@
 		    <version>5.2.3</version>
 		</dependency>
 		    
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind **json change**-->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.10.5</version>
+		</dependency>
+				    
+		    
 	</dependencies>
     <build>
         <plugins>

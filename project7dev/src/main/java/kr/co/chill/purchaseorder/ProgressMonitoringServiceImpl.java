@@ -74,4 +74,22 @@ public class ProgressMonitoringServiceImpl implements ProgressMonitoringService 
 		return "PM" + datePart + serial;
 	}
 
+	@Override
+	public List<ProgressMonitoringDTO> detailProgressListByVer(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return progressMonitoringDAO.detailProgressListByVer(map);
+	}
+
+	@Override
+	public String searchPoNo(int progress_monitoring_no) {
+		// TODO Auto-generated method stub
+		return progressMonitoringDAO.searchPoNo(progress_monitoring_no);
+	}
+
+	@Override
+	public void delete(int progress_monitoring_no) {
+		// TODO Auto-generated method stub
+		progressMonitoringDAO.delete(progress_monitoring_no);
+	}
+
 }

@@ -19,10 +19,10 @@
 		<form action="${contextPath}/login" method="post">
 			<div>
 				<p>
-				ID<input type="text" name="user_id" required><br>
+				ID<input type="text" name="user_id" value="${cookie.user_id.value}" required><br>
 				PW<input type="password" name="user_password" required>
 				</p>
-				<p><input type="checkbox">Remember me</p>
+				<p><input type="checkbox" name="rememberId" ${cookie.user_id.value != null ? "checked" : ""}>Remember me</p>
 			</div>
 			<button>sign in</button>
 		</form>

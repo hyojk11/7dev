@@ -18,11 +18,11 @@
 			, emp.emp_name
 			, po.purc_order_status
 		FROM purchase_order po
-		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
-		JOIN contract ct ON po.contract_cont_no = ct.cont_no
-		JOIN employee emp ON po.employee_emp_no = emp.emp_no
-		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
-		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+		JOIN material_resource_plan mrp ON po.mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.cont_no = ct.cont_no
+		JOIN employee emp ON po.emp_no = emp.emp_no
+		JOIN supplier sup ON ct.sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.mprice_no = mup.mprice_no
 	</select>
 	
 	<!-- 발주리스트 (페이징) -->
@@ -38,11 +38,11 @@
 			, emp.emp_name
 			, po.purc_order_status
 		FROM purchase_order po
-		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
-		JOIN contract ct ON po.contract_cont_no = ct.cont_no
-		JOIN employee emp ON po.employee_emp_no = emp.emp_no
-		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
-		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+		JOIN material_resource_plan mrp ON po.mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.cont_no = ct.cont_no
+		JOIN employee emp ON po.emp_no = emp.emp_no
+		JOIN supplier sup ON ct.sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.mprice_no = mup.mprice_no
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	
@@ -61,11 +61,11 @@
 			, emp.emp_name
 			, po.purc_order_status
 		FROM purchase_order po
-		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
-		JOIN contract ct ON po.contract_cont_no = ct.cont_no
-		JOIN employee emp ON po.employee_emp_no = emp.emp_no
-		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
-		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+		JOIN material_resource_plan mrp ON po.mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.cont_no = ct.cont_no
+		JOIN employee emp ON po.emp_no = emp.emp_no
+		JOIN supplier sup ON ct.sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.mprice_no = mup.mprice_no
 		
 		<where>
 			<choose>
@@ -105,11 +105,11 @@
 			, emp.emp_name
 			, po.purc_order_status
 		FROM purchase_order po
-		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
-		JOIN contract ct ON po.contract_cont_no = ct.cont_no
-		JOIN employee emp ON po.employee_emp_no = emp.emp_no
-		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
-		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+		JOIN material_resource_plan mrp ON po.mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.cont_no = ct.cont_no
+		JOIN employee emp ON po.emp_no = emp.emp_no
+		JOIN supplier sup ON ct.sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.mprice_no = mup.mprice_no
 		
 		<where>
 			<choose>
@@ -141,11 +141,11 @@
 	<select id="listSearchCount" resultType="int" parameterType="map">
 		SELECT COUNT(*)
 		FROM purchase_order po
-		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
-		JOIN contract ct ON po.contract_cont_no = ct.cont_no
-		JOIN employee emp ON po.employee_emp_no = emp.emp_no
-		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
-		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+		JOIN material_resource_plan mrp ON po.mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.cont_no = ct.cont_no
+		JOIN employee emp ON po.emp_no = emp.emp_no
+		JOIN supplier sup ON ct.sup_no = sup.sup_no
+		JOIN material_unit_price mup ON ct.mprice_no = mup.mprice_no
 		
 		<where>
 			<choose>
@@ -192,11 +192,11 @@
 			, emp.emp_name
 			, emp.emp_email
 		FROM purchase_order po
-		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
-		JOIN contract ct ON po.contract_cont_no = ct.cont_no
-		JOIN supplier sup ON ct.supplier_sup_no = sup.sup_no
-		JOIN employee emp ON po.employee_emp_no = emp.emp_no
-		JOIN company comp ON emp.company_comp_no = comp.comp_no
+		JOIN material_resource_plan mrp ON po.mrp_no = mrp.mrp_no
+		JOIN contract ct ON po.cont_no = ct.cont_no
+		JOIN supplier sup ON ct.sup_no = sup.sup_no
+		JOIN employee emp ON po.emp_no = emp.emp_no
+		JOIN company comp ON emp.comp_no = comp.comp_no
 	</select>
 	
 	
@@ -213,10 +213,10 @@
 			, mup.mprice_currency
 			, po.purc_order_etc
 		FROM purchase_order po
-		JOIN contract ct ON po.contract_cont_no = ct.cont_no
-		JOIN material_resource_plan mrp ON po.material_resource_plan_mrp_no = mrp.mrp_no
-		JOIN material ma ON mrp.material_material_no = ma.material_no
-		JOIN material_unit_price mup ON ct.material_unit_price_mprice_no = mup.mprice_no
+		JOIN contract ct ON po.cont_no = ct.cont_no
+		JOIN material_resource_plan mrp ON po.mrp_no = mrp.mrp_no
+		JOIN material ma ON mrp.material_no = ma.material_no
+		JOIN material_unit_price mup ON ct.mprice_no = mup.mprice_no
 	</select>
 	
 	
