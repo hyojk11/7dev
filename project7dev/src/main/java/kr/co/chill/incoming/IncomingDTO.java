@@ -6,7 +6,7 @@ import java.util.List;
 public class IncomingDTO {
 	
 	
-	private int material_material_no;//자재번호
+	private int material_no;//자재번호
 	private String material_name; //자재명
 	private String material_code;// 자재코드
 	private String material_raw_material;//소재
@@ -14,10 +14,10 @@ public class IncomingDTO {
 	private String material_unit;//단위
 	private	int mstorage_stock;//자재수량
 	private String mstorage_code;//창고코드
-	private int emp_emp_no;//담당자 번호
+	private int emp_no;//담당자 번호
 	private String emp_name;//담당자 이름
 	private String sup_name;//공급업체명
-	private int product_product_no;//제품번호
+	private int product_no;//제품번호
 	private int material_in_no; // 자재도착순서
 	private String material_in_date;//입고날짜
 	private int material_in_cnt;//입고예정수량 
@@ -26,20 +26,20 @@ public class IncomingDTO {
 	private String start_date;//검색 시작날짜
 	private String end_date;// 검색 끝 날짜
 	private int mstorage_no; 
-	private int supplier_sup_no;
+	private int sup_no;
 	private String mstorage_in_date;
 	
 
 	public IncomingDTO(){}
 
 
-	public IncomingDTO(int material_material_no, String material_name, String material_code,
-			String material_raw_material, String material_description, String material_unit, int mstorage_stock,
-			String mstorage_code, int emp_emp_no, String emp_name, String sup_name, int product_product_no,
-			int material_in_no, String material_in_date, int material_in_cnt, String material_etc, Integer state,
-			String start_date, String end_date, int mstorage_no, int supplier_sup_no, String mstorage_in_date) {
+	public IncomingDTO(int material_no, String material_name, String material_code, String material_raw_material,
+			String material_description, String material_unit, int mstorage_stock, String mstorage_code, int emp_no,
+			String emp_name, String sup_name, int product_no, int material_in_no, String material_in_date,
+			int material_in_cnt, String material_etc, Integer state, String start_date, String end_date,
+			int mstorage_no, int sup_no, String mstorage_in_date) {
 		super();
-		this.material_material_no = material_material_no;
+		this.material_no = material_no;
 		this.material_name = material_name;
 		this.material_code = material_code;
 		this.material_raw_material = material_raw_material;
@@ -47,10 +47,10 @@ public class IncomingDTO {
 		this.material_unit = material_unit;
 		this.mstorage_stock = mstorage_stock;
 		this.mstorage_code = mstorage_code;
-		this.emp_emp_no = emp_emp_no;
+		this.emp_no = emp_no;
 		this.emp_name = emp_name;
 		this.sup_name = sup_name;
-		this.product_product_no = product_product_no;
+		this.product_no = product_no;
 		this.material_in_no = material_in_no;
 		this.material_in_date = material_in_date;
 		this.material_in_cnt = material_in_cnt;
@@ -59,18 +59,18 @@ public class IncomingDTO {
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.mstorage_no = mstorage_no;
-		this.supplier_sup_no = supplier_sup_no;
+		this.sup_no = sup_no;
 		this.mstorage_in_date = mstorage_in_date;
 	}
 
 
-	public int getMaterial_material_no() {
-		return material_material_no;
+	public int getMaterial_no() {
+		return material_no;
 	}
 
 
-	public void setMaterial_material_no(int material_material_no) {
-		this.material_material_no = material_material_no;
+	public void setMaterial_no(int material_no) {
+		this.material_no = material_no;
 	}
 
 
@@ -144,13 +144,13 @@ public class IncomingDTO {
 	}
 
 
-	public int getEmp_emp_no() {
-		return emp_emp_no;
+	public int getEmp_no() {
+		return emp_no;
 	}
 
 
-	public void setEmp_emp_no(int emp_emp_no) {
-		this.emp_emp_no = emp_emp_no;
+	public void setEmp_no(int emp_no) {
+		this.emp_no = emp_no;
 	}
 
 
@@ -174,13 +174,13 @@ public class IncomingDTO {
 	}
 
 
-	public int getProduct_product_no() {
-		return product_product_no;
+	public int getProduct_no() {
+		return product_no;
 	}
 
 
-	public void setProduct_product_no(int product_product_no) {
-		this.product_product_no = product_product_no;
+	public void setProduct_no(int product_no) {
+		this.product_no = product_no;
 	}
 
 
@@ -264,13 +264,13 @@ public class IncomingDTO {
 	}
 
 
-	public int getSupplier_sup_no() {
-		return supplier_sup_no;
+	public int getSup_no() {
+		return sup_no;
 	}
 
 
-	public void setSupplier_sup_no(int supplier_sup_no) {
-		this.supplier_sup_no = supplier_sup_no;
+	public void setSup_no(int sup_no) {
+		this.sup_no = sup_no;
 	}
 
 
@@ -286,16 +286,16 @@ public class IncomingDTO {
 
 	@Override
 	public String toString() {
-		return "IncomingDTO [material_material_no=" + material_material_no + ", material_name=" + material_name
-				+ ", material_code=" + material_code + ", material_raw_material=" + material_raw_material
-				+ ", material_description=" + material_description + ", material_unit=" + material_unit
-				+ ", mstorage_stock=" + mstorage_stock + ", mstorage_code=" + mstorage_code + ", emp_emp_no="
-				+ emp_emp_no + ", emp_name=" + emp_name + ", sup_name=" + sup_name + ", product_product_no="
-				+ product_product_no + ", material_in_no=" + material_in_no + ", material_in_date=" + material_in_date
-				+ ", material_in_cnt=" + material_in_cnt + ", material_etc=" + material_etc + ", state=" + state
-				+ ", start_date=" + start_date + ", end_date=" + end_date + ", mstorage_no=" + mstorage_no
-				+ ", supplier_sup_no=" + supplier_sup_no + ", mstorage_in_date=" + mstorage_in_date + "]";
+		return "IncomingDTO [material_no=" + material_no + ", material_name=" + material_name + ", material_code="
+				+ material_code + ", material_raw_material=" + material_raw_material + ", material_description="
+				+ material_description + ", material_unit=" + material_unit + ", mstorage_stock=" + mstorage_stock
+				+ ", mstorage_code=" + mstorage_code + ", emp_no=" + emp_no + ", emp_name=" + emp_name + ", sup_name="
+				+ sup_name + ", product_no=" + product_no + ", material_in_no=" + material_in_no + ", material_in_date="
+				+ material_in_date + ", material_in_cnt=" + material_in_cnt + ", material_etc=" + material_etc
+				+ ", state=" + state + ", start_date=" + start_date + ", end_date=" + end_date + ", mstorage_no="
+				+ mstorage_no + ", sup_no=" + sup_no + ", mstorage_in_date=" + mstorage_in_date + "]";
 	}
+
 
 	
 }

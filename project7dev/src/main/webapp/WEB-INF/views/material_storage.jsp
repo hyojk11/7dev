@@ -58,7 +58,7 @@
 		<td>${incoming.mstorage_code}</td>
 		<td>${incoming.emp_name}</td>
 		<td>${incoming.sup_name}</td>
-		<td>${incoming.product_product_no}</td>
+		<td>${incoming.product_no}</td>
 		<td>${incoming.material_in_date}</td>
 		<td>${incoming.material_etc}</td>
 	</tr>

@@ -103,7 +103,7 @@
 			let in_no = chk.dataset.in_no;
 			const row = document.createElement("tr");
 			row.innerHTML = `
-					<td><input type="hidden" name="incomingDTOList[\${index}].material_material_no" value="\${no}" required>\${no}</td>
+					<td><input type="hidden" name="incomingDTOList[\${index}].material_no" value="\${no}" required>\${no}</td>
 					<td><input type="hidden" name="incomingDTOList[\${index}].material_name" value="\${name}" required>\${name}</td>
 					<td><input type="hidden" name="incomingDTOList[\${index}].material_code" value="\${code}" required>\${code}</td>
 					<td><input type="hidden" name="incomingDTOList[\${index}].material_raw_material" value="\${raw_material}" required>\${raw_material}</td>
@@ -188,7 +188,7 @@
 				<c:forEach var="incoming" items="${expected}" >
 				<tr>
 				<td><input type="checkbox" class="materialChk" 
-					data-no="${incoming.material_material_no}"
+					data-no="${incoming.material_no}"
 					data-name="${incoming.material_name}"
 					data-code="${incoming.material_code}"
 					data-raw_material="${incoming.material_raw_material}"

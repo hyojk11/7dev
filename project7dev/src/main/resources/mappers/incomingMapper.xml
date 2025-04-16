@@ -18,9 +18,9 @@
 		ms.mstorage_no,     
 		emp.emp_name,   
 		emp.emp_no,    
-		ms.supplier_sup_no,  
+		ms.sup_no,  
 		supplier.sup_name, 
-		m.product_product_no,         
+		m.product_no,         
 		mi.material_in_date, 
 		mi.state,
 		mi.material_in_no,  
@@ -28,7 +28,7 @@
 		           
 		FROM material_storage ms
 		JOIN material m
-		ON ms.material_material_no = m.material_no
+		ON ms.material_no = m.material_no
 		
 		LEFT JOIN (
 		    SELECT *
@@ -36,15 +36,15 @@
 		    WHERE mi1.material_in_no = (
 		        SELECT MIN(mi2.material_in_no)
 		        FROM material_in mi2
-		        WHERE mi2.material_material_no = mi1.material_material_no
+		        WHERE mi2.material_no = mi1.material_no
 		        AND mi2.state = 1
 		    )
-		) mi ON m.material_no = mi.material_material_no
+		) mi ON m.material_no = mi.material_no
 		
 		LEFT JOIN employee emp
-		ON ms.emp_emp_no = emp.emp_no  
+		ON ms.emp_no = emp.emp_no  
 		LEFT JOIN supplier 
-		ON ms.supplier_sup_no = supplier.sup_no  
+		ON ms.sup_no = supplier.sup_no  
 		<where>
 		<!-- 창고코드는 필수 조건 -->
 		ms.mstorage_code = #{mstorage_code}
@@ -60,10 +60,10 @@
 		</if>
 		
 		<!-- 자재 상태가 1(정상)인 것만 조회-->
-		AND mi.state = 1
+		AND ms.mstorage_code IS NOT NULL
 		
 		<!-- 자재수량이 0 이상여야 조회 -->
-		AND ms.mstorage_stock > 0
+		AND ms.mstorage_stock > 0 
 	</where>
 		ORDER BY ms.mstorage_code, m.material_name
 	</select>		
@@ -72,7 +72,7 @@
   	<!-- 창고에 입고예정인 자재목록조회 -->	
   	 <select id="selectExp" parameterType="kr.co.chill.incoming.IncomingDTO" resultType="kr.co.chill.incoming.IncomingDTO">
 			SELECT 
-		mi.material_material_no,	
+		mi.material_no,	
 	    m.material_name, 
 	    m.material_code, 
 	    m.material_raw_material, 
@@ -84,9 +84,9 @@
 	    mi.mstorage_in_date,
 	    mi.state
 		FROM material_in mi
-		JOIN material m ON mi.material_material_no = m.material_no
-		JOIN material_storage ms ON mi.material_storage_mstorage_no = ms.mstorage_no
-		left join supplier s ON ms.supplier_sup_no = s.sup_no
+		JOIN material m ON mi.material_no = m.material_no
+		JOIN material_storage ms ON mi.mstorage_no = ms.mstorage_no
+		left join supplier s ON ms.sup_no = s.sup_no
 		<where>
 		<!-- 자재 상태에 따라 조회-->
 		
@@ -112,21 +112,21 @@
 	<select id="checkMaterialInStorage" resultType="int">
 		  SELECT COUNT(*) 
 		  FROM material_storage 
-		  WHERE material_material_no = #{material_material_no}
+		  WHERE material_no = #{material_no}
 		  AND mstorage_code = #{mstorage_code}
 	</select>
 	
 	<!-- 창고 insert -->
 	<insert id="insertMaterialStorage">
-	 	 INSERT INTO material_storage (mstorage_no, mstorage_stock, mstorage_code, material_material_no, supplier_sup_no, emp_emp_no)
-	 	 VALUES (#{mstorage_no}, #{material_in_cnt}, #{mstorage_code}, #{material_material_no}, #{supplier_sup_no}, #{emp_emp_no})
+	 	 INSERT INTO material_storage (mstorage_no, mstorage_stock, mstorage_code, material_no, sup_no, emp_no)
+	 	 VALUES (#{mstorage_no}, #{material_in_cnt}, #{mstorage_code}, #{material_no}, #{sup_no}, #{emp_no})
 	</insert>
 	
 	<!-- 창고 update -->
 	<update id="updateMaterialStorage">
 		  UPDATE material_storage 
 		  SET mstorage_stock = mstorage_stock + #{material_in_cnt}
-		  WHERE material_material_no = #{material_material_no}
+		  WHERE material_no = #{material_no}
 		  AND mstorage_code = #{mstorage_code}
 	</update>
 	

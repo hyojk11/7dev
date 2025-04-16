@@ -42,22 +42,22 @@ public class IncomingServiceImpl implements IncomingService{
 				//창고에 존재하지 않으면 새로 추가
 				
 				if(dto.getMstorage_code().equals("MW002")) {
-					dto.setEmp_emp_no(3);
+					dto.setEmp_no(3);
 				}else if(dto.getMstorage_code().equals("MW001")) {
-					dto.setEmp_emp_no(4);
+					dto.setEmp_no(4);
 				}else if(dto.getMstorage_code().equals("MW003")) {
-					dto.setEmp_emp_no(5);
+					dto.setEmp_no(5);
 				}else {
 					 int randomEmpNo = (int)(Math.random() * 7) + 1; // 1~7 사이 랜덤
-					    dto.setEmp_emp_no(randomEmpNo);
+					    dto.setEmp_no(randomEmpNo);
 				}
 				
 				if(dto.getMstorage_code().equals("MW002")) {
-					dto.setProduct_product_no(1);
+					dto.setProduct_no(1);
 				}else if(dto.getMstorage_code().equals("MW001")) {
-					dto.setProduct_product_no(2);
+					dto.setProduct_no(2);
 				}else if(dto.getMstorage_code().equals("MW003")) {
-					dto.setProduct_product_no(3);
+					dto.setProduct_no(3);
 				}
 				
 				incomingDAO.insertMaterialStorage(dto);
