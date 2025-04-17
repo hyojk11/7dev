@@ -12,7 +12,7 @@
 	
 	<h1>창고별 자재 리스트</h1>
 	
-	<form action="material_storage" method="get">
+	<form action="${pageContext.request.contextPath}/incoming/material_storage" method="get">
 	창고코드 :
 	<select name="mstorage_code" required>
     <option value="MW001" <c:if test="${mstorage_code eq 'MW001'}">selected</c:if>>MW001</option>

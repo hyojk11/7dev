@@ -7,6 +7,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class IncomingServiceImpl implements IncomingService{
 	
@@ -82,6 +83,33 @@ public class IncomingServiceImpl implements IncomingService{
 	    public void updatePurchaseOrderStatus(List<Integer> purcOrderNos) {
 	        incomingDAO.updatePurchaseOrderStatus(purcOrderNos);
 	    }
+	    
+	    
+	 // 거래명세서
+	@Override
+	public List<Trans_paperDTO> tp_list() throws Exception {
+		// TODO Auto-generated method stub
+		
+		return incomingDAO.tp_list();
+	}
+
+		
+	// 거래명세서 조회
+	@Override
+	public Trans_paperDTO tp_detail(int trans_paper_no) throws Exception {
+		// TODO Auto-generated method stub
+		return incomingDAO.tp_detail(trans_paper_no);
+	}
+
+
+		
+	// 현황관리
+	@Override
+	public List<StatusDTO> status_list(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return incomingDAO.status_list(paramMap);
+	}
+    
 
 	
 }	
