@@ -7,10 +7,10 @@ public interface ProgressMonitoringService {
 	
 	//전체조회(페이징X)
 	List<ProgressMonitoringDTO> list();
-	List<ProgressMonitoringDTO> listPaged(Map<String, Object> map);
+	List<ProgressMonitoringDTO> listSearch(Map<String, Object> map);
 	
 	//전체조회(페이징)
-	List<ProgressMonitoringDTO> listSearch(Map<String, Object> map);
+	List<ProgressMonitoringDTO> listPaged(Map<String, Object> map);
 	List<ProgressMonitoringDTO> listSearchPaged(Map<String, Object> map);
 	int listSearchCount(Map<String, Object> map);
 
@@ -20,12 +20,13 @@ public interface ProgressMonitoringService {
 	List<ProgressMonitoringDTO> detailProgressList(String purc_order_code);
 	List<ProgressMonitoringDTO> detailProgressListByVer(Map<String, Object> map);
 	
+	//발주서 저장시 자동등록
+	void preRegister(ProgressMonitoringDTO dto);
+	
 	//등록
 	void register(ProgressMonitoringDTO dto);
 	String codemaker(String progress_monitoring_date);
 	
-	//삭제 후 상세페이지 재이동 위한 발주코드조회
-	String searchPoNo(int progress_monitoring_no);
 	//삭제
 	void delete(int progress_monitoring_no);
 	

@@ -20,7 +20,7 @@ public class MypageControllor {
 	private MypageService mypageService;
 	
 	
-	//마이페이지 이동
+	//사원 마이페이지 이동
 	@GetMapping(value="mypage/empDetail")
 	public ModelAndView empDetail(HttpSession session) {
 		
@@ -30,6 +30,20 @@ public class MypageControllor {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.setViewName("mypage/empDetail");
+		
+		return mav;
+	}
+	
+	//거래처 마이페이지 이동
+	@GetMapping(value="mypage/supDetail")
+	public ModelAndView supDetail(HttpSession session) {
+		
+		String user_id = (String) session.getAttribute("user_id");
+		UserDTO dto = mypageService.detailSup(user_id);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("dto", dto);
+		mav.setViewName("mypage/supDetail");
 		
 		return mav;
 	}

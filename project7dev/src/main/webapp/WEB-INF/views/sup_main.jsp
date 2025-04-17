@@ -16,6 +16,7 @@
 	</script>
 </c:if>
 <h1>SUP</h1>
+<button type="button" onclick="location.href='${contextPath}/mypage/supDetail'">마이페이지</button>
 <button type="button" onclick="location.href='${contextPath}/logout'">로그아웃</button>
 </body>
 </html>

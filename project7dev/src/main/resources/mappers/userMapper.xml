@@ -32,6 +32,15 @@
 		WHERE emp_id = #{user_id}
 	</select>
 	
+	<!-- 거래처 마이페이지 -->
+	<select id="detailSup" parameterType="string" resultType="kr.co.chill.user.UserDTO">
+		SELECT *
+		, CONCAT(sup_addr1,sup_addr2) AS sup_total_addr
+		FROM supplier
+		WHERE sup_id = #{user_id}
+	</select>
+	
+	
 	<!-- 아이디중복체크 -->
 	<select id="idCheck" parameterType="string" resultType="int">
 		SELECT COUNT(*)
