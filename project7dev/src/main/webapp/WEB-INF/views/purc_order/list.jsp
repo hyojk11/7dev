@@ -109,8 +109,8 @@
 			} else if(searchType === "purc_order_status") {
 				inputType.innerHTML = `
 					<select name="keyword">
-						<option value="0" ${param.keyword == '0' ? 'selected' : ''}>마감 전</option>
-						<option value="1" ${param.keyword == '1' ? 'selected' : ''}>마감완료</option>
+						<option value= 0 ${param.keyword == 0 ? 'selected' : ''}>마감 전</option>
+						<option value= 1 ${param.keyword == 1 ? 'selected' : ''}>마감완료</option>
 					</select>
 				`;
 			} else {

@@ -294,6 +294,7 @@
 		SELECT
 			po.purc_order_no
 			, po.purc_order_code
+			, po.purc_order_status
 			, DATE(po.purc_order_reg_date) AS po_date_only
 			, emp.emp_no
 			, emp.emp_name

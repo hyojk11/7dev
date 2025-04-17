@@ -125,7 +125,7 @@ public class PurchaseorderController {
 			row.createCell(5).setCellValue(dto.getMprice_currency());
 			row.createCell(6).setCellValue(dto.getMrp_due_date());
 			row.createCell(7).setCellValue(dto.getEmp_name());
-			row.createCell(8).setCellValue("0".equals(dto.getPurc_order_status()) ? "마감 전" : "마감완료");
+			row.createCell(8).setCellValue(dto.getPurc_order_status() == 0 ? "마감 전" : "마감완료");
 		}
 		
 		wb.write(response.getOutputStream());

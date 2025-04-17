@@ -212,7 +212,14 @@
 	
 	<!-- 자바스크립트 함수-->
 	<script>
-	
+		const contextPath = "${contextPath}";
+		const purcOrderStatus = "${dto.purc_order_status}";
+		
+		// 검수등록 버튼 숨기기
+		if(purcOrderStatus === '1') {
+			document.getElementById("openModalBtn").style.display = "none";
+		}
+		
 		//모달
 		document.getElementById("openModalBtn").onclick = function() {
 			document.getElementById("modal").style.display = "block";
@@ -223,7 +230,6 @@
 		};
 		
 		//검수 행 삭제
-		const contextPath = "${contextPath}";
 		document.querySelectorAll('.deleteBtn').forEach(btn => {
 		 btn.addEventListener('click',() => {
 			 const pro_no = btn.dataset.id;

@@ -215,6 +215,7 @@
 		JOIN material_resource_plan mrp ON po.mrp_no = mrp.mrp_no
 		JOIN material ma ON mrp.material_no = ma.material_no
 		JOIN material_unit_price mup ON ct.mprice_no = mup.mprice_no
+		WHERE po.purc_order_code = #{purc_order_code}
 	</select>
 	
 	

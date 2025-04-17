@@ -24,6 +24,7 @@ public class ProgressMonitoringDTO {
 	private String purc_order_code; //시리얼코드
 	private String purc_order_reg_date; //발주일
 	private String purc_order_dterms; //인도조건
+	private int purc_order_status; //발주마감여부
 	
 	private String end_date; //**납기일 별칭
 	private String po_date_only; //**발주일 날짜만 별칭
@@ -84,12 +85,12 @@ public class ProgressMonitoringDTO {
 			String progress_monitoring_etc, int progress_rate, int total_progress_rate, String next_progress_date,
 			int total_material_cnt, int rest_progress_cnt, String progress_eval, double expected_progress_rate,
 			String pm_date_only, int purc_order_no, String purc_order_code, String purc_order_reg_date,
-			String purc_order_dterms, String end_date, String po_date_only, int sup_no, String sup_name,
-			String sup_reg_no, String sup_ceo_name, String sup_phone, String sup_addr1, String sup_addr2,
-			String sup_cip, String sup_cip_phone, String sup_cip_email, String sup_total_addr, int comp_no,
-			String comp_name, String comp_ceo_name, String comp_reg_no, String comp_addr1, String comp_addr2,
-			String comp_total_addr, int cont_no, int cont_material_cnt, String cont_date, int emp_no, String emp_name,
-			String emp_email, int mrp_no, String mrp_due_date, int material_no, String material_name,
+			String purc_order_dterms, int purc_order_status, String end_date, String po_date_only, int sup_no,
+			String sup_name, String sup_reg_no, String sup_ceo_name, String sup_phone, String sup_addr1,
+			String sup_addr2, String sup_cip, String sup_cip_phone, String sup_cip_email, String sup_total_addr,
+			int comp_no, String comp_name, String comp_ceo_name, String comp_reg_no, String comp_addr1,
+			String comp_addr2, String comp_total_addr, int cont_no, int cont_material_cnt, String cont_date, int emp_no,
+			String emp_name, String emp_email, int mrp_no, String mrp_due_date, int material_no, String material_name,
 			String material_code) {
 		super();
 		this.progress_monitoring_no = progress_monitoring_no;
@@ -110,6 +111,7 @@ public class ProgressMonitoringDTO {
 		this.purc_order_code = purc_order_code;
 		this.purc_order_reg_date = purc_order_reg_date;
 		this.purc_order_dterms = purc_order_dterms;
+		this.purc_order_status = purc_order_status;
 		this.end_date = end_date;
 		this.po_date_only = po_date_only;
 		this.sup_no = sup_no;
@@ -357,6 +359,18 @@ public class ProgressMonitoringDTO {
 
 	public void setPurc_order_dterms(String purc_order_dterms) {
 		this.purc_order_dterms = purc_order_dterms;
+	}
+
+
+
+	public int getPurc_order_status() {
+		return purc_order_status;
+	}
+
+
+
+	public void setPurc_order_status(int purc_order_status) {
+		this.purc_order_status = purc_order_status;
 	}
 
 
@@ -743,20 +757,19 @@ public class ProgressMonitoringDTO {
 				+ total_material_cnt + ", rest_progress_cnt=" + rest_progress_cnt + ", progress_eval=" + progress_eval
 				+ ", expected_progress_rate=" + expected_progress_rate + ", pm_date_only=" + pm_date_only
 				+ ", purc_order_no=" + purc_order_no + ", purc_order_code=" + purc_order_code + ", purc_order_reg_date="
-				+ purc_order_reg_date + ", purc_order_dterms=" + purc_order_dterms + ", end_date=" + end_date
-				+ ", po_date_only=" + po_date_only + ", sup_no=" + sup_no + ", sup_name=" + sup_name + ", sup_reg_no="
-				+ sup_reg_no + ", sup_ceo_name=" + sup_ceo_name + ", sup_phone=" + sup_phone + ", sup_addr1="
-				+ sup_addr1 + ", sup_addr2=" + sup_addr2 + ", sup_cip=" + sup_cip + ", sup_cip_phone=" + sup_cip_phone
-				+ ", sup_cip_email=" + sup_cip_email + ", sup_total_addr=" + sup_total_addr + ", comp_no=" + comp_no
-				+ ", comp_name=" + comp_name + ", comp_ceo_name=" + comp_ceo_name + ", comp_reg_no=" + comp_reg_no
-				+ ", comp_addr1=" + comp_addr1 + ", comp_addr2=" + comp_addr2 + ", comp_total_addr=" + comp_total_addr
-				+ ", cont_no=" + cont_no + ", cont_material_cnt=" + cont_material_cnt + ", cont_date=" + cont_date
-				+ ", emp_no=" + emp_no + ", emp_name=" + emp_name + ", emp_email=" + emp_email + ", mrp_no=" + mrp_no
-				+ ", mrp_due_date=" + mrp_due_date + ", material_no=" + material_no + ", material_name=" + material_name
+				+ purc_order_reg_date + ", purc_order_dterms=" + purc_order_dterms + ", purc_order_status="
+				+ purc_order_status + ", end_date=" + end_date + ", po_date_only=" + po_date_only + ", sup_no=" + sup_no
+				+ ", sup_name=" + sup_name + ", sup_reg_no=" + sup_reg_no + ", sup_ceo_name=" + sup_ceo_name
+				+ ", sup_phone=" + sup_phone + ", sup_addr1=" + sup_addr1 + ", sup_addr2=" + sup_addr2 + ", sup_cip="
+				+ sup_cip + ", sup_cip_phone=" + sup_cip_phone + ", sup_cip_email=" + sup_cip_email
+				+ ", sup_total_addr=" + sup_total_addr + ", comp_no=" + comp_no + ", comp_name=" + comp_name
+				+ ", comp_ceo_name=" + comp_ceo_name + ", comp_reg_no=" + comp_reg_no + ", comp_addr1=" + comp_addr1
+				+ ", comp_addr2=" + comp_addr2 + ", comp_total_addr=" + comp_total_addr + ", cont_no=" + cont_no
+				+ ", cont_material_cnt=" + cont_material_cnt + ", cont_date=" + cont_date + ", emp_no=" + emp_no
+				+ ", emp_name=" + emp_name + ", emp_email=" + emp_email + ", mrp_no=" + mrp_no + ", mrp_due_date="
+				+ mrp_due_date + ", material_no=" + material_no + ", material_name=" + material_name
 				+ ", material_code=" + material_code + "]";
 	}
-
-
 
 
 }
