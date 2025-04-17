@@ -1,7 +1,9 @@
 package kr.co.chill.incoming;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.chill.HomeController;
 
@@ -46,8 +49,6 @@ public class IncomingController {
         } else {
             incomingDTO.setMaterial_code(itemCode);  // 조건 걸리게
         }
-       
-
     	// 날짜 범위도 DTO에 넣기
     	incomingDTO.setMaterial_in_date(request.getParameter("start_date"));
     	incomingDTO.setMaterial_in_date(request.getParameter("end_date"));
@@ -79,7 +80,6 @@ public class IncomingController {
            } else {
                incomingDTO.setMaterial_code(itemCode);  // 조건 걸리게
            }
-
            // state의 값에 따른 검색
            incomingDTO.setState(state);
            
@@ -112,5 +112,41 @@ public class IncomingController {
 	       return "redirect:/expected";
 	   }
 	
+	   
+	   
+	   //material_handling
+	   @GetMapping("/material_handling")
+	    public String getMaterials(
+	        @RequestParam(required = false) String order_code,
+	        @RequestParam(required = false) Integer state,
+	        @RequestParam(required = false) Integer purc_order_status,
+	        @RequestParam(required = false) String mstorage_in_date,
+	        @RequestParam(required = false) String start_date,
+	        @RequestParam(required = false) String end_date,
+	        Model model) {
 
+	        Map<String, Object> params = new HashMap<>();
+	        params.put("order_code", order_code);
+	        params.put("state", state);
+	        params.put("purc_order_status", purc_order_status);
+	        params.put("mstorage_in_date", mstorage_in_date);
+	        params.put("start_date", start_date);
+	        params.put("end_date", end_date);
+
+	        List<IncomingDTO> list = inService.searchMaterials(params);
+	        model.addAttribute("material_handling", list);
+	        model.addAttribute("state", state);
+	        model.addAttribute("purc_order_status", purc_order_status);
+	        model.addAttribute("mstorage_in_date", mstorage_in_date);
+
+	        return "/material_handling";
+	    }
+
+	    // 구매마감 처리
+	    @PostMapping("/purchaseClose")
+	    public String closePurchase(@RequestParam("purc_order_no") List<Integer> orderNo) {
+	    	inService.updatePurchaseOrderStatus(orderNo);
+	        return "redirect:/material_handling";
+	    }
+	  
 }

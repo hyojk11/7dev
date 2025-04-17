@@ -1,6 +1,7 @@
 package kr.co.chill.incoming;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IncomingDAO {
 	//창고별 자재리스트 전체조회 
@@ -18,5 +19,7 @@ public interface IncomingDAO {
 	// 자재예정에서 입고되면 state값 0에서 1로 변경
 	int updateMaterialState(IncomingDTO incomingDTO);
 
-
+	//material_handling 의 필요한 기능
+	List<IncomingDTO> searchMaterials(Map<String, Object> params);
+    void updatePurchaseOrderStatus(List<Integer> purcOrderNos);
 }

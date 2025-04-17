@@ -1,6 +1,7 @@
 package kr.co.chill.incoming;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ public class IncomingServiceImpl implements IncomingService{
 	
 	@Autowired
 	private IncomingDAO incomingDAO;
+	
+	 
 
 	@Override
 	public List<IncomingDTO> material_storage(IncomingDTO DTO) {
@@ -66,6 +69,19 @@ public class IncomingServiceImpl implements IncomingService{
 			incomingDAO.updateMaterialState(dto);
 		}
 	}
+
+	
+	
+	//material_handling에 필요한 기능
+	 @Override
+	    public List<IncomingDTO> searchMaterials(Map<String, Object> params) {
+	        return incomingDAO.searchMaterials(params);
+	    }
+
+	    @Override
+	    public void updatePurchaseOrderStatus(List<Integer> purcOrderNos) {
+	        incomingDAO.updatePurchaseOrderStatus(purcOrderNos);
+	    }
 
 	
 }	

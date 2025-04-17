@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>입고예정 리스트</title>
+<title>자재 입고 관리</title>
 
 <style>
 	/* 전체 레이아웃 */
@@ -119,15 +119,31 @@
 				// 창고 선택 셀 추가
 				let storageTd = document.createElement('td');
 				storageTd.innerHTML = `
-					<select name="incomingDTOList[\${index}].mstorage_code">
+					<select name="incomingDTOList[\${index}].mstorage_code" class="storageSelect">
 						<option value="MW001">MW001</option>
 						<option value="MW002">MW002</option>
 						<option value="MW003">MW003</option>
 					</select>
+					<input type="hidden" name="incomingDTOList[\${index}].mstorage_plant_code" class="plantCode" />
 				`;
 			
 			row.appendChild(storageTd);
 			modalTableBody.appendChild(row);
+			
+			// 이벤트 연결: select가 바뀔 때 plant_code 자동 설정
+				const select = storageTd.querySelector(".storageSelect");
+				const plantCodeInput = storageTd.querySelector(".plantCode");
+	
+				select.addEventListener("change", () => {
+					const codeMap = {
+						"MW001": "PL001",
+						"MW002": "PL002",
+						"MW003": "PL003"
+					};
+					plantCodeInput.value = codeMap[select.value] || "";
+				});
+				select.dispatchEvent(new Event("change"));
+				
 			index++;
 		});
 		document.getElementById('myModal').style.display = 'block';
@@ -148,13 +164,13 @@
 
 <body>
 
-	<h1>입고예정 리스트</h1>
+	<h1>자재입고관리</h1>
 	
 	<!-- 검색 조건 영역 -->
 	<form action="expected" method="Get">
 		자재코드 : <input type="text" name="material_code" value="${param.material_code}">
 	
-		검수상태 :
+		입고상태 :
 			검수중: <input type="radio" name="state" value="0" ${state == 0 ? 'checked' : ''}>
 			완료: <input type="radio" name="state" value="1" ${state == 1 ? 'checked' : ''}>
 
@@ -178,7 +194,16 @@
 					<th>단위</th>
 					<th>수량</th>
 					<th>공급업체</th>
-					<th>도착날짜</th>
+					<!-- 입고 상태에 따라 동적으로 컬럼명 표시 -->
+				    <c:choose>
+				      <c:when test="${state == 1}">
+				        <th>입고날짜</th>
+				      </c:when>
+				      <c:otherwise>
+				        <th>도착날짜</th>
+				      </c:otherwise>
+				    </c:choose>
+				    <th>입고가능여부</th>
 					<th>상태</th>
 					<th>입고번호</th>
 				</tr>
@@ -198,10 +223,13 @@
 					data-sup_name="${incoming.sup_name}"
 					data-in_date="${incoming.mstorage_in_date}"
 					data-state="${incoming.state}"
+					data-status="${incoming.purc_order_status}"
 					data-in_no="${incoming.material_in_no}"
-					<c:if test="${incoming.state == 1}">disabled</c:if> 
+					<c:if test="${incoming.state == 1 || incoming.purc_order_status == 0}">disabled</c:if>
+					
 				 ></td> 
-					<!-- <c:if test="${incoming.state == 1}">disabled</c:if> state의 값이 1이면 체크박스 비활성화 -->	
+					<!-- <c:if test="${incoming.state == 1 || incoming.purc_order_status == 0}">disabled</c:if> 
+							state(이미 창고에 입고)의 값이 1이거나, purc_order_status(구매마감상태'미완료')의 값이 0이면 체크선택 불가 체크박스 비활성화 -->
 					<td>${incoming.material_name}</td>
 					<td>${incoming.material_code}</td>
 					<td>${incoming.material_raw_material}</td>
@@ -210,7 +238,8 @@
 					<td>${incoming.material_in_cnt}</td>
 					<td>${incoming.sup_name}</td>
 					<td>${incoming.mstorage_in_date}</td>
-					<td>${incoming.state == 0 ? '검수중' : '검수완료'}</td>
+					<td>${incoming.purc_order_status == 0 ? '입고불가' : '입고가능' }
+					<td>${incoming.state == 0 ? '입고대기' : '입고완료'}</td>
 					<td>${incoming.material_in_no}</td>
 				</tr>
 				</c:forEach>
@@ -221,8 +250,12 @@
 	<br>
 	
 	<!-- 모달창열기 -->
-	<button type="button" onclick="openModal()">자재 등록</button>
 	
+	<c:if test="${state != 1}">
+    <button type="button" onclick="openModal()">자재 등록</button>
+	</c:if>
+	
+					
 	<!-- 모달창 -->
 	
 	<div id="myModal" style="display:none; border:1px solid black; padding:20px;">
@@ -240,7 +273,15 @@
 							<th>단위</th>
 							<th>수량</th>
 							<th>공급업체</th>
-							<th>입고날짜</th>
+							<!-- 입고 상태에 따라 동적으로 컬럼명 표시 -->
+						    <c:choose>
+						      <c:when test="${state == 1}">
+						        <th>입고날짜</th>
+						      </c:when>
+						      <c:otherwise>
+						        <th>도착날짜</th>
+						      </c:otherwise>
+						    </c:choose>
 							<th>상태</th>
 							<th>입고번호</th>
 							<th>창고</th>

@@ -1,6 +1,7 @@
 package kr.co.chill.incoming;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ public class IncomingDAOImpl implements IncomingDAO{
 
 	@Autowired
 	private SqlSession session;
+	
+	
 
 	@Override
 	public List<IncomingDTO> material_storage(IncomingDTO incomingDTO) {
@@ -52,5 +55,20 @@ public class IncomingDAOImpl implements IncomingDAO{
 		// TODO Auto-generated method stub
 		return session.update("kr.co.chill.incomingMapper.updateMaterialState", incomingDTO);
 	}
+
+	
+	//material_handling 의 필요한 기능
+
+	  @Override
+	    public List<IncomingDTO> searchMaterials(Map<String, Object> params) {
+	        return session.selectList("kr.co.chill.incomingMapper.searchMaterials", params);
+	    }
+
+	    @Override
+	    public void updatePurchaseOrderStatus(List<Integer> purcOrderNos) {
+	        session.update("kr.co.chill.incomingMapper.updatePurchaseOrderStatus", purcOrderNos);
+	    }
+	
+	
 
 }

@@ -60,7 +60,6 @@
 		<td>${incoming.sup_name}</td>
 		<td>${incoming.product_no}</td>
 		<td>${incoming.material_in_date}</td>
-		<td>${incoming.material_etc}</td>
 	</tr>
 	</c:forEach>
 	</tbody>

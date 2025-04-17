@@ -80,13 +80,20 @@
 	    m.material_unit, 
 	    mi.material_in_cnt, 
 	    mi.material_in_no,
+	    mi.material_in_date,
 	    s.sup_name,     
 	    mi.mstorage_in_date,
-	    mi.state
+	    mi.state,
+		tp.purc_order_no,
+        po.purc_order_code,
+        po.purc_order_reg_date,
+        po.purc_order_status
 		FROM material_in mi
 		JOIN material m ON mi.material_no = m.material_no
 		JOIN material_storage ms ON mi.mstorage_no = ms.mstorage_no
-		left join supplier s ON ms.sup_no = s.sup_no
+		LEFT JOIN supplier s ON ms.sup_no = s.sup_no
+		LEFT JOIN trans_paper tp ON mi.material_no = tp.material_no
+    	LEFT JOIN purchase_order po ON tp.purc_order_no = po.purc_order_no
 		<where>
 		<!-- 자재 상태에 따라 조회-->
 		
@@ -118,8 +125,8 @@
 	
 	<!-- 창고 insert -->
 	<insert id="insertMaterialStorage">
-	 	 INSERT INTO material_storage (mstorage_no, mstorage_stock, mstorage_code, material_no, sup_no, emp_no)
-	 	 VALUES (#{mstorage_no}, #{material_in_cnt}, #{mstorage_code}, #{material_no}, #{sup_no}, #{emp_no})
+	 	 INSERT INTO material_storage (mstorage_no, mstorage_stock, mstorage_code, material_no, sup_no, emp_no, mstorage_plant_code)
+	 	 VALUES (#{mstorage_no}, #{material_in_cnt}, #{mstorage_code}, #{material_no}, #{sup_no}, #{emp_no}, #{mstorage_plant_code})
 	</insert>
 	
 	<!-- 창고 update -->
@@ -136,5 +143,65 @@
 		  SET state = 1 , material_in_date = now()
 		  WHERE material_in_no = #{material_in_no} AND state = 0
 	</update>
+	
+	
+	  	<!-- 창고에 입고예정인 자재목록조회 -->	
+  	 <select id="searchMaterials" parameterType="map" resultType="kr.co.chill.incoming.IncomingDTO">
+			SELECT 
+		mi.material_no,	
+	    m.material_name, 
+	    m.material_code, 
+	    m.material_raw_material, 
+	    m.material_description, 
+	    m.material_unit, 
+	    mi.material_in_cnt, 
+	    mi.material_in_no,
+	    s.sup_name,     
+	    mi.mstorage_in_date,
+	    mi.state,
+	    tp.purc_order_no,
+        po.purc_order_code,
+        po.purc_order_reg_date,
+        po.purc_order_status
+		FROM material_in mi
+		JOIN material m ON mi.material_no = m.material_no
+		JOIN material_storage ms ON mi.mstorage_no = ms.mstorage_no
+		LEFT JOIN supplier s ON ms.sup_no = s.sup_no
+		LEFT JOIN trans_paper tp ON mi.material_no = tp.material_no
+    	LEFT JOIN purchase_order po ON tp.purc_order_no = po.purc_order_no
+		   <where>
+        <if test="order_code != null and order_code != ''">
+            AND po.purc_order_code LIKE CONCAT('%', #{order_code}, '%')
+        </if>
+        <if test="state != null">
+            AND mi.state = #{state}
+        </if>
+        <if test="purc_order_status != null">
+            AND po.purc_order_status = #{purc_order_status}
+        </if>
+        <if test="mstorage_in_date == '1'">
+            AND mi.mstorage_in_date IS NOT NULL
+        </if>
+        <if test="mstorage_in_date == '0'">
+            AND mi.mstorage_in_date IS NULL
+        </if>
+        <if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+            AND po.purc_order_reg_date BETWEEN #{start_date} AND #{end_date}
+        </if>
+   			 </where>
+   		 ORDER BY po.purc_order_reg_date DESC
+	
+	</select>
+
+
+		<!-- 구매마감 처리 시 purc_order_status값 변경 -->
+		<update id="updatePurchaseOrderStatus" parameterType="list">
+		    UPDATE purchase_order
+		    SET purc_order_status = 1
+		    WHERE purc_order_no IN
+		    <foreach item="no" collection="list" open="(" separator="," close=")">
+		        #{no}
+		    </foreach>
+		</update>
 	
 </mapper>
