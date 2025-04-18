@@ -97,10 +97,13 @@
 			let description = chk.dataset.description;
 			let unit = chk.dataset.unit;
 			let cnt = chk.dataset.cnt;
+			let sup_no = chk.dataset.sup_no;
 			let sup_name = chk.dataset.sup_name;
 			let in_date = chk.dataset.in_date;
-			let state = chk.dataset.state;
+			let material_in_state = chk.dataset.material_in_state;
 			let in_no = chk.dataset.in_no;
+			let mstorage_snapshot_month = chk.dataset.mstorage_snapshot_month;
+			
 			const row = document.createElement("tr");
 			row.innerHTML = `
 					<td><input type="hidden" name="incomingDTOList[\${index}].material_no" value="\${no}" required>\${no}</td>
@@ -110,10 +113,11 @@
 					<td><input type="hidden" name="incomingDTOList[\${index}].material_description" value="\${description}" required>\${description}</td>
 					<td><input type="hidden" name="incomingDTOList[\${index}].material_unit" value="\${unit}" required>\${unit}</td>
 					<td><input type="hidden" name="incomingDTOList[\${index}].material_in_cnt" value="\${cnt}" required>\${cnt}</td>
-					<td><input type="hidden" name="incomingDTOList[\${index}].sup_name" value="\${sup_name}" required>\${sup_name}</td>
+				    <td><input type="hidden" name="incomingDTOList[\${index}].sup_no" value="\${sup_no}" required>\${sup_name}</td>
 					<td><input type="hidden" name="incomingDTOList[\${index}].mstorage_in_date" value="\${in_date}" required>\${in_date}</td>
-					<td><input type="hidden" name="incomingDTOList[\${index}].state" value="\${state}" required>${incoming.state == 0 ? '검수중' : '검수완료'}</td>
+					<td><input type="hidden" name="incomingDTOList[\${index}].material_in_state" value="\${material_in_state}" required>${incoming.material_in_state == 0 ? '검수중' : '검수완료'}</td>
 					<td><input type="hidden" name="incomingDTOList[\${index}].material_in_no" value="\${in_no}" required>\${in_no}</td>
+					<td><input type="hidden" name="incomingDTOList[\${index}].mstorage_snapshot_month" value="\${mstorage_snapshot_month}" required></td>
 			`;
 			
 				// 창고 선택 셀 추가
@@ -167,12 +171,12 @@
 	<h1>자재입고관리</h1>
 	
 	<!-- 검색 조건 영역 -->
-	<form action="expected" method="Get">
+	<form action="${pageContext.request.contextPath}/incoming/expected" method="Get">
 		자재코드 : <input type="text" name="material_code" value="${param.material_code}">
 	
 		입고상태 :
-			검수중: <input type="radio" name="state" value="0" ${state == 0 ? 'checked' : ''}>
-			완료: <input type="radio" name="state" value="1" ${state == 1 ? 'checked' : ''}>
+			검수중: <input type="radio" name="material_in_state" value="0" ${material_in_state == 0 ? 'checked' : ''}>
+			완료: <input type="radio" name="material_in_state" value="1" ${material_in_state == 1 ? 'checked' : ''}>
 
 		입고날짜 : 	
 		<input type="date" name="start_date" value="${param.start_date}"> ~ 
@@ -196,7 +200,7 @@
 					<th>공급업체</th>
 					<!-- 입고 상태에 따라 동적으로 컬럼명 표시 -->
 				    <c:choose>
-				      <c:when test="${state == 1}">
+				      <c:when test="${material_in_state == 1}">
 				        <th>입고날짜</th>
 				      </c:when>
 				      <c:otherwise>
@@ -220,16 +224,18 @@
 					data-description="${incoming.material_description}"
 					data-unit="${incoming.material_unit}"
 					data-cnt="${incoming.material_in_cnt}"
+					data-sup_no="${incoming.sup_no}"
 					data-sup_name="${incoming.sup_name}"
 					data-in_date="${incoming.mstorage_in_date}"
-					data-state="${incoming.state}"
+					data-material_in_state="${incoming.material_in_state}"
 					data-status="${incoming.purc_order_status}"
 					data-in_no="${incoming.material_in_no}"
-					<c:if test="${incoming.state == 1 || incoming.purc_order_status == 0}">disabled</c:if>
+					data-mstorage_snapshot_month="${incoming.mstorage_snapshot_month}"
+					<c:if test="${incoming.material_in_state == 1 || incoming.purc_order_status == 0}">disabled</c:if>
 					
 				 ></td> 
-					<!-- <c:if test="${incoming.state == 1 || incoming.purc_order_status == 0}">disabled</c:if> 
-							state(이미 창고에 입고)의 값이 1이거나, purc_order_status(구매마감상태'미완료')의 값이 0이면 체크선택 불가 체크박스 비활성화 -->
+					<!-- <c:if test="${incoming.material_in_state == 1 || incoming.purc_order_status == 0}">disabled</c:if> 
+							material_in_state(이미 창고에 입고)의 값이 1이거나, purc_order_status(구매마감상태'미완료')의 값이 0이면 체크선택 불가 체크박스 비활성화 -->
 					<td>${incoming.material_name}</td>
 					<td>${incoming.material_code}</td>
 					<td>${incoming.material_raw_material}</td>
@@ -239,7 +245,7 @@
 					<td>${incoming.sup_name}</td>
 					<td>${incoming.mstorage_in_date}</td>
 					<td>${incoming.purc_order_status == 0 ? '입고불가' : '입고가능' }
-					<td>${incoming.state == 0 ? '입고대기' : '입고완료'}</td>
+					<td>${incoming.material_in_state == 0 ? '입고대기' : '입고완료'}</td>
 					<td>${incoming.material_in_no}</td>
 				</tr>
 				</c:forEach>
@@ -251,7 +257,7 @@
 	
 	<!-- 모달창열기 -->
 	
-	<c:if test="${state != 1}">
+	<c:if test="${material_in_state != 1}">
     <button type="button" onclick="openModal()">자재 등록</button>
 	</c:if>
 	
@@ -261,7 +267,7 @@
 	<div id="myModal" style="display:none; border:1px solid black; padding:20px;">
 	
 		<h3>선택한 자재 리스트</h3>
-	<form action="${pageContext.request.contextPath}/expected/inProcess" method="post">
+	<form action="${pageContext.request.contextPath}/incoming/expected/inProcess" method="post">
 		<table id="modalTable" border="1">
 			<thead>
 				<tr>
@@ -275,7 +281,7 @@
 							<th>공급업체</th>
 							<!-- 입고 상태에 따라 동적으로 컬럼명 표시 -->
 						    <c:choose>
-						      <c:when test="${state == 1}">
+						      <c:when test="${material_in_state == 1}">
 						        <th>입고날짜</th>
 						      </c:when>
 						      <c:otherwise>

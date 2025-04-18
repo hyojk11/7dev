@@ -19,6 +19,7 @@ public class IncomingDTO {
 	private	int mstorage_stock;//자재수량
 	private String mstorage_code;//창고코드
 	private String mstorage_plant_code;
+	private String mstorage_snapshot_month;
 	//emp 테이블
 	private int emp_no;//담당자 번호
 	private String emp_name;//담당자 이름
@@ -35,7 +36,7 @@ public class IncomingDTO {
 	private String material_in_date;//입고날짜
 	private String mstorage_in_date;//자재 도착날짜
 	private int material_in_cnt;//입고예정수량 
-	private Integer state;//자재입고여부 상태
+	private Integer material_in_state;//자재입고여부 상태
 	
 	//날짜검색에 필요한 변수
 	private String start_date;//검색 시작날짜
@@ -51,10 +52,10 @@ public class IncomingDTO {
 
 	public IncomingDTO(int material_no, String material_name, String material_code, String material_raw_material,
 			String material_description, String material_unit, String material_etc, int mstorage_no, int mstorage_stock,
-			String mstorage_code, String mstorage_plant_code, int emp_no, String emp_name, String sup_name, int sup_no,
-			int product_no, int material_in_no, String material_in_date, String mstorage_in_date, int material_in_cnt,
-			Integer state, String start_date, String end_date, Integer purc_order_no, String purc_order_code,
-			Integer purc_order_status, String purc_order_reg_date) {
+			String mstorage_code, String mstorage_plant_code, String mstorage_snapshot_month, int emp_no,
+			String emp_name, String sup_name, int sup_no, int product_no, int material_in_no, String material_in_date,
+			String mstorage_in_date, int material_in_cnt, Integer material_in_state, String start_date, String end_date,
+			Integer purc_order_no, String purc_order_code, Integer purc_order_status, String purc_order_reg_date) {
 		super();
 		this.material_no = material_no;
 		this.material_name = material_name;
@@ -67,6 +68,7 @@ public class IncomingDTO {
 		this.mstorage_stock = mstorage_stock;
 		this.mstorage_code = mstorage_code;
 		this.mstorage_plant_code = mstorage_plant_code;
+		this.mstorage_snapshot_month = mstorage_snapshot_month;
 		this.emp_no = emp_no;
 		this.emp_name = emp_name;
 		this.sup_name = sup_name;
@@ -76,7 +78,7 @@ public class IncomingDTO {
 		this.material_in_date = material_in_date;
 		this.mstorage_in_date = mstorage_in_date;
 		this.material_in_cnt = material_in_cnt;
-		this.state = state;
+		this.material_in_state = material_in_state;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.purc_order_no = purc_order_no;
@@ -173,6 +175,14 @@ public class IncomingDTO {
 		this.mstorage_plant_code = mstorage_plant_code;
 	}
 
+	public String getMstorage_snapshot_month() {
+		return mstorage_snapshot_month;
+	}
+
+	public void setMstorage_snapshot_month(String mstorage_snapshot_month) {
+		this.mstorage_snapshot_month = mstorage_snapshot_month;
+	}
+
 	public int getEmp_no() {
 		return emp_no;
 	}
@@ -245,12 +255,12 @@ public class IncomingDTO {
 		this.material_in_cnt = material_in_cnt;
 	}
 
-	public Integer getState() {
-		return state;
+	public Integer getMaterial_in_state() {
+		return material_in_state;
 	}
 
-	public void setState(Integer state) {
-		this.state = state;
+	public void setMaterial_in_state(Integer material_in_state) {
+		this.material_in_state = material_in_state;
 	}
 
 	public String getStart_date() {
@@ -307,14 +317,16 @@ public class IncomingDTO {
 				+ material_code + ", material_raw_material=" + material_raw_material + ", material_description="
 				+ material_description + ", material_unit=" + material_unit + ", material_etc=" + material_etc
 				+ ", mstorage_no=" + mstorage_no + ", mstorage_stock=" + mstorage_stock + ", mstorage_code="
-				+ mstorage_code + ", mstorage_plant_code=" + mstorage_plant_code + ", emp_no=" + emp_no + ", emp_name="
-				+ emp_name + ", sup_name=" + sup_name + ", sup_no=" + sup_no + ", product_no=" + product_no
-				+ ", material_in_no=" + material_in_no + ", material_in_date=" + material_in_date
-				+ ", mstorage_in_date=" + mstorage_in_date + ", material_in_cnt=" + material_in_cnt + ", state=" + state
-				+ ", start_date=" + start_date + ", end_date=" + end_date + ", purc_order_no=" + purc_order_no
-				+ ", purc_order_code=" + purc_order_code + ", purc_order_status=" + purc_order_status
-				+ ", purc_order_reg_date=" + purc_order_reg_date + "]";
+				+ mstorage_code + ", mstorage_plant_code=" + mstorage_plant_code + ", mstorage_snapshot_month="
+				+ mstorage_snapshot_month + ", emp_no=" + emp_no + ", emp_name=" + emp_name + ", sup_name=" + sup_name
+				+ ", sup_no=" + sup_no + ", product_no=" + product_no + ", material_in_no=" + material_in_no
+				+ ", material_in_date=" + material_in_date + ", mstorage_in_date=" + mstorage_in_date
+				+ ", material_in_cnt=" + material_in_cnt + ", material_in_state=" + material_in_state + ", start_date="
+				+ start_date + ", end_date=" + end_date + ", purc_order_no=" + purc_order_no + ", purc_order_code="
+				+ purc_order_code + ", purc_order_status=" + purc_order_status + ", purc_order_reg_date="
+				+ purc_order_reg_date + "]";
 	}
+
 
 	
 }

@@ -5,25 +5,94 @@
 <mapper namespace="kr.co.chill.supplierMapper">
 	<!-- 거래처정보 불러오기(기본셋) -->
 	<select id="readSupplier" resultType="SupplierDTO">
-		select * from supplier	
+		select 
+		sup_no as supNo,
+		sup_category as supCategory,
+		sup_reg_no as supRegNo,
+		sup_name as supName,
+		sup_ceo_name as supCeoName,
+		sup_phone as supPhone,
+		sup_email as supEmail,
+		sup_addr1 as supAddr1,
+		sup_addr2 as supAddr2,
+		sup_cip as supCip,
+		sup_cip_phone as supCipPhone,
+		sup_cip_email as supCipEmail,
+		sup_id as supId,
+		sup_password as supPassword,
+		sup_etc as eupEtc
+		from supplier	
 	</select>
 	<!-- 거래처정보 상세보기(선택) -->
 	<select id="readSupplierBySupNo" resultType="SupplierDTO">
-		select * from supplier
+		select 
+		sup_no as supNo,
+		sup_category as supCategory,
+		sup_reg_no as supRegNo,
+		sup_name as supName,
+		sup_ceo_name as supCeoName,
+		sup_phone as supPhone,
+		sup_email as supEmail,
+		sup_addr1 as supAddr1,
+		sup_addr2 as supAddr2,
+		sup_cip as supCip,
+		sup_cip_phone as supCipPhone,
+		sup_cip_email as supCipEmail,
+		sup_id as supId,
+		sup_password as supPassword,
+		sup_etc as eupEtc
+		from supplier
 		where sup_no=#{supNo}
 	</select>
 	
 	<!-- 거래처정보 검색조회(거래처명,사업자번호) -->
 	<select id="searchSupplier" parameterType="map" resultType="SupplierDTO">
-		select * from supplier 	
+		select 
+		sup_no as supNo,
+		sup_category as supCategory,
+		sup_reg_no as supRegNo,
+		sup_name as supName,
+		sup_ceo_name as supCeoName,
+		sup_phone as supPhone,
+		sup_email as supEmail,
+		sup_addr1 as supAddr1,
+		sup_addr2 as supAddr2,
+		sup_cip as supCip,
+		sup_cip_phone as supCipPhone,
+		sup_cip_email as supCipEmail,
+		sup_id as supId,
+		sup_password as supPassword,
+		sup_etc as eupEtc
+		from supplier 	
 		<where>
-       		<if test="searchType == 'supName' and searchValue != null and searchValue != ''">
+       		<if test="searchType eq 'supName' and searchValue != null and searchValue != ''">
             	AND sup_name LIKE CONCAT('%', #{searchValue}, '%')
         	</if>
-        	<if test="searchType == 'supRegNo' and searchValue != null and searchValue != ''">
+        	<if test="searchType eq 'supRegNo' and searchValue != null and searchValue != ''">
         	    AND sup_reg_no LIKE CONCAT('%', #{searchValue}, '%')
         	</if>
     	</where>
+	</select>
+	<!-- 사업자번호로 거래처 가져오기 -->
+	<select id="getSupplierBySupRegNo" parameterType="String" resultType="SupplierDTO">
+		select 
+		sup_no as supNo,
+		sup_category as supCategory,
+		sup_reg_no as supRegNo,
+		sup_name as supName,
+		sup_ceo_name as supCeoName,
+		sup_phone as supPhone,
+		sup_email as supEmail,
+		sup_addr1 as supAddr1,
+		sup_addr2 as supAddr2,
+		sup_cip as supCip,
+		sup_cip_phone as supCipPhone,
+		sup_cip_email as supCipEmail,
+		sup_id as supId,
+		sup_password as supPassword,
+		sup_etc as eupEtc
+		from supplier
+		where sup_reg_no LIKE CONCAT('%', #{supRegNo}, '%')
 	</select>
 	
 	<!-- 거래처 신규등록 -->
@@ -45,9 +114,8 @@
 	
 	<!-- 거래처 삭제 -->
 	<delete id="deleteSupplier" parameterType="int">
-		delete supplier
+		delete from supplier
 		where sup_no=#{supNo}
 	</delete>
-
 
 </mapper>

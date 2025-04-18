@@ -5,11 +5,21 @@
 <mapper namespace="kr.co.chill.productMapper">
 	<!-- 품목정보 불러오기(기본셋) -->
 	<select id="readProduct" resultType="ProductDTO">
-		select * from product
+		select 
+		product_no as productNo, 
+		product_name as productName, 
+		product_code as productCode, 
+		eop
+		from product 
 	</select>
 	<!-- 품목정보 검색조회(품목코드,품목명,판매상태) -->
 	<select id="searchProduct" parameterType="map" resultType="ProductDTO">
-		select * from product 	
+		select 
+		product_no as productNo, 
+		product_name as productName, 
+		product_code as productCode, 
+		eop 
+		from product 	
 		<where>
        		<if test="searchType == 'productCode' and searchValue != null and searchValue != ''">
             	AND product_code LIKE CONCAT('%', #{searchValue}, '%')
@@ -21,8 +31,23 @@
 	</select>
 	<!-- 품목정보 검색조회(제품코드, 외부용) -->
 	<select id="getProductByProductCode" resultType="ProductDTO">
-		select * from product
+		select 
+		product_no as productNo, 
+		product_name as productName, 
+		product_code as productCode, 
+		eop 
+		from product
 		where product_code=#{productCode}
+	</select>
+	<!-- 선택조회(상세보기,bom 화면출력용) -->
+	<select id="getProductByProductNo" parameterType="int" resultType="ProductDTO">
+		select 
+		product_no as productNo, 
+		product_name as productName, 
+		product_code as productCode, 
+		eop 
+		from product
+		where product_no=#{productNo}
 	</select>
 	
 	<!-- 품목추가 -->

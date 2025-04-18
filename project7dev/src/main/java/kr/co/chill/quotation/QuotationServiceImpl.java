@@ -1,5 +1,7 @@
 package kr.co.chill.quotation;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +36,13 @@ public class QuotationServiceImpl implements QuotationService {
 	@Override
 	public void createQuotation(QuotationDTO quotationDTO) throws Exception {
 		// TODO Auto-generated method stub
+	    String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+	    String baseCode = "QT" + today;
+
+	    int countToday = quotationDAO.countQuotationToday(today);
+	    String newQuotCode = baseCode + String.format("%02d", countToday + 1);
+
+	    quotationDTO.setQuotCode(newQuotCode);
 		quotationDAO.createQuotation(quotationDTO);
 	}
 	//수정
@@ -44,9 +53,9 @@ public class QuotationServiceImpl implements QuotationService {
 	}
 	//견적확정시
 	@Override
-	public void updateQuotState(Map<String, Object> updateMap) throws Exception {
+	public void updateQuotState(int quotNo) throws Exception {
 		// TODO Auto-generated method stub
-		quotationDAO.updateQuotState(updateMap);
+		quotationDAO.updateQuotState(quotNo);
 	}
 	//삭제
 	@Override

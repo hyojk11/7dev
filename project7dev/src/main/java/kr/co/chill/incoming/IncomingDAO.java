@@ -22,4 +22,16 @@ public interface IncomingDAO {
 	//material_handling 의 필요한 기능
 	List<IncomingDTO> searchMaterials(Map<String, Object> params);
     void updatePurchaseOrderStatus(List<Integer> purcOrderNos);
+    
+    // 거래명세서 목록
+ 	List<Trans_paperDTO> tp_list()throws Exception;
+ 	
+ 	
+ 	// 거래명세서 상세보기
+ 	Trans_paperDTO tp_detail(int trans_paper_no)throws Exception;
+ 	
+ 	
+ 	// 현황관리
+ 	List<StatusDTO> status_list(Map<String, Object> paramMap);
+ 	
 }

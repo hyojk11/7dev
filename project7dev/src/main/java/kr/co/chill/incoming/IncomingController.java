@@ -17,12 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.chill.HomeController;
+
 
 @Controller
 public class IncomingController {
@@ -34,7 +36,7 @@ public class IncomingController {
 	
 	
 	//자재창고에 있는 자재리스트확인
-    @GetMapping(value="/material_storage")
+    @GetMapping(value="incoming/material_storage")
     public ModelAndView material_storage(IncomingDTO incomingDTO
     		, @RequestParam(value = "material_code", required = false) String code
     		, HttpServletRequest request) throws UnsupportedEncodingException {
@@ -58,16 +60,16 @@ public class IncomingController {
        logger.info("리스트:" + material_storage);
        mav.addObject("mstorage_code", incomingDTO.getMstorage_code());
        mav.addObject("material_storage", material_storage);
-       mav.setViewName("material_storage");
+       mav.setViewName("incoming/material_storage");
         return mav;
     }
     
     
     // 입고예정 자재리스트
-    @GetMapping(value="/expected")
+    @GetMapping(value="incoming/expected")
     public ModelAndView expected(IncomingDTO incomingDTO
     		, @RequestParam(value = "material_code", required = false) String code
-    		, @RequestParam(value = "state", required = false, defaultValue = "0") int state
+    		, @RequestParam(value = "material_in_state", required = false, defaultValue = "0") int material_in_state
     		, HttpServletRequest request) throws UnsupportedEncodingException {
     	ModelAndView mav = new ModelAndView();
     	request.setCharacterEncoding("UTF-8");
@@ -80,8 +82,8 @@ public class IncomingController {
            } else {
                incomingDTO.setMaterial_code(itemCode);  // 조건 걸리게
            }
-           // state의 값에 따른 검색
-           incomingDTO.setState(state);
+           // material_in_state의 값에 따른 검색
+           incomingDTO.setMaterial_in_state(material_in_state);
            
      // 날짜 범위도 DTO에 넣기
     	incomingDTO.setMaterial_in_date(request.getParameter("start_date"));
@@ -92,15 +94,15 @@ public class IncomingController {
     	
     	logger.info("material_code: " + incomingDTO.getMaterial_code());
     	mav.addObject("mstorage_code", incomingDTO.getMstorage_code());
-    	mav.addObject("state", state);
+    	mav.addObject("material_in_state", material_in_state);
     	mav.addObject("expected", expected);
-    	mav.setViewName("expected");
+    	mav.setViewName("incoming/expected");
     	return mav;
     }
     
     
     	// 입고처리
-	   @PostMapping("/expected/inProcess")
+	   @PostMapping("incoming/expected/inProcess")
 	  public String materialInProcess(@ModelAttribute IncomingWrapperList wrapper) {
 	   	List<IncomingDTO> list = wrapper.getIncomingDTOList();
 	   	System.out.println("incomingDTOListWrapper:" + wrapper);
@@ -109,16 +111,16 @@ public class IncomingController {
 	   	    
 	   	}
 	       inService.materialInProcess(list);
-	       return "redirect:/expected";
+	       return "redirect:/incoming/expected";
 	   }
 	
 	   
 	   
 	   //material_handling
-	   @GetMapping("/material_handling")
+	   @GetMapping("incoming/material_handling")
 	    public String getMaterials(
 	        @RequestParam(required = false) String order_code,
-	        @RequestParam(required = false) Integer state,
+	        @RequestParam(required = false) Integer material_in_state,
 	        @RequestParam(required = false) Integer purc_order_status,
 	        @RequestParam(required = false) String mstorage_in_date,
 	        @RequestParam(required = false) String start_date,
@@ -127,7 +129,7 @@ public class IncomingController {
 
 	        Map<String, Object> params = new HashMap<>();
 	        params.put("order_code", order_code);
-	        params.put("state", state);
+	        params.put("material_in_state", material_in_state);
 	        params.put("purc_order_status", purc_order_status);
 	        params.put("mstorage_in_date", mstorage_in_date);
 	        params.put("start_date", start_date);
@@ -135,18 +137,78 @@ public class IncomingController {
 
 	        List<IncomingDTO> list = inService.searchMaterials(params);
 	        model.addAttribute("material_handling", list);
-	        model.addAttribute("state", state);
+	        model.addAttribute("material_in_state", material_in_state);
 	        model.addAttribute("purc_order_status", purc_order_status);
 	        model.addAttribute("mstorage_in_date", mstorage_in_date);
 
-	        return "/material_handling";
+	        return "incoming/material_handling";
 	    }
 
 	    // 구매마감 처리
-	    @PostMapping("/purchaseClose")
+	    @PostMapping("incoming/purchaseClose")
 	    public String closePurchase(@RequestParam("purc_order_no") List<Integer> orderNo) {
 	    	inService.updatePurchaseOrderStatus(orderNo);
-	        return "redirect:/material_handling";
+	        return "redirect:incoming/material_handling";
 	    }
+	    
+	    
+	 // 거래명세서 목록
+		@GetMapping(value="incoming/tp_list")
+		public String tp_list(Model model) throws Exception {
+			
+			logger.info("거래명세서 조회");
+			
+			List<Trans_paperDTO> tp_list = inService.tp_list();
+			model.addAttribute("tp_list", tp_list);
+			
+			
+			return "incoming/tp_list";
+			
+		}
+
+		
+		// 거래명세서 상세보기
+		@GetMapping("incoming/tp_detail")
+		public String tp_detail(@RequestParam("trans_paper_no") int trans_paper_no, Model model) throws Exception {
+		
+			logger.info("거래명세서 상세보기");
+			
+			Trans_paperDTO trans_PaperDTO = inService.tp_detail(trans_paper_no);
+			
+			model.addAttribute("transPaper", trans_PaperDTO );
+			
+			return "incoming/tp_detail";
+		}
+		
+		
+		// 현황관리 리포트
+		@RequestMapping("incoming/status_list")
+		public String status_list(@RequestParam(required = false) String sup,
+                @RequestParam(required = false) String purc_order_reg_date,
+                @RequestParam(required = false) String material_code,
+                @RequestParam(required = false) String material_name,
+                @RequestParam(required = false) String purc_order_code,
+                Model model) {
+			
+			Map<String, Object> paramMap = new HashMap<>();
+			
+			paramMap.put("sup", sup);
+			paramMap.put("material_code", material_code);
+	        paramMap.put("material_name", material_name);
+	        paramMap.put("purc_order_reg_date", purc_order_reg_date);
+	        paramMap.put("purc_order_code", purc_order_code);
+
+	        List<StatusDTO> status_list = inService.status_list(paramMap);
+			
+	        model.addAttribute("status_list", status_list);
+	        model.addAttribute("servertime", new java.util.Date());
+	        model.addAttribute("totalCount", status_list.size());
+	        
+			
+			return "incoming/status_list";	
+			
+		}    
+	    
+	    
 	  
 }
