@@ -5,22 +5,78 @@
 <mapper namespace="kr.co.chill.productionPlanningMapper">
 	<!-- 제품생산계획 불러오기(전체) -->
 	<select id="readProductionPlanning" resultType="ProductionPlanningDTO">
-		select production_planning.*, product.product_code, product.product_name
+		select 
+		production_planning.prpl_no as prplNo, 
+		production_planning.prpl_plant as prplPlant, 
+		production_planning.prpl_line as prplLine, 
+		production_planning.prpl_due_date as prplDueDate, 
+		production_planning.prpl_code as prplCode, 
+		production_planning.prpl_leadtime as prplLeadtime, 
+		production_planning.prpl_etc as prplEtc, 
+
+		product.product_no as productNo, 
+		product.product_code as productCode, 
+		product.product_name as productName,
+		
+		product_storage.pstorage_no as pstorageNo,
+		
+		employee.emp_no as empNo
+		
 		from production_planning
 		join product on production_planning.product_no = product.product_no
+		join product_storage on production_planning.pstorage_no = product_storage.pstorage_no
+		join employee on production_planning.emp_no = employee.emp_no
 	</select>
 	<!-- 제품생산계획 상세보기(선택) -->
 	<select id="readProductionPlanningByPrplNo" resultType="ProductionPlanningDTO">
-		select production_planning.*, product.product_code, product.product_name, employee.emp_no, 
-		employee.emp_name, employee.emp_phone, employee.emp_email
+		select 
+		production_planning.prpl_no as prplNo, 
+		production_planning.prpl_plant as prplPlant, 
+		production_planning.prpl_line as prplLine, 
+		production_planning.prpl_due_date as prplDueDate, 
+		production_planning.prpl_code as prplCode, 
+		production_planning.prpl_leadtime as prplLeadtime, 
+		production_planning.prpl_etc as prplEtc, 
+		
+		product.product_no as productNo, 
+		product.product_code as productCode, 
+		product.product_name as productName,
+		
+		product_storage.pstorage_no as pstorageNo,
+		
+		employee.emp_no as empNo, 
+		employee.emp_name as empName, 
+		employee.emp_phone as empPhone, 
+		employee.emp_email as empEmail
 		from production_planning
 		join product on production_planning.product_no = product.product_no
 		join employee on production_planning.emp_no = employee.emp_no
+		join product_storage on production_planning.pstorage_no = product_storage.pstorage_no
 		where prpl_no=#{prplNo}
 	</select>
 	<!-- 제품생산계획 검색조회(제품코드 사용, 제품생산계획 전용) --> <!-- _no로 안하고 _code로 하는게 맞는지..? -->
 	<select id="searchProductionPlanning" parameterType="map" resultType="ProductionPlanningDTO">
-		select * from production_planning	
+		select 
+		production_planning.prpl_no as prplNo, 
+		production_planning.prpl_plant as prplPlant, 
+		production_planning.prpl_line as prplLine, 
+		production_planning.prpl_due_date as prplDueDate, 
+		production_planning.prpl_code as prplCode, 
+		production_planning.prpl_leadtime as prplLeadtime, 
+		production_planning.prpl_etc as prplEtc, 
+
+		product.product_no as productNo, 
+		product.product_code as productCode, 
+		product.product_name as productName,
+		
+		product_storage.pstorage_no as pstorageNo,
+		
+		employee.emp_no as empNo
+		
+		from production_planning
+		join product on production_planning.product_no = product.product_no
+		join product_storage on production_planning.pstorage_no = product_storage.pstorage_no
+		join employee on production_planning.emp_no = employee.emp_no
 		<where>
        		<if test="searchType == 'productCode' and searchValue != null and searchValue != ''">
             	AND product_code LIKE CONCAT('%', #{searchValue}, '%')
@@ -35,12 +91,20 @@
 	</insert>
 	<!-- 생산계획 등록 시 사원번호로 사원정보 불러오기(emp관련 파일이 없음..) -->
 	<select id="getEmployeeByEmpNo" resultType="ProductionPlanningDTO">
-		select * from employee
-		where emp_no=#{empNO}
+		select 
+		employee.emp_no as empNo,
+		employee.emp_name as empName,
+		employee.emp_phone as empPhone,
+		employee.emp_email as empEmail
+		from employee
+		where emp_no=#{empNo}
 	</select>	
 	<!-- 생산계획 등록 시 창고번호로 창고정보(재고) 불러오기 -->
 	<select id="getPstorageByPstorageNo" resultType="ProductionPlanningDTO">
-		select * from product_storage
+		select 
+		product_storage.pstorage_no as pstorageNo,
+		product_storage.pstorage_stock as pstorageStock
+		from product_storage
 		where pstorage_no=#{pstorageNo}
 	</select>
 	
