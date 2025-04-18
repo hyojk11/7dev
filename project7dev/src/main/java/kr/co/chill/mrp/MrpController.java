@@ -84,11 +84,11 @@ public class MrpController {
 		ProductionPlanningDTO prpl = prplService.readProductionPlanningByPrplNo(prplNo);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date dueDate = sdf.parse(prpl.getPrplDueDate());
+		Date dueDate = sdf.parse(prpl.getPrpl_due_date());
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dueDate);
-		cal.add(Calendar.DATE, -prpl.getPrplLeadtime());
+		cal.add(Calendar.DATE, -prpl.getPrpl_leadtime());
 
 		String mrpDueDate = sdf.format(cal.getTime());
 		
