@@ -15,7 +15,7 @@
 	<h1>자재입고관리</h1>
 	
 	<!-- 검색 조건 영역 -->
-	<form action="material_handling" method="get">
+	<form action="${pageContext.request.contextPath}/incoming/material_handling" method="get">
 		발주번호 : <input type="text" name="order_code" value="${param.purc_order_code}">
 		
 		조달상태:
@@ -33,10 +33,10 @@
 		</select>
 		
 		자재마감상태:
-		<select name="state">
+		<select name="material_in_state">
 			<option value="">선택없음</option>
-			<option value="1" ${state == 1 ? 'selected' : ''}>완료</option>
-			<option value="0" ${state == 0 ? 'selected' : ''}>미완료</option>
+			<option value="1" ${material_in_state == 1 ? 'selected' : ''}>완료</option>
+			<option value="0" ${material_in_state == 0 ? 'selected' : ''}>미완료</option>
 		</select>
 		
 		발주날짜 : 	<!-- purc_order_reg_date를 기준으로 검색 -->
@@ -47,7 +47,7 @@
 	</form>
 
 	<!-- 입고예정 목록 테이블 -->
-	<form action="purchaseClose" method="post">
+	<form action="${pageContext.request.contextPath}/incoming/purchaseClose" method="post" id="myForm">
 		<table>
 			<thead>
 				<tr>
@@ -68,10 +68,10 @@
 			<!-- items의 값은 Controller에서 add.object()로 보낸 데이터를 가져오는 거 -->
 				<c:forEach var="incoming" items="${material_handling}" >
 				<tr>
-				<td><input type="checkbox" name="purc_order_no" value="${incoming.purc_order_no}" 
-					<c:if test="${incoming.state == 1 || incoming.purc_order_status == 1 || incoming.mstorage_in_date == null}">disabled</c:if> 
-				 ></td> 
-					<!-- <c:if test="${incoming.state == 1}">disabled</c:if> state의 값이 1이면 체크박스 비활성화 -->	
+				<td><input type="checkbox" name="purc_order_no" value="${incoming.purc_order_no}"
+					<c:if test="${incoming.material_in_state == 1 || incoming.purc_order_status == 1 || incoming.mstorage_in_date == null}">disabled</c:if> 
+				 class="material-check"></td> 
+					<!-- <c:if test="${incoming.material_in_state == 1}">disabled</c:if> material_in_state의 값이 1이면 체크박스 비활성화 -->	
 					<td>${incoming.purc_order_code}</td>
 					<td>${incoming.sup_name}</td>
 					<td>${incoming.material_name}</td>
@@ -82,8 +82,8 @@
 					<td>${incoming.mstorage_in_date != null ? '도착완료':'배송중'}</td>
 					<!-- mstorage_in_date(자재회사에서 보낸 자재가 도착한 날짜가 생성되면 '도착완료'로 자동 변경 -->
 					<td>${incoming.purc_order_status == 0 ?'미완료':'완료'}</td>
-					<td>${incoming.state == 0 ? '미완료':'완료' }</td>
-					<!-- 자재마감상태는 자재입고페이지에서 자재별로 나눠져 창고에 입고하면 state값이 1로 바뀌고 그러므로 '완료'로 자동변경 -->
+					<td>${incoming.material_in_state == 0 ? '미완료':'완료' }</td>
+					<!-- 자재마감상태는 자재입고페이지에서 자재별로 나눠져 창고에 입고하면 material_in_state값이 1로 바뀌고 그러므로 '완료'로 자동변경 -->
 				</tr>
 				</c:forEach>
 			</tbody>
@@ -93,5 +93,15 @@
 	
 	<button type="submit">선택 발주 구매마감</button>
 		</form>
+		
+		<script id="myForm">
+		document.getElementById("myForm").addEventListener("submit", function (e){
+			const checked = document.querySelectorAll(".material-check:checked");
+			if(checked.length === 0){
+				alert("항목을 체크해야합니다..");
+				e.preventDefault();
+			}
+		});
+		</script>
 	</body>
 </html>
