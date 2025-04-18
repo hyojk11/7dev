@@ -166,15 +166,13 @@
 	
 	<!-- 제품생산계획 불러오기(전체) -->
 	<select id="readProductionPlanning" resultType="ProductionPlanningDTO">
-<<<<<<< HEAD
 		select
-			production_planning.*
-			, DATE(production_planning.prpl_due_date) AS prpl_due_date_only
-			, product.product_code
-			, product.product_name
-			, employee.emp_name
-=======
-		select 
+			production_planning.*,
+			DATE(production_planning.prpl_due_date) AS prpl_due_date_only,
+			product.product_code, 
+			product.product_name, 
+			employee.emp_name,
+			
 		production_planning.prpl_no as prplNo, 
 		production_planning.prpl_plant as prplPlant, 
 		production_planning.prpl_line as prplLine, 
@@ -217,15 +215,12 @@
 		employee.emp_name as empName, 
 		employee.emp_phone as empPhone, 
 		employee.emp_email as empEmail
->>>>>>> branch 'main' of https://github.com/Simwons/7dev.git
+		
 		from production_planning
 		join product on production_planning.product_no = product.product_no
 		join employee on production_planning.emp_no = employee.emp_no
-<<<<<<< HEAD
-=======
 		join product_storage on production_planning.pstorage_no = product_storage.pstorage_no
 		where prpl_no=#{prplNo}
->>>>>>> branch 'main' of https://github.com/Simwons/7dev.git
 	</select>
 	
 	<!-- 제품생산계획 상세보기(선택) -->
@@ -335,8 +330,6 @@
     	</where>
 	</select>	
 	
-<<<<<<< HEAD
-=======
 	<!-- 제품생산계획 등록하기 -->
 	<insert id="createProductionPlanning" parameterType="ProductionPlanningDTO">
 		insert into production_planning(product_no, prpl_plant, prpl_line, product_cnt, pstorage_no, prpl_leadtime, prpl_due_date, emp_no, prpl_etc)
@@ -352,7 +345,6 @@
 		from employee
 		where emp_no=#{empNo}
 	</select>	
->>>>>>> branch 'main' of https://github.com/Simwons/7dev.git
 	<!-- 생산계획 등록 시 창고번호로 창고정보(재고) 불러오기 -->
 	<select id="getPstorageByPstorageNo" resultType="ProductionPlanningDTO">
 		select 
