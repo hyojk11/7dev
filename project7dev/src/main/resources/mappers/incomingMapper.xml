@@ -313,55 +313,57 @@
      <select id="status_list" resultType="kr.co.chill.incoming.StatusDTO" parameterType="map">
        SELECT
 
-		    m.material_no AS material_no,
+		    m.material_no,
 		    m.material_name,
 		    m.material_code,
 		    m.material_raw_material ,
 		    m.material_description ,
 		    m.material_unit,
 		    
+		    mi.material_in_no,
 			mi.material_in_date,
+			mi.material_in_cnt,
+			mi.material_in_state,
 		    
-		    ms.mstorage_stock,
-		    ms.mstorage_code,
-		
 		    e.emp_name,
 		    s.sup_name,
+		    
 		
 		    po.purc_order_no,
+		    po.purc_order_code,
 		    po.purc_order_reg_date,
-		    po.purc_order_reg_date AS mrp_due_date,
+		    po.purc_order_reg_date AS mrp_due_date
 		    
-		    c.cont_material_cnt
+
+	 	FROM material_in mi
+	    LEFT JOIN material m ON mi.material_no = m.material_no
+	    LEFT JOIN purchase_order po ON  po.cont_no = m.cont_no
+	    LEFT JOIN supplier s ON m.sup_no = s.sup_no
+	    LEFT JOIN employee e ON po.emp_no = e.emp_no
+
 		
-		FROM material_storage ms
-		JOIN purchase_order po ON po.purc_order_no = po.purc_order_no
-		JOIN material m ON ms.material_no = m.material_no
-		JOIN material_in mi ON mi.material_no = m.material_no
-		JOIN supplier s ON m.sup_no = s.sup_no
-		JOIN employee e ON ms.emp_no = e.emp_no
-		JOIN contract c ON po.cont_no = c.cont_no
-        WHERE
-            1=1
+		  <where>
+        <trim prefix="(" suffix=")" prefixOverrides="OR">
             <if test="sup != null and sup != ''">
-                AND s.sup_name LIKE CONCAT('%', #{sup}, '%')
+                OR s.sup_name LIKE CONCAT('%', #{sup}, '%')
             </if>
             <if test="material_code != null and material_code != ''">
-                AND m.material_code LIKE CONCAT('%', #{material_code}, '%')
+                OR m.material_code LIKE CONCAT('%', #{material_code}, '%')
             </if>
             <if test="material_name != null and material_name != ''">
-                AND m.material_name LIKE CONCAT('%', #{material_name}, '%')
+                OR m.material_name LIKE CONCAT('%', #{material_name}, '%')
             </if>
             <if test="purc_order_reg_date != null and purc_order_reg_date != ''">
-                AND po.purc_order_reg_date = #{purc_order_reg_date}
+                OR DATE(po.purc_order_reg_date) = #{purc_order_reg_date}
             </if>
             <if test="purc_order_code != null and purc_order_code != ''">
-                AND po.purc_order_no = #{purc_order_code}
+                OR po.purc_order_code = #{purc_order_code}
             </if>
-            <if test="mstorage_code != null and mstorage_code != ''">
-                AND ms.mstorage_code = #{mstorage_code}
-            </if>
-        ORDER BY po.purc_order_reg_date DESC
+         </trim>
+         </where>
+        
+		    ORDER BY po.purc_order_reg_date DESC
+		    
     </select>	
 		
 	

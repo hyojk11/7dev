@@ -40,10 +40,10 @@
 
 			<h3> 발주진행현황 </h3>
 				
-				<form action="incoming/status_list" method="get" class="search-box">
+				<form action="${pageContext.request.contextPath}/incoming/status_list" method="get" class="search-box">
 					<div class="form-group">
 					    <label> 거래처 : 
-						<input type="text" list="supplier" name="sup">
+						<input type="text" list="supplier" name="sup" value="${param.sup}">
 						<datalist id="supplier">
 							<option value="ooo잉크테크"></option>
 							<option value="클립앤파트너스"></option>
@@ -53,25 +53,22 @@
 						</datalist>
 						</label>
 						<label>발주일 :
-							<input type="date" name="purc_order_reg_date">
+							<input type="date" name="purc_order_reg_date" value="${param.purc_order_reg_date}">
 						</label>
 					</div>
 					<div class="form-group">
 			            <label>부품번호:
-			                <input type="text" name="material_code">
+			                <input type="text" name="material_code" value="${param.material_code}">
 			            </label>
 			            <label>부품명:
-			                <input type="text" name="material_name">
+			                <input type="text" name="material_name" value="${param.material_name}">
 			            </label>
 			        </div>
 			        <div class="form-group">
 			            <label>발주번호:
-			                <input type="text" name="purc_order_code">
+			                <input type="text" name="purc_order_code" value="${param.purc_order_code}">
 			            </label>
-			            <label>입고번호:
-			                <input type="text" name="mstorage_code">
-			            </label>
-			            <button type="submit">조회</button>
+			            <button type="submit" class="btn">조회</button>
 			        </div>
 				</form>
 			        
@@ -94,7 +91,6 @@
 						<th> 납품일 </th>
 						<th> 입고일 </th>
 						<th> 발주수량 </th>
-						<th> 납품수량 </th>
 						<th> 입고수량 </th>
 					</tr>
 				</thead>
@@ -102,27 +98,26 @@
         <c:forEach var="ps" items="${status_list}" varStatus="status">
             <tr>
                 <td>${status.index + 1}</td>
-                <td>${ps.state}</td>
+                <td>${ps.material_in_state}</td>
                 <td>${ps.sup_name}</td>
                 <td>${ps.material_code}</td>
                 <td>${ps.material_name}</td>
-                <td>${ps.purc_order_no}</td>
-                <td>${ps.mstorage_code}</td>
+                <td>${ps.purc_order_code}</td>
+                <td>${ps.material_in_no}</td>
                 <td>${ps.purc_order_reg_date}</td>
                 <td>${ps.mrp_due_date}</td>
                 <td>${ps.material_in_date}</td>
                 <td>${ps.cont_material_cnt}</td>
-                <td>${ps.cont_material_cnt}</td>
-                <td>${ps.mstorage_stock}</td>
+                <td>${ps.material_in_cnt}</td>
             </tr>
 		        </c:forEach>
 		        <c:if test="${empty status_list}">
-		            <tr><td colspan="13">조회 결과가 없습니다.</td></tr>
+		            <tr><td colspan="12">조회 결과가 없습니다.</td></tr>
 		        </c:if>
 		    </tbody>
 		</table>
 	
 
-<p>서버시간: ${servertime}</p>
+<p>서버시간:${servertime}</p>
 </body>
 </html>

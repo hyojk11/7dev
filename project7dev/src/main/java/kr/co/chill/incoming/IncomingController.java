@@ -183,28 +183,31 @@ public class IncomingController {
 		
 		// 현황관리 리포트
 		@RequestMapping("incoming/status_list")
-		public String status_list(HttpServletRequest request, Model model) {
+		public String status_list(@RequestParam(required = false) String sup,
+                @RequestParam(required = false) String purc_order_reg_date,
+                @RequestParam(required = false) String material_code,
+                @RequestParam(required = false) String material_name,
+                @RequestParam(required = false) String purc_order_code,
+                Model model) {
+			
 			Map<String, Object> paramMap = new HashMap<>();
 			
-			paramMap.put("sup", request.getParameter("sup"));
-			paramMap.put("material_code", request.getParameter("material_code"));
-	        paramMap.put("material_name", request.getParameter("material_name"));
-	        paramMap.put("purc_order_reg_date", request.getParameter("purc_order_reg_date"));
-	        paramMap.put("purc_order_code", request.getParameter("purc_order_code"));
-	        paramMap.put("mstorage_code", request.getParameter("mstorage_code"));
+			paramMap.put("sup", sup);
+			paramMap.put("material_code", material_code);
+	        paramMap.put("material_name", material_name);
+	        paramMap.put("purc_order_reg_date", purc_order_reg_date);
+	        paramMap.put("purc_order_code", purc_order_code);
 
 	        List<StatusDTO> status_list = inService.status_list(paramMap);
 			
 	        model.addAttribute("status_list", status_list);
 	        model.addAttribute("servertime", new java.util.Date());
 	        model.addAttribute("totalCount", status_list.size());
+	        
 			
 			return "incoming/status_list";	
 			
 		}    
-	    
-	    
-	    
 	    
 	    
 	  

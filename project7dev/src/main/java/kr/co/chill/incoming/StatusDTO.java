@@ -17,24 +17,32 @@ public class StatusDTO {
 	private int product_no;//제품번호
 	private String material_in_date;//입고날짜
 	private String material_etc;//기타정보
-	private int state;//자재입고여부 상태
+	private int material_in_no;
+	private int material_in_cnt;//입고예정수량 
+	private Integer material_in_state;//자재입고여부 상태
 	
 	// 구매발주서 
-	private String purc_order_no;
+	private int purc_order_no;
+	private String purc_order_code;
 	private String purc_order_reg_date;
 	private String mrp_due_date;
+	
+	
+	private int cont_no;
 	private int cont_material_cnt;
 	
-	
+
 	public StatusDTO() {}
-	
-	
-	public StatusDTO(int material_material_no, String material_name, String material_code, String material_raw_material,
+
+
+	public StatusDTO(int material_no, String material_name, String material_code, String material_raw_material,
 			String material_description, String material_unit, int mstorage_stock, String mstorage_code,
-			String emp_name, String sup_name, int product_product_no, String material_in_date, String material_etc,
-			int state, String purc_order_no, String purc_order_reg_date, String mrp_due_date, int cont_material_cnt) {
+			String emp_name, String sup_name, int product_no, String material_in_date, String material_etc,
+			int material_in_no, int material_in_cnt, Integer material_in_state, int purc_order_no,
+			String purc_order_code, String purc_order_reg_date, String mrp_due_date, int cont_no,
+			int cont_material_cnt) {
 		super();
-		this.material_no = material_material_no;
+		this.material_no = material_no;
 		this.material_name = material_name;
 		this.material_code = material_code;
 		this.material_raw_material = material_raw_material;
@@ -44,24 +52,28 @@ public class StatusDTO {
 		this.mstorage_code = mstorage_code;
 		this.emp_name = emp_name;
 		this.sup_name = sup_name;
-		this.product_no = product_product_no;
+		this.product_no = product_no;
 		this.material_in_date = material_in_date;
 		this.material_etc = material_etc;
-		this.state = state;
+		this.material_in_no = material_in_no;
+		this.material_in_cnt = material_in_cnt;
+		this.material_in_state = material_in_state;
 		this.purc_order_no = purc_order_no;
+		this.purc_order_code = purc_order_code;
 		this.purc_order_reg_date = purc_order_reg_date;
 		this.mrp_due_date = mrp_due_date;
+		this.cont_no = cont_no;
 		this.cont_material_cnt = cont_material_cnt;
 	}
 
 
-	public int getMaterial_material_no() {
+	public int getMaterial_no() {
 		return material_no;
 	}
 
 
-	public void setMaterial_material_no(int material_material_no) {
-		this.material_no = material_material_no;
+	public void setMaterial_no(int material_no) {
+		this.material_no = material_no;
 	}
 
 
@@ -155,13 +167,13 @@ public class StatusDTO {
 	}
 
 
-	public int getProduct_product_no() {
+	public int getProduct_no() {
 		return product_no;
 	}
 
 
-	public void setProduct_product_no(int product_product_no) {
-		this.product_no = product_product_no;
+	public void setProduct_no(int product_no) {
+		this.product_no = product_no;
 	}
 
 
@@ -185,23 +197,53 @@ public class StatusDTO {
 	}
 
 
-	public int getState() {
-		return state;
+	public int getMaterial_in_no() {
+		return material_in_no;
 	}
 
 
-	public void setState(int state) {
-		this.state = state;
+	public void setMaterial_in_no(int material_in_no) {
+		this.material_in_no = material_in_no;
 	}
 
 
-	public String getPurc_order_no() {
+	public int getMaterial_in_cnt() {
+		return material_in_cnt;
+	}
+
+
+	public void setMaterial_in_cnt(int material_in_cnt) {
+		this.material_in_cnt = material_in_cnt;
+	}
+
+
+	public Integer getMaterial_in_state() {
+		return material_in_state;
+	}
+
+
+	public void setMaterial_in_state(Integer material_in_state) {
+		this.material_in_state = material_in_state;
+	}
+
+
+	public int getPurc_order_no() {
 		return purc_order_no;
 	}
 
 
-	public void setPurc_order_no(String purc_order_no) {
+	public void setPurc_order_no(int purc_order_no) {
 		this.purc_order_no = purc_order_no;
+	}
+
+
+	public String getPurc_order_code() {
+		return purc_order_code;
+	}
+
+
+	public void setPurc_order_code(String purc_order_code) {
+		this.purc_order_code = purc_order_code;
 	}
 
 
@@ -225,6 +267,16 @@ public class StatusDTO {
 	}
 
 
+	public int getCont_no() {
+		return cont_no;
+	}
+
+
+	public void setCont_no(int cont_no) {
+		this.cont_no = cont_no;
+	}
+
+
 	public int getCont_material_cnt() {
 		return cont_material_cnt;
 	}
@@ -237,15 +289,15 @@ public class StatusDTO {
 
 	@Override
 	public String toString() {
-		return "StatusDTO [material_material_no=" + material_no + ", material_name=" + material_name
-				+ ", material_code=" + material_code + ", material_raw_material=" + material_raw_material
-				+ ", material_description=" + material_description + ", material_unit=" + material_unit
-				+ ", mstorage_stock=" + mstorage_stock + ", mstorage_code=" + mstorage_code + ", emp_name=" + emp_name
-				+ ", sup_name=" + sup_name + ", product_product_no=" + product_no + ", material_in_date="
-				+ material_in_date + ", material_etc=" + material_etc + ", state=" + state + ", purc_order_no="
-				+ purc_order_no + ", purc_order_reg_date=" + purc_order_reg_date + ", mrp_due_date=" + mrp_due_date
-				+ ", cont_material_cnt=" + cont_material_cnt + "]";
+		return "StatusDTO [material_no=" + material_no + ", material_name=" + material_name + ", material_code="
+				+ material_code + ", material_raw_material=" + material_raw_material + ", material_description="
+				+ material_description + ", material_unit=" + material_unit + ", mstorage_stock=" + mstorage_stock
+				+ ", mstorage_code=" + mstorage_code + ", emp_name=" + emp_name + ", sup_name=" + sup_name
+				+ ", product_no=" + product_no + ", material_in_date=" + material_in_date + ", material_etc="
+				+ material_etc + ", material_in_no=" + material_in_no + ", material_in_cnt=" + material_in_cnt
+				+ ", material_in_state=" + material_in_state + ", purc_order_no=" + purc_order_no + ", purc_order_code="
+				+ purc_order_code + ", purc_order_reg_date=" + purc_order_reg_date + ", mrp_due_date=" + mrp_due_date
+				+ ", cont_no=" + cont_no + ", cont_material_cnt=" + cont_material_cnt + "]";
 	}
-	
 
 }
