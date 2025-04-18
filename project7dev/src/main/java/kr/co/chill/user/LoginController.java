@@ -2,6 +2,8 @@ package kr.co.chill.user;
 
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +41,10 @@ public class LoginController {
 	//로그인 처리
 	@PostMapping(value="login")
 	public String login(HttpSession session
+			, HttpServletResponse response
 			, RedirectAttributes ra
-			, @RequestParam Map<String, Object> map) {
+			, @RequestParam Map<String, Object> map
+			, @RequestParam(required = false) String rememberId) {
 		
 		Map<String, Object> user = loginService.login(map);
 		
@@ -51,6 +55,20 @@ public class LoginController {
 			session.setAttribute("user_id", user.get("user_id"));
 			session.setAttribute("user_name", user.get("user_name"));
 			ra.addFlashAttribute("resultMsg", "성공적으로 로그인되었습니다.");
+			
+			String user_id = (String) user.get("user_id");
+			
+			if("on".equals(rememberId)) {
+				Cookie cookie = new Cookie("user_id", user_id);
+				cookie.setMaxAge(60*60*24*30); //30일
+				cookie.setPath("/");
+				response.addCookie(cookie);
+			} else {
+				Cookie cookie = new Cookie("user_id", null);
+				cookie.setMaxAge(0);
+				cookie.setPath("/");
+				response.addCookie(cookie);
+			}
 			
 			String user_type = (String) user.get("user_type");
 
@@ -70,7 +88,31 @@ public class LoginController {
 	}
 	
 	
+	//사원,관리자가 로그인 상태에서 메인으로 이동시
+	@GetMapping(value="login/main")
+	public String main(HttpSession session) {
+		String user_id = (String) session.getAttribute("user_id");
+		if(user_id == null) {
+			return "redirect:/";
+		}
+		int emp_no = loginService.searchEmpNo(user_id);
+		if(emp_no == 0) {
+			return "redirect:/";
+		}
+		if(emp_no != 1) {
+			return "redirect:/emp_main";
+		} else {
+			return "redirect:/admin_main";
+		}
+	}
 	
+	
+	//로그아웃
+	@GetMapping(value="logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
 	
 	
 	

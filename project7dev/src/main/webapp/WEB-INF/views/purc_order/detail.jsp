@@ -37,7 +37,7 @@
 				납기일 : ${dto.mrp_due_date}
 			</td>
 			<td colspan="3">
-				문서번호 : ${dto.purc_order_code}
+				발주번호 : ${dto.purc_order_code}
 			</td>
 		</tr>
 		<tr>
@@ -95,9 +95,9 @@
 		<c:set var="totalCnt" value="0" />
 		<c:set var="totalPrice" value="0" />
 		
-		<c:forEach var="data" items="${list}" varStatus="status">
+		<c:forEach var="data" items="${list}" varStatus="i">
 		<tr>
-			<td>${status.index+1}</td>
+			<td>${i.index+1}</td>
 			<td>${data.material_name}</td>
 			<td>${data.material_code}</td>
 			<td>${data.material_description}</td>
@@ -123,6 +123,6 @@
 	</div>
 	<button onclick="location.href='${contextPath}/purc_order/list'">이전으로</button>
 	<button onclick="window.print()">인 쇄</button>
-	<button>계약 상세</button>
+	<button onclick="location.href='${contextPath}/contract/contract_main?searchType=contractNo&searchValue=${dto.cont_no}'">계약 상세</button>
 </body>
 </html>

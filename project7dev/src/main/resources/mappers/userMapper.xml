@@ -17,4 +17,47 @@
 		WHERE sup_id = #{user_id} AND sup_password = #{user_password}
 	</select>
 	
+	<!-- 사원,관리자 구분위한 emp_no 조회 -->
+	<select id="searchEmpNo" parameterType="string" resultType="int">
+		SELECT emp_no
+		FROM employee
+		WHERE emp_id = #{user_id}
+	</select>
+	
+	
+	<!-- 사원 마이페이지 -->
+	<select id="detailEmp" parameterType="string" resultType="kr.co.chill.user.UserDTO">
+		SELECT *
+		FROM employee
+		WHERE emp_id = #{user_id}
+	</select>
+	
+	<!-- 거래처 마이페이지 -->
+	<select id="detailSup" parameterType="string" resultType="kr.co.chill.user.UserDTO">
+		SELECT *
+		, CONCAT(sup_addr1,sup_addr2) AS sup_total_addr
+		FROM supplier
+		WHERE sup_id = #{user_id}
+	</select>
+	
+	
+	<!-- 아이디중복체크 -->
+	<select id="idCheck" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM employee
+		WHERE emp_id = #{emp_id}
+	</select>
+	
+	<!-- 사원 개인정보수정 -->
+	<update id="updateEmp" parameterType="kr.co.chill.user.UserDTO">
+		UPDATE employee
+		SET emp_job = #{emp_job}
+			, emp_id = #{emp_id}
+			, emp_password = #{emp_password}
+			, emp_phone = #{emp_phone}
+			, emp_email = #{emp_email}
+		WHERE emp_no = #{emp_no}
+	</update>
+	
+	
 </mapper>

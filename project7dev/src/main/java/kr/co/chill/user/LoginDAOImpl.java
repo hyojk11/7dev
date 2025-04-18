@@ -19,4 +19,11 @@ public class LoginDAOImpl implements LoginDAO {
 		return sqlSession.selectOne("kr.co.chill.userMapper.login", map);
 	}
 
+	//사원,관리자 구분위한 emp_no조회
+	@Override
+	public int searchEmpNo(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.chill.userMapper.searchEmpNo", user_id);
+	}
+
 }

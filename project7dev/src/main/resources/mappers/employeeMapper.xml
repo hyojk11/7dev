@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.chill.employeeMapper">
+
+
+	<!-- 사원 리스트 + 검색 + 페이징 -->
+	<select id="listSearchPaged" resultType="kr.co.chill.employee.EmployeeDTO" parameterType="map">
+		SELECT *
+		FROM employee
+		<where>
+			<choose>
+				<when test="searchType == 'emp_no'">
+					emp_no = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'emp_job'">
+					emp_job LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'emp_id'">
+					emp_id LIKE CONCAT('%',#{keyword},'%')
+				</when>
+			</choose>
+		</where>
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+	
+	<!-- 검색리스트 갯수 (페이징용) -->
+	<select id="listSearchCount" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+		FROM employee
+		<where>
+			<choose>
+				<when test="searchType == 'emp_no'">
+					emp_no = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'emp_job'">
+					emp_job LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'emp_id'">
+					emp_id LIKE CONCAT('%',#{keyword},'%')
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	<!-- 사원 리스트 + 검색 (페이징X,엑셀용) -->
+	<select id="listSearch" resultType="kr.co.chill.employee.EmployeeDTO" parameterType="map">
+		SELECT *
+		FROM employee
+		<where>
+			<choose>
+				<when test="searchType == 'emp_no'">
+					emp_no = #{keyword}
+				</when>
+				<when test="searchType == 'emp_name'">
+					emp_name LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'emp_job'">
+					emp_job LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="searchType == 'emp_id'">
+					emp_id LIKE CONCAT('%',#{keyword},'%')
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	<!-- 사원리스트(검색X,페이징X,엑셀용) -->
+	<select id="list" resultType="kr.co.chill.employee.EmployeeDTO" parameterType="map">
+		SELECT *
+		FROM employee
+	</select>
+	
+	<!-- 사원상세조회 -->
+	<select id="detail" resultType="kr.co.chill.employee.EmployeeDTO" parameterType="int">
+		SELECT *
+		FROM employee
+		WHERE emp_no = #{emp_no}
+	</select>
+	
+	<!-- 사원등록 -->
+	<insert id="register" parameterType="kr.co.chill.employee.EmployeeDTO">
+		INSERT INTO employee (
+			emp_name
+			, emp_job
+			, emp_id
+			, emp_password
+			, emp_phone
+			, emp_email
+			, comp_no
+		)
+		VALUES (
+			#{emp_name}
+			, #{emp_job}
+			, #{emp_id}
+			, #{emp_password}
+			, #{emp_phone}
+			, #{emp_email}
+			, 0
+		)
+	</insert>
+	
+	<!-- 아이디중복체크 -->
+	<select id="idCheck" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM employee
+		WHERE emp_id = #{emp_id}
+	</select>
+	
+	<!-- 사원수정 -->
+	<update id="update" parameterType="kr.co.chill.employee.EmployeeDTO">
+		UPDATE employee SET
+			emp_name = #{emp_name}
+			, emp_job = #{emp_job}
+			, emp_id = #{emp_id}
+			, emp_password = #{emp_password}
+			, emp_phone = #{emp_phone}
+			, emp_email = #{emp_email}
+		WHERE emp_no = #{emp_no}
+	</update>
+	
+	<!-- 사원삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM employee
+		WHERE emp_no = #{emp_no}
+	</delete>
+	
+	
+	
+</mapper>

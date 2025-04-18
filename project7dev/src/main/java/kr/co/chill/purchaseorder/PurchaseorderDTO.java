@@ -7,7 +7,7 @@ public class PurchaseorderDTO {
 	private String purc_order_code; //시리얼코드
 	private String purc_order_reg_date; //발주일
 	private String purc_order_dterms; //인도조건
-	private String purc_order_status; //발주진행중1, 마감0
+	private int purc_order_status; //발주진행중1, 마감0
 	private String purc_order_etc; //비고
 	
 	private int total_price; //**총 금액 별칭
@@ -72,7 +72,7 @@ public class PurchaseorderDTO {
 
 
 	public PurchaseorderDTO(int purc_order_no, String purc_order_code, String purc_order_reg_date,
-			String purc_order_dterms, String purc_order_status, String purc_order_etc, int total_price, String end_date,
+			String purc_order_dterms, int purc_order_status, String purc_order_etc, int total_price, String end_date,
 			int sup_no, String sup_name, String sup_ceo_name, String sup_reg_no, String sup_addr1, String sup_addr2,
 			String sup_cip, String sup_cip_email, String sup_total_addr, int comp_no, String comp_name,
 			String comp_ceo_name, String comp_reg_no, String comp_addr1, String comp_addr2, String comp_total_addr,
@@ -175,13 +175,13 @@ public class PurchaseorderDTO {
 
 
 
-	public String getPurc_order_status() {
+	public int getPurc_order_status() {
 		return purc_order_status;
 	}
 
 
 
-	public void setPurc_order_status(String purc_order_status) {
+	public void setPurc_order_status(int purc_order_status) {
 		this.purc_order_status = purc_order_status;
 	}
 
@@ -652,6 +652,4 @@ public class PurchaseorderDTO {
 	}
 
 
-	
-	
 }

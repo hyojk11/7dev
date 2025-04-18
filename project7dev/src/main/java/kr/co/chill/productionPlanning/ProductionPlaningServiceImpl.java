@@ -1,5 +1,7 @@
 package kr.co.chill.productionPlanning;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -61,5 +63,40 @@ public class ProductionPlaningServiceImpl implements ProductionPlanningService {
 		productionPlanningDAO.deleteProductionPlanning(prplNo);
 	}
 	
+	
+	
+	
+	@Override
+	public List<ProductionPlanningDTO> listSearchPaged(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return productionPlanningDAO.listSearchPaged(map);
+	}
+	@Override
+	public List<ProductionPlanningDTO> listSearch(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return productionPlanningDAO.listSearch(map);
+	}
+	@Override
+	public int listSearchCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return productionPlanningDAO.listSearchCount(map);
+	}
+	@Override
+	public List<ProductionPlanningDTO> searchProduct(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return productionPlanningDAO.searchProduct(map);
+	}
+	@Override
+	public ProductionPlanningDTO searchStock(int product_no) throws Exception {
+		// TODO Auto-generated method stub
+		return productionPlanningDAO.searchStock(product_no);
+	}
+	@Override
+	public String codemaker(String reg_date) {
+		String datePart = reg_date.replace("-","");
+		int count = productionPlanningDAO.codemaker(datePart);
+		String serial = String.format("%02d", count + 1);
+		return "PP" + datePart + serial;
+	}
 	
 }
