@@ -9,49 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>자재소요계획</title>
-<style>
-  .scroll-table {
-    width: 100%;
-    border-collapse: separate;
-    table-layout: fixed;
-  }
 
-  .scroll-table thead {
-    background-color: #f2f2f2;
-  }
-  
-  .scroll-table th,
-  .scroll-table td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
-    word-wrap: break-word;
-  }
-
-  .scroll-container {
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-  }
-  
-  .sticky-row th {
-  position: sticky;
-  background-color: #fff;
-  z-index: 2;
-}
-
- .scroll-container thead th {
-   position: sticky;
-   top: 0;
-   background-color: #fff; /* 배경 지정 안 하면 스크롤시 투명해짐 */
-   z-index: 1;
- }
- 
-   .label-cell {
-    background-color: #7EFFAF;
-    font-weight: semibold;
-  }
-</style>
 <h1>자재소요계획</h1>
 </head>
 <body>
@@ -89,16 +47,16 @@
 			<tbody>
 				<c:forEach var="productionPlanning" items="${productionPlanning}">
 						<tr>
-							<td>${productionPlanning.productCode}</td>
-							<td>${productionPlanning.productName}</td>
-							<td>${productionPlanning.prplPlant}</td>
-							<td>${productionPlanning.prplLine}</td>
-							<td>${productionPlanning.productCnt}</td>
-							<td>${fn:substring(productionPlanning.prplDueDate, 0, 10)}</td>
-							<td>${productionPlanning.empName}</td>
+							<td>${productionPlanning.product_code}</td>
+							<td>${productionPlanning.product_name}</td>
+							<td>${productionPlanning.prpl_plant}</td>
+							<td>${productionPlanning.prpl_line}</td>
+							<td>${productionPlanning.product_cnt}</td>
+							<td>${fn:substring(productionPlanning.prpl_due_date, 0, 10)}</td>
+							<td>${productionPlanning.emp_name}</td>
 							<td>
 			             	    <form action="${contextPath}/mrp/mrp_getCreateMrp" method="get">
-			                        <input type="hidden" name="prplNo" value="${productionPlanning.prplNo}" />
+			                        <input type="hidden" name="prplNo" value="${productionPlanning.prpl_no}" />
 			                        <button type="submit">등록</button>
 			                    </form>
 							</td>

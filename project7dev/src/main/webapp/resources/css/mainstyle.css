@@ -53,12 +53,12 @@ body {
 }
 
 .btn-primary {
-    background-color: #212529;
-    border-color: #212529;
+    background-color: #198754;
+    border-color: #198754;
 }
 
 .btn-primary:hover {
-    background-color: #444;
+    background-color: #157347;
 }
 
 .btn-success {
@@ -78,4 +78,40 @@ body {
 .btn-outline-success:hover {
     background-color: #198754;
     color: #fff;
+}
+
+.btn-select {
+	background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-select:hover {
+	background-color: #157347;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #printArea, #printArea * {
+    visibility: visible;
+  }
+
+  #printArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+.scroll-container {
+  max-height: 600px; /* 300px → 600px */
+  overflow-y: auto;
+  border: 1px solid #ccc;
 }

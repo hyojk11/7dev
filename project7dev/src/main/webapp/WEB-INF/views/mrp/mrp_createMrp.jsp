@@ -73,18 +73,18 @@
 		<table border="1" cellpadding="5" cellspacing="0" style="width: 100%;">
 			<thead class="sticky-row">
 
-				<input type="hidden" name="prplNo" value="${prpl.prplNo}"/>
-				<input type="hidden" name="productNo" value="${prpl.productNo}"/>
+				<input type="hidden" name="prplNo" value="${prpl.prpl_no}"/>
+				<input type="hidden" name="productNo" value="${prpl.product_no}"/>
 				<tr>
 					<td class="label-cell" style="width:15%;">제품명</td>
-					<td style="width:35%;">${prpl.productName }</td>
+					<td style="width:35%;">${prpl.product_name }</td>
 					<td class="label-cell" style="width:15%;">제품코드</td>
-					<td style="width:35%;">${prpl.productCode }</td>
+					<td style="width:35%;">${prpl.product_code }</td>
 				</tr>
 				<tr>
-					<input type="hidden" name="mrpDueDate" value="${mrpDueDate}"/>
+					<input type="hidden" name="mrpDueDate" value="${mrp_due_date}"/>
 					<td class="label-cell" style="width:15%;">자재납기일</td>
-					<td style="width:35%;">${mrpDueDate}</td>
+					<td style="width:35%;">${mrp_due_date}</td>
 				</tr>
 			</thead>
 		</table>
@@ -117,15 +117,15 @@
 			<input type="hidden" name="empNo" value="4"/>
 			<tr>
 		        <td class="label-cell" style="width:15%;">사원번호</td>
-		        <td style="width:35%;">${employee.empNo}</td>
+		        <td style="width:35%;">${employee.emp_no}</td>
 		        <td class="label-cell" style="width:15%;">담당자명</td>
-		        <td style="width:35%;">${employee.empName}</td>
+		        <td style="width:35%;">${employee.emp_name}</td>
 		    </tr>
 			<tr>
 		        <td class="label-cell" style="width:15%;">담당자 연락처</td>
-		        <td style="width:35%;">${employee.empPhone}</td>
+		        <td style="width:35%;">${employee.emp_phone}</td>
 		        <td class="label-cell" style="width:15%;">담당자 메일</td>
-		        <td style="width:35%;">${employee.empEmail}</td>
+		        <td style="width:35%;">${employee.emp_email}</td>
 		    </tr>
 		    <tr>
 		    	<td colspan="4"></td>
