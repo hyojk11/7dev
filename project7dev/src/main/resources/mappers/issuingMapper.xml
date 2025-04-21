@@ -30,13 +30,13 @@
 	<select id="materialSnapIn" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
 		select material_in_cnt from material_in
 		where material_no = #{material_no} and mstorage_no = #{mstorage_no} 
-		and date_format(material_in_date, '%Y-%m') = #{mstorage_snapshot_month}
+		and date(material_in_date) > date(#{mstorage_snapshot_month})
 	</select>
 	<!-- 부품 스냅샷출고수량 가져오기 -->
 	<select id="materialSnapOut" parameterType="kr.co.chill.issuing.IssuingDTO" resultType="int">
 		select material_out_cnt from material_out
 		where material_no = #{material_no} and mstorage_no = #{mstorage_no} 
-		and date_format(material_out_date, '%Y-%m') = #{mstorage_snapshot_month}
+		and date(material_out_date) > date(#{mstorage_snapshot_month})
 	</select>
 	
 	
