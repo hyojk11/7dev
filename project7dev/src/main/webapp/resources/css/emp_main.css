@@ -1,0 +1,86 @@
+/* 직원용 index.css */
+
+body {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #ffffff;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px);
+}
+
+.container-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 220px); /* 카드 크기 220px 유지 */
+    gap: 30px;
+}
+
+.card {
+    width: 220px; /* 카드 크기 220px 유지 */
+    height: 220px; /* 카드 높이 조금 더 높게 설정 */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background-color: white;
+    padding-top: 20px; /* 여백을 줄여서 내용이 더 잘 들어가도록 조정 */
+    position: relative;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 내용이 위로 너무 붙지 않게 조정 */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-title {
+    background-color: #d2f4d1;
+    padding: 8px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.card-icon {
+    font-size: 24px;
+    color: #0a7e7e;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.card-body {
+    padding: 15px; /* 더 넓은 여백 추가 */
+    text-align: center;
+    flex-grow: 1; /* 내용이 많으면 공간을 채우도록 설정 */
+    overflow-y: auto; /* 내용이 많을 경우 스크롤 가능 */
+    margin-top: 20px; /* 상단 여백 추가 */
+}
+
+.card-body a {
+    display: block;
+    font-size: 16px; /* 글자 크기를 16px로 키움 */
+    text-decoration: none;
+    color: #333;
+    margin-bottom: 5px; /* 링크 간격을 적당히 띄워줌 */
+}
+
+.card-body a:hover {
+    text-decoration: underline; /* 마우스 오버시 밑줄 추가 */
+}

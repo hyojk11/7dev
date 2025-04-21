@@ -1,0 +1,81 @@
+@charset "UTF-8";
+
+body {
+    background-color: #ffffff;
+    color: #212529;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.sidebar {
+    background-color: #198754;
+    min-height: 100vh;
+    color: #fff;
+    padding: 25px 20px;
+}
+
+.sidebar h4 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sidebar a,
+.sidebar select {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+}
+
+.sidebar .form-select {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+.main {
+    padding: 30px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.table thead {
+    background-color: #212529;
+    color: #ffffff;
+}
+
+.form-select-sm {
+    font-size: 0.875rem;
+}
+
+.btn-primary {
+    background-color: #212529;
+    border-color: #212529;
+}
+
+.btn-primary:hover {
+    background-color: #444;
+}
+
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+}
+
+.btn-outline-success {
+    color: #198754;
+    border-color: #198754;
+}
+
+.btn-outline-success:hover {
+    background-color: #198754;
+    color: #fff;
+}
