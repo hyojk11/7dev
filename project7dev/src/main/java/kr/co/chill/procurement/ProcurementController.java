@@ -158,12 +158,14 @@ public class ProcurementController {
 	    for (MrpDTO item : selectedMaterials) {
 	        try {
 	            MrpDTO mrp = mrpService.getMrpByMrpNo(item.getMrpNo());
+	            System.out.println(item.getMrpNo());
+	            System.out.println(mrp);
 	            MaterialDTO material = materialService.getMaterialByMaterialNo(mrp.getMaterialNo());
 	            SupplierDTO supplier = supplierService.readSupplierBySupNo(material.getSupNo());
 
-//	            System.out.println("✔ mrp: " + mrp);
-//	            System.out.println("✔ material: " + material);
-//	            System.out.println("✔ supplier: " + supplier);
+	            System.out.println("✔ mrp: " + mrp);
+	            System.out.println("✔ material: " + material);
+	            System.out.println("✔ supplier: " + supplier);
 
 	            mrpList.add(mrp);
 	            materialList.add(material);
@@ -205,6 +207,7 @@ public class ProcurementController {
 
 	    List<MrpDTO> mrpList = mrpFormDTO.getMaterials();
 
+//	    System.out.println(mrpList);
 	    for (MrpDTO mrp : mrpList) {
 	        PurchaseorderDTO order = new PurchaseorderDTO();
 

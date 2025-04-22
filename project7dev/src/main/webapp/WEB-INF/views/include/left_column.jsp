@@ -32,8 +32,8 @@
 	    <div class="nav-group">
 	        <div class="nav-title">개발</div>
 	        <ul class="sub-menu">
-	            <li><a href="#">부품정보</a></li>
-	            <li><a href="#">품목정보</a></li>
+	            <li><a href="${contextPath}/material/material_main">부품정보</a></li>
+	            <li><a href="${contextPath}/product/product_main">제품정보</a></li>
 	        </ul>
 	    </div>
 	    <!-- 생산 메뉴 -->
@@ -49,9 +49,9 @@
 	    <div class="nav-group">
 	        <div class="nav-title">구매</div>
 	        <ul class="sub-menu">
-	            <li><a href="#">견적관리</a></li>
+	            <li><a href="${contextPath}/quotation/quotation_main">견적관리</a></li>
 	            <li><a href="${contextPath}/contract/contract_main">계약관리</a></li>
-	            <li><a href="#">구매발주</a></li>
+	            <li><a href="${contextPath}/purc_order/list">구매발주</a></li>
 	            <li><a href="#">진척검수</a></li>
 	            <li><a href="#">현황관리리포트(발주진행)</a></li>
 	            <li><a href="#">통합 발주마감</a></li>
@@ -63,6 +63,7 @@
 	        <ul class="sub-menu">
 	            <li><a href="${contextPath}/inventory/status">자재재고조회</a></li>
 	            <li><a href="${contextPath}/inventory/documents">자재입출고조회</a></li>
+	            <li><a href="${contextPath}/incoming/expected">자재입고관리</a></li>
 	            <li><a href="#">입고 예정목록</a></li>
 	        </ul>
 	    </div>  
@@ -73,6 +74,7 @@
 	            <li><a href="#">발주진행</a></li>
 	            <li><a href="#">재고금액</a></li>
 	            <li><a href="${contextPath}/inventory/report">재고현황보고서</a></li>
+	            <li><a href="${contextPath}/incoming/tp_list">거래명세서</a></li>
 	        </ul>
 	    </div>  
 	  	<!-- 공지사항 메뉴 -->

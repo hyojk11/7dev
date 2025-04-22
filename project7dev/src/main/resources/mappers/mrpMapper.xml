@@ -196,7 +196,7 @@
 		join material_unit_price on material.material_no = material_unit_price.material_no
 		join quotation on material.material_no = quotation.material_no
 		join contract on quotation.quot_no = contract.quot_no
-		where mrp_No=#{mrpNo}	
+		where mrp_no=#{mrpNo}	
 	</select>
 	
 </mapper>

@@ -11,7 +11,7 @@
 
         <!-- 메인 화면 영역 -->
         <div class="col-10 main" style="padding-right: 20px;">
-            <h3 class="fw-bold mb-4">제품 부품 목록</h3>
+            <h3 class="fw-bold mb-4">사용 부품 목록</h3>
 
             <table class="table table-bordered text-center align-middle" style="max-width: 1000px; margin: 0 auto; border-radius: 8px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); background-color: #DBFFE8;">
                 <thead>

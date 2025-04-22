@@ -11,7 +11,7 @@
 
     <!-- 메인 콘텐츠 영역 -->
     <div class="col-10 main" style="padding: 20px;">
-      <h3 class="fw-bold mb-4">품목정보 목록</h3>
+      <h3 class="fw-bold mb-4">제품정보</h3>
 
       <div class="scroll-container" style="max-height: 600px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #fff;">
         <table class="table table-bordered text-center align-middle scroll-table" style="width: 100%; table-layout: fixed;">

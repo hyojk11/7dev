@@ -12,7 +12,7 @@
         <!-- 메인 콘텐츠 영역 -->
         <div class="col-10 main" style="padding: 40px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.1); height: 1200px;">
 
-            <h3 class="fw-bold mb-4">품목정보</h3>
+            <h3 class="fw-bold mb-4">부품정보</h3>
 
             <div class="scroll-container mb-4" style="max-height: 500px; overflow-y: auto; border: 1px solid #ccc;">
                 <table class="table table-bordered text-center align-middle scroll-table">
