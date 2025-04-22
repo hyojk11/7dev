@@ -14,51 +14,53 @@
         <div class="col-10 main p-4" id="printArea">
         <div class="col-10 main p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="fw-bold mb-0">거래명세서 상세</h3>
+                <h3 class="fw-bold mb-0">거 래 명 세 서 (공급자용)</h3>
             </div>
 
             <!-- 기본 정보 테이블 -->
-            <div class="table-responsive mb-4">
+            <div class="print-table mb-4 mx-auto">
                 <table class="table table-bordered text-center align-middle" style="background-color: #E6F7FF;">
                     <thead style="background-color: #EDFFF4;">
                         <tr>
-						    <th class="align-middle">거래명세서<br>No.</th>
-						    <th class="align-middle">등록일</th>
-						    <th class="align-middle">거래처<br>사업자번호</th>
-						    <th class="align-middle">거래처<br>상호명</th>
-						    <th class="align-middle">거래처<br>대표자</th>
-						    <th class="align-middle">거래처<br>주소</th>
-						    <th class="align-middle">거래처<br>상세주소</th>
-						    <th class="align-middle">사업자번호</th>
-						    <th class="align-middle">회사<br>상호명</th>
-						    <th class="align-middle">회사<br>대표자</th>
-						    <th class="align-middle">회사<br>주소</th>
-						    <th class="align-middle">회사<br>상세주소</th>
-						    <th class="align-middle">담당자</th>
+                        	<th class="align-middle">명세서 No.</th>
+                        	<td colspan="2"> ${transPaper.trans_paper_no}</td>
+                        	<th class="align-middle">등록일</th>
+				            <td colspan="2" >${transPaper.trans_paper_reg_date}</td>
+						</tr>
+						<tr>
+							 <th colspan="3" class="align-middle">공 급 받 는 자</th>
+            				 <th colspan="3" class="align-middle">공 급 자</th>
+						</tr>
+						<tr>
+							<th class="align-middle">사업자번호</th>
+				            <td colspan="2" >${transPaper.sup_reg_no}</td>
+				            <th class="align-middle">사업자번호</th>
+				            <td colspan="2" >${transPaper.comp_reg_no}</td>
+						</tr>
+						<tr>
+							 <th class="align-middle">상호명</th>
+					         <td colspan="2" >${transPaper.sup_name}</td>
+					         <th class="align-middle">상호명</th>
+					         <td colspan="2">${transPaper.comp_name}</td>
+						</tr>
+						<tr>
+							 <th class="align-middle">주 소</th>
+				             <td colspan="2" >${transPaper.sup_addr1} ${transPaper.sup_addr2}</td>
+				             <th class="align-middle">주 소</th>
+				             <td colspan="2" >${transPaper.comp_addr1} ${transPaper.comp_addr2}</td>
+						</tr>
+						<tr>
+						     <th class="align-middle">성 명</th>
+            				 <td colspan="2">${transPaper.sup_ceo_name}</td>
+						     <th class="align-middle">성 명</th>
+            				 <td colspan="2">${transPaper.comp_ceo_name}</td>
 						</tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>${transPaper.trans_paper_no}</td>
-                            <td>${transPaper.trans_paper_reg_date}</td>
-                            <td>${transPaper.sup_reg_no}</td>
-                            <td>${transPaper.sup_name}</td>
-                            <td>${transPaper.sup_ceo_name}</td>
-                            <td>${transPaper.sup_addr1}</td>
-                            <td>${transPaper.sup_addr2}</td>
-                            <td>${transPaper.comp_reg_no}</td>
-                            <td>${transPaper.comp_name}</td>
-                            <td>${transPaper.comp_ceo_name}</td>
-                            <td>${transPaper.comp_addr1}</td>
-                            <td>${transPaper.comp_addr2}</td>
-                            <td>${transPaper.emp_name}</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
 
             <!-- 거래 내역 테이블 -->
-            <div class="table-responsive mb-4">
+            <div class="print-table mb-4 mx-auto">
                 <table class="table table-bordered text-center align-middle" style="background-color: #E6F7FF;">
                     <thead style="background-color: #EDFFF4;">
                         <tr>
