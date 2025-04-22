@@ -54,6 +54,7 @@ public class LoginController {
 		} else {
 			session.setAttribute("user_id", user.get("user_id"));
 			session.setAttribute("user_name", user.get("user_name"));
+			session.setAttribute("user_type", user.get("user_type"));
 			ra.addFlashAttribute("resultMsg", "성공적으로 로그인되었습니다.");
 			
 			String user_id = (String) user.get("user_id");

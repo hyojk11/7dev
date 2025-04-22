@@ -22,37 +22,37 @@
                 <table class="table table-bordered text-center align-middle" style="background-color: #E6F7FF;">
                     <thead style="background-color: #EDFFF4;">
                         <tr>
-                        	<th class="align-middle">명세서 No.</th>
+                        	<th class="align-middle" style="background-color: #EDFFF4;">명세서 No.</th>
                         	<td colspan="2"> ${transPaper.trans_paper_no}</td>
-                        	<th class="align-middle">등록일</th>
+                        	<th class="align-middle" style="background-color: #EDFFF4;">등록일</th>
 				            <td colspan="2" >${transPaper.trans_paper_reg_date}</td>
 						</tr>
 						<tr>
-							 <th colspan="3" class="align-middle">공 급 받 는 자</th>
-            				 <th colspan="3" class="align-middle">공 급 자</th>
+							 <th colspan="3" class="align-middle" style="background-color: #EDFFF4;">공 급 받 는 자</th>
+            				 <th colspan="3" class="align-middle" style="background-color: #EDFFF4;">공 급 자</th>
 						</tr>
 						<tr>
-							<th class="align-middle">사업자번호</th>
+							<th class="align-middle" style="background-color: #EDFFF4;">사업자번호</th>
 				            <td colspan="2" >${transPaper.sup_reg_no}</td>
-				            <th class="align-middle">사업자번호</th>
+				            <th class="align-middle" style="background-color: #EDFFF4;">사업자번호</th>
 				            <td colspan="2" >${transPaper.comp_reg_no}</td>
 						</tr>
 						<tr>
-							 <th class="align-middle">상호명</th>
+							 <th class="align-middle" style="background-color: #EDFFF4;">상호명</th>
 					         <td colspan="2" >${transPaper.sup_name}</td>
-					         <th class="align-middle">상호명</th>
+					         <th class="align-middle" style="background-color: #EDFFF4;">상호명</th>
 					         <td colspan="2">${transPaper.comp_name}</td>
 						</tr>
 						<tr>
-							 <th class="align-middle">주 소</th>
+							 <th class="align-middle" style="background-color: #EDFFF4;">주 소</th>
 				             <td colspan="2" >${transPaper.sup_addr1} ${transPaper.sup_addr2}</td>
-				             <th class="align-middle">주 소</th>
+				             <th class="align-middle" style="background-color: #EDFFF4;">주 소</th>
 				             <td colspan="2" >${transPaper.comp_addr1} ${transPaper.comp_addr2}</td>
 						</tr>
 						<tr>
-						     <th class="align-middle">성 명</th>
+						     <th class="align-middle" style="background-color: #EDFFF4;">성 명</th>
             				 <td colspan="2">${transPaper.sup_ceo_name}</td>
-						     <th class="align-middle">성 명</th>
+						     <th class="align-middle" style="background-color: #EDFFF4;">성 명</th>
             				 <td colspan="2">${transPaper.comp_ceo_name}</td>
 						</tr>
                     </thead>
@@ -64,13 +64,13 @@
                 <table class="table table-bordered text-center align-middle" style="background-color: #E6F7FF;">
                     <thead style="background-color: #EDFFF4;">
                         <tr>
-                            <th>No</th>
-                            <th>부품명</th>
-                            <th>부품코드</th>
-                            <th>수량</th>
-                            <th>단위</th>
-                            <th>계약단가</th>
-                            <th>비고</th>
+                            <th style="background-color: #EDFFF4;">No</th>
+                            <th style="background-color: #EDFFF4;">부품명</th>
+                            <th style="background-color: #EDFFF4;">부품코드</th>
+                            <th style="background-color: #EDFFF4;">수량</th>
+                            <th style="background-color: #EDFFF4;">단위</th>
+                            <th style="background-color: #EDFFF4;">계약단가</th>
+                            <th style="background-color: #EDFFF4;">비고</th>
                         </tr>
                     </thead>
                     <tbody>
