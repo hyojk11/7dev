@@ -61,15 +61,15 @@
           <tbody>
             <tr>
               <th class="table-success" style="width: 15%; background-color: #EDFFF4;">사원번호</th>
-              <td style="width: 35%;">${employee.emp_no}</td>
+              <td style="width: 35%;">${prpl.emp_no}</td>
               <th class="table-success" style="width: 15%; background-color: #EDFFF4;">담당자명</th>
-              <td style="width: 35%;">${employee.emp_name}</td>
+              <td style="width: 35%;">${prpl.emp_name}</td>
             </tr>
             <tr>
               <th class="table-success" style="background-color: #EDFFF4;">담당자 연락처</th>
-              <td>${employee.emp_phone}</td>
+              <td>${prpl.emp_phone}</td>
               <th class="table-success" style="background-color: #EDFFF4;">담당자 메일</th>
-              <td>${employee.emp_email}</td>
+              <td>${prpl.emp_email}</td>
             </tr>
             <tr>
               <th class="table-success" style="background-color: #EDFFF4;">기타사항</th>

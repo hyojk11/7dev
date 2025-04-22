@@ -91,7 +91,7 @@ public class MrpController {
 		cal.add(Calendar.DATE, -prpl.getPrpl_leadtime());
 
 		String mrpDueDate = sdf.format(cal.getTime());
-		System.out.println(mrpDueDate);
+//		System.out.println(mrpDueDate);
 		
 		model.addAttribute("prpl", prpl);
 		model.addAttribute("mrp_due_date", mrpDueDate);
