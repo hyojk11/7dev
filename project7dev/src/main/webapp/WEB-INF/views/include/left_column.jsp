@@ -4,7 +4,7 @@
     <h4>7chilldev</h4>
     
     <div class="user-info-box">
-    	<c:if test="${empty sessionScope.user_type}">
+    	<c:if test="${empty sessionScope.user_id}">
     	<p class="user-greeting">
     		<span class="line">로그인을 먼저 해주세요</span>
 		</p>
@@ -27,6 +27,7 @@
 
     <hr>
     <nav>
+    <c:if test="${not empty sessionScope.user_id}">
 	    <!-- 개발 메뉴 -->
 	    <div class="nav-group">
 	        <div class="nav-title">개발</div>
@@ -39,9 +40,9 @@
 	    <div class="nav-group">
 	        <div class="nav-title">생산</div>
 	        <ul class="sub-menu">
-	            <li><a href="#">제품생산계획</a></li>
-	            <li><a href="#">자재소요계획</a></li>
-	            <li><a href="#">부품조달계획</a></li>
+	            <li><a href="${contextPath}/prd_planning/list">제품생산계획</a></li>
+	            <li><a href="${contextPath}/mrp/mrp_main">자재소요계획</a></li>
+	            <li><a href="${contextPath}/mpp/mpp_main">부품조달계획</a></li>
 	        </ul>
 	    </div>  
 	  	<!-- 구매 메뉴 -->
@@ -49,7 +50,7 @@
 	        <div class="nav-title">구매</div>
 	        <ul class="sub-menu">
 	            <li><a href="#">견적관리</a></li>
-	            <li><a href="#">계약관리</a></li>
+	            <li><a href="${contextPath}/contract/contract_main">계약관리</a></li>
 	            <li><a href="#">구매발주</a></li>
 	            <li><a href="#">진척검수</a></li>
 	            <li><a href="#">현황관리리포트(발주진행)</a></li>
@@ -60,7 +61,8 @@
 	    <div class="nav-group">
 	        <div class="nav-title">자재</div>
 	        <ul class="sub-menu">
-	            <li><a href="#">자재조회</a></li>
+	            <li><a href="${contextPath}/inventory/status">자재재고조회</a></li>
+	            <li><a href="${contextPath}/inventory/documents">자재입출고조회</a></li>
 	            <li><a href="#">입고 예정목록</a></li>
 	        </ul>
 	    </div>  
@@ -70,6 +72,7 @@
 	        <ul class="sub-menu">
 	            <li><a href="#">발주진행</a></li>
 	            <li><a href="#">재고금액</a></li>
+	            <li><a href="${contextPath}/inventory/report">재고현황보고서</a></li>
 	        </ul>
 	    </div>  
 	  	<!-- 공지사항 메뉴 -->
@@ -80,6 +83,7 @@
 	            <li><a href="#">공지사항 관리</a></li>
 	        </ul>
 	    </div> 
+	    </c:if>
     </nav>
 </div>
 

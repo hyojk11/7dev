@@ -1,86 +1,96 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page session="true" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath }" />
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>생산계획 상세보기</title>
-</head>
+<html lang="ko">
+<%@ include file="../include/header.jsp" %>
 <body>
-	<h2>생산계획 상세보기</h2>
-	<form action="${contextPath}/prd_planning/updateSend" method="post">
-	<input type="hidden" name="prpl_no" value="${dto.prpl_no}">
-	<input type="hidden" name="product_no" value="${dto.product_no}">
-	<input type="hidden" name="pstorage_no" value="${dto.pstorage_no}">
-	<table border="1">
-		<tr>
-			<td>제품명</td>
-			<td colspan="2"><input type="text"  name="product_name" value="${dto.product_name}" readonly></td>
-			<td>제품코드</td>
-			<td colspan="2"><input type="text"  name="product_code" value="${dto.product_code}" readonly></td>
-		</tr>
-		<tr><td colspan="6"><br></td></tr>
-		<tr>
-			<td>공장</td>
-			<td colspan="2">
-				<select id = "plant" name = "prpl_plant" onchange = "changeLine()" disabled>
-					<option value="KR">KR</option>
-					<option value="CN">CN</option>
-				</select>
-			</td>
-			<td>라인</td>
-			<td colspan="2" id = "line"><input type="text" name="prpl_line" value="${dto.prpl_line}" readonly></td>
-		</tr>
-		<tr>
-			<td>출고계획수량</td>
-			<td><input type="number" id="plan_cnt" name="plan_cnt" value="${dto.pstorage_stock + dto.product_cnt}" readonly></td>
-			<td><button type="button" id="planCntBtn" onclick="changePlanCnt()" disabled>입력</button>
-			<td>창고재고수량</td>
-			<td colspan="2"><input type="number" id="pstorage_stock" name="pstorage_stock" value="${dto.pstorage_stock}" readonly></td>
-		</tr>
-		<tr>
-			<td>생산계획수량</td>
-			<td><input type="number" id="product_cnt" name="product_cnt" value="${dto.product_cnt}" readonly></td>
-			<td>출고납기일</td>
-			<td>
-				<input type="date" id="prpl_due_date" name="prpl_due_date" value="${dto.prpl_due_date_only}" readonly>
-			</td>
-			<td>리드타임</td>
-			<td><input type="number" id="prpl_leadtime" name="prpl_leadtime" value="${dto.prpl_leadtime}" readonly></td>
-		</tr>
-		<tr><td colspan="6"><br></td></tr>
-		<tr>
-			<td>사원번호</td>
-			<td><input type="number" id="emp_no" name="emp_no" value="${dto.emp_no}" readonly></td>
-			<td><button type="button" id="empBtn" onclick="changeEmp()" disabled>입력</button></td>
-			<td>담당자명</td>
-			<td colspan="2"><input type="text" id="emp_name" name="emp_name" value="${dto.emp_name}"readonly></td>
-		</tr>
-		<tr>
-			<td>담당자 연락처</td>
-			<td colspan="2"><input type="text" id="emp_phone" name="emp_phone" value="${dto.emp_phone}" readonly></td>
-			<td>담당자 이메일</td>
-			<td colspan="2"><input type="email" id="emp_email" name="emp_email" value="${dto.emp_email}" readonly></td>
-		</tr>
-		<tr><td colspan="6"><br></td></tr>
-		<tr>
-			<td>기타사항</td>
-			<td colspan="5">
-				<textarea rows="5" cols="70" id="prpl_etc" name="prpl_etc" readonly>${dto.prpl_etc}</textarea>
-			</td>
-		</tr>
-		</table>
-	<button type="button" id="editBtn" onclick="updateForm()">수정</button>
-	<button type="submit" id="saveBtn" style="display: none;">저장</button>
-	<button type="button" id="deleteBtn" onclick="location.href='${contextPath}/prd_planning/delete?prpl_no=${dto.prpl_no}'">삭제</button>
-	<button type="button" id="backBtn" onclick="location.href='${contextPath}/prd_planning/list'">목록으로</button>
-	<button type="button" id="cancelBtn" onclick="location.href='${contextPath}/prd_planning/detail?prpl_no=${dto.prpl_no}'" style="display: none;">취소</button>
-	</form>
-	
+<div class="container-fluid">
+  <div class="row">
+    <%@ include file="../include/left_column.jsp" %>
+
+    <div class="col-10 main" style="padding: 20px;">
+      <h3 class="fw-bold mb-4">생산계획 상세보기</h3>
+
+      <form action="${contextPath}/prd_planning/updateSend" method="post">
+        <input type="hidden" name="prpl_no" value="${dto.prpl_no}">
+        <input type="hidden" name="product_no" value="${dto.product_no}">
+        <input type="hidden" name="pstorage_no" value="${dto.pstorage_no}">
+
+        <table class="table table-bordered align-middle">
+          <tbody>
+            <tr>
+              <th style="width: 15%; background-color: #EDFFF4;">제품명</th>
+              <td colspan="2"><input type="text" name="product_name" value="${dto.product_name}" class="form-control" readonly></td>
+              <th style="background-color: #EDFFF4;">제품코드</th>
+              <td colspan="2"><input type="text" name="product_code" value="${dto.product_code}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">공장</th>
+              <td colspan="2">
+                <select id="plant" name="prpl_plant" class="form-select w-auto" onchange="changeLine()" disabled>
+                  <option value="KR" ${dto.prpl_plant == 'KR' ? 'selected' : ''}>KR</option>
+                  <option value="CN" ${dto.prpl_plant == 'CN' ? 'selected' : ''}>CN</option>
+                </select>
+              </td>
+              <th style="background-color: #EDFFF4;">라인</th>
+              <td colspan="2" id="line">
+                <input type="text" name="prpl_line" value="${dto.prpl_line}" class="form-control" readonly>
+              </td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">출고계획수량</th>
+              <td><input type="number" id="plan_cnt" name="plan_cnt" class="form-control" value="${dto.pstorage_stock + dto.product_cnt}" readonly></td>
+              <td><button type="button" class="btn btn-primary btn-sm" id="planCntBtn" onclick="changePlanCnt()" disabled>입력</button></td>
+              <th style="background-color: #EDFFF4;">창고재고수량</th>
+              <td colspan="2"><input type="number" id="pstorage_stock" name="pstorage_stock" value="${dto.pstorage_stock}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">생산계획수량</th>
+              <td><input type="number" id="product_cnt" name="product_cnt" value="${dto.product_cnt}" class="form-control" readonly></td>
+              <th style="background-color: #EDFFF4;">출고납기일</th>
+              <td><input type="date" id="prpl_due_date" name="prpl_due_date" value="${dto.prpl_due_date_only}" class="form-control" readonly></td>
+              <th style="background-color: #EDFFF4;">리드타임</th>
+              <td><input type="number" id="prpl_leadtime" name="prpl_leadtime" value="${dto.prpl_leadtime}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">사원번호</th>
+              <td><input type="number" id="emp_no" name="emp_no" value="${dto.emp_no}" class="form-control" readonly></td>
+              <td><button type="button" class="btn btn-primary btn-sm" id="empBtn" onclick="changeEmp()" disabled>입력</button></td>
+              <th style="background-color: #EDFFF4;">담당자명</th>
+              <td colspan="2"><input type="text" id="emp_name" name="emp_name" value="${dto.emp_name}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">담당자 연락처</th>
+              <td colspan="2"><input type="text" id="emp_phone" name="emp_phone" value="${dto.emp_phone}" class="form-control" readonly></td>
+              <th style="background-color: #EDFFF4;">담당자 이메일</th>
+              <td colspan="2"><input type="email" id="emp_email" name="emp_email" value="${dto.emp_email}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">기타사항</th>
+              <td colspan="5">
+                <textarea rows="5" class="form-control" id="prpl_etc" name="prpl_etc" readonly>${dto.prpl_etc}</textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-warning" id="editBtn" onclick="updateForm()">수정</button>
+          <button type="submit" class="btn btn-success" id="saveBtn" style="display: none;">저장</button>
+          <button type="button" class="btn btn-danger" id="deleteBtn" onclick="location.href='${contextPath}/prd_planning/delete?prpl_no=${dto.prpl_no}'">삭제</button>
+          <button type="button" class="btn btn-secondary" id="backBtn" onclick="location.href='${contextPath}/prd_planning/list'">목록으로</button>
+          <button type="button" class="btn btn-secondary" id="cancelBtn" onclick="location.href='${contextPath}/prd_planning/detail?prpl_no=${dto.prpl_no}'" style="display: none;">취소</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%@ include file="../include/footer.jsp" %>
+
 	<!-- 등록란 동적변환 -->
 	<script>
 	
@@ -196,6 +206,5 @@
 			
 		}
 	</script>
-	
-<body>
+</body>
 </html>

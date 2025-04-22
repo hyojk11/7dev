@@ -30,7 +30,7 @@
                             </th>
                         </tr>
                         <tr>
-                            <th colspan="3" class="table-light">자재소요계획 목록</th>
+                            <th colspan="3" class="table-light" style="background-color: #FFFFFF;">자재소요계획 목록</th>
                             <th>
                                 <form action="${contextPath}/mrp/mrp_selectPrpl" method="get">
                                     <button type="submit" class="btn btn-success btn-sm">신규등록</button>
@@ -38,10 +38,10 @@
                             </th>
                         </tr>
                         <tr>
-                            <th>자재소요계획코드</th>
-                            <th>제품명</th>
-                            <th>자재 납기일</th>
-                            <th>담당자</th>
+                            <th style="background-color: #EDFFF4;">자재소요계획코드</th>
+                            <th style="background-color: #EDFFF4;">제품명</th>
+                            <th style="background-color: #EDFFF4;">자재 납기일</th>
+                            <th style="background-color: #EDFFF4;">담당자</th>
                         </tr>
                     </thead>
                     <tbody>

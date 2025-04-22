@@ -1,70 +1,84 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath }" />
+
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>C. 재고 현황 보고서</title>
+<html lang="ko">
+<%@ include file="../include/header.jsp" %>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/test.css">
 <style>
-    body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column; height: 100vh; }
-    .main-container { display: flex; flex-grow: 1; }
-    .left-menu { width: 200px; border-right: 1px solid #ccc; background-color: #f8f9fa; height: 100%; overflow-y: auto; }
-    .content-area { flex-grow: 1; padding: 20px; display: flex; flex-direction: column; }
-    .search-criteria { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; background-color: #fdfdfd; }
-    .search-criteria fieldset { border: none; padding: 0; margin: 0; }
-    .search-criteria legend { font-weight: bold; margin-bottom: 10px; font-size: 1.1em; }
-    .criteria-row { display: flex; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
-    .criteria-row label { width: 90px; text-align: right; margin-right: 10px; font-size: 0.9em; }
-    .criteria-row input[type=text], .criteria-row input[type=month] { width: 130px; padding: 5px; margin-right: 20px; }
-    .search-button-row { text-align: right; margin-top: 10px; }
-    #resultsArea { flex-grow: 1; border: 1px solid #ccc; padding: 15px; overflow-y: auto; }
+	#resultsArea { flex-grow: 1; border: 1px solid #ccc; padding: 15px; overflow-y: auto; }
     table.styled-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
     table.styled-table th, table.styled-table td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 0.9em; }
-    table.styled-table th { background-color: #e9ecef; }
+    table.styled-table th { background-color: #EDFFF4; }
     .error-message { color: red; }
     table.styled-table td:nth-child(n+4) { text-align: right; }
 </style>
-</head>
+
 <body>
-    <jsp:include page="common/header.jsp" />
-    <div class="main-container">
-        <jsp:include page="common/menu.jsp" />
-        <div class="content-area">
-             <h2>재고 현황 보고서</h2>
-             <div class="search-criteria">
-                <form id="reportForm">
-                    <fieldset>
-                        <legend>조회 조건</legend>
-                        <div class="criteria-row">
-                            <label>조회 월:</label>
-                            <input type="month" name="queryMonthFrom" title="시작월"> ~
-                            <input type="month" name="queryMonthTo" title="종료월">
-                            <label>자재 유형:</label>
-                            <input type="text" name="materialTypeFrom" title="자재 유형 시작"> ~
-                            <input type="text" name="materialTypeTo" title="자재 유형 종료">
-                        </div>
-                         <div class="criteria-row">
-                            <label>자재 품번:</label>
-                            <input type="text" name="materialCodeFrom" title="자재 품번 시작"> ~
-                            <input type="text" name="materialCodeTo" title="자재 품번 종료">
-                            <label>저장 위치:</label>
-                            <input type="text" name="storageCodeFrom" title="저장 위치 시작"> ~
-                            <input type="text" name="storageCodeTo" title="저장 위치 종료">
-                         </div>
-                         <div class="search-button-row">
-                            <button type="button" id="searchBtn">조회</button>
-                        </div>
-                    </fieldset>
-                </form>
-             </div>
-             <div id="resultsArea"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <%@ include file="../include/left_column.jsp" %>
+
+            <div class="col-10 main" style="padding: 20px;">
+                <h3 class="fw-bold mb-4">재고 현황 보고서</h3>
+
+                <div class="card p-4 shadow mb-4 bg-light">
+                    <form id="reportForm">
+                        <fieldset>
+                            <legend class="fw-bold mb-3">조회 조건</legend>
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">조회 월(시작)</label>
+                                    <input type="month" class="form-control" name="queryMonthFrom">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">조회 월(종료)</label>
+                                    <input type="month" class="form-control" name="queryMonthTo">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">자재 유형(시작)</label>
+                                    <input type="text" class="form-control" name="materialTypeFrom">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">자재 유형(종료)</label>
+                                    <input type="text" class="form-control" name="materialTypeTo">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">자재 품번(시작)</label>
+                                    <input type="text" class="form-control" name="materialCodeFrom">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">자재 품번(종료)</label>
+                                    <input type="text" class="form-control" name="materialCodeTo">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">저장 위치(시작)</label>
+                                    <input type="text" class="form-control" name="storageCodeFrom">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">저장 위치(종료)</label>
+                                    <input type="text" class="form-control" name="storageCodeTo">
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="button" id="searchBtn" class="btn btn-success px-4">조회</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div id="resultsArea" class="bg-white p-3 shadow rounded"></div>
+            </div>
         </div>
     </div>
 
-     <script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function() {
             $('#searchBtn').on('click', function() {
                 const formId = '#reportForm';
@@ -128,5 +142,6 @@
             $('#searchBtn').click();
         });
      </script>
+<%@ include file="../include/footer.jsp" %>
 </body>
 </html>

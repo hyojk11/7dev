@@ -1,147 +1,96 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <%@ page session="true"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>자재소요계획</title>
-<style>
-.scroll-table {
-	width: 100%;
-	border-collapse: separate;
-	table-layout: fixed;
-}
-
-.scroll-table thead {
-	background-color: #f2f2f2;
-}
-
-.scroll-table th, .scroll-table td {
-	border: 1px solid #ccc;
-	padding: 8px;
-	text-align: center;
-	word-wrap: break-word;
-}
-
-.scroll-container {
-  height: 400px;     /* 고정 높이로 박스 크기 만들기 */
-  overflow-y: auto;      /* 이 안에서만 스크롤 */
-  border: 1px solid #ccc;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  border-radius: 4px;
-}
-
-.sticky-row th, fix {
-	position: sticky;
-	background-color: #fff;
-	z-index: 2;
-}
-
-.scroll-container thead th {
-  position: sticky;
-  top: 0;
-  background-color: #fff;
-  z-index: 2;
-}
-
-.label-cell {
-	background-color: #7EFFAF;
-	font-weight: semibold;
-}
-#fix {
-  position: sticky;
-  left: 0;
-  background-color: #fff;
-  z-index: 3;
-}
-.label-cell {
-  background-color: #7EFFAF;
-  font-weight: semibold;
-}	
-
-</style>
-<h1>자재소요계획 등록</h1>
-</head>
+<html lang="ko">
+<%@ include file="../include/header.jsp" %>
 <body>
-	<form action="${contextPath}/mrp/createMrp" method="post">
-		<table border="1" cellpadding="5" cellspacing="0" style="width: 100%;">
-			<thead class="sticky-row">
+<div class="container-fluid">
+  <div class="row">
+    <%@ include file="../include/left_column.jsp" %>
 
-				<input type="hidden" name="prplNo" value="${prpl.prpl_no}"/>
-				<input type="hidden" name="productNo" value="${prpl.product_no}"/>
-				<tr>
-					<td class="label-cell" style="width:15%;">제품명</td>
-					<td style="width:35%;">${prpl.product_name }</td>
-					<td class="label-cell" style="width:15%;">제품코드</td>
-					<td style="width:35%;">${prpl.product_code }</td>
-				</tr>
-				<tr>
-					<input type="hidden" name="mrpDueDate" value="${mrp_due_date}"/>
-					<td class="label-cell" style="width:15%;">자재납기일</td>
-					<td style="width:35%;">${mrp_due_date}</td>
-				</tr>
-			</thead>
-		</table>
-						
-		<div class="scroll-container">
-			<table border="1" cellpadding="5" cellspacing="0" style="width: 100%;">	
-				<thead class="sticky-row">	
-					<tr style="position: sticky; background-color: #fff;">
-						<th class="label-cell" colspan="7">소요자재 목록</th>
-						<th><input type="button" value="자재조회" onclick="openMaterialModal()"></th>
-					</tr>
-					<tr style="position: sticky; top: 36px; background-color: #fff;">
-						<th style="width:15%;">자재명</th>
-						<th style="width:20%;">자재코드</th>
-						<th style="width:15%;">자재창고</th>
-						<th style="width:10%;">가용재고</th>
-						<th style="width:10%;">총소요량</th>
-						<th style="width:10%;">순소요량</th>
-						<th style="width:10%;">포장단위</th>
-						<th style="width:10%;">리드타임(일)</th>
-					</tr>
-				</thead>
-				<tbody id="materialBody">
-				
-				
-				</tbody>
-			</table>
-		</div>
-		<table border="1" cellpadding="5" cellspacing="0" style="width: 100%;">
-			<input type="hidden" name="empNo" value="4"/>
-			<tr>
-		        <td class="label-cell" style="width:15%;">사원번호</td>
-		        <td style="width:35%;">${employee.emp_no}</td>
-		        <td class="label-cell" style="width:15%;">담당자명</td>
-		        <td style="width:35%;">${employee.emp_name}</td>
-		    </tr>
-			<tr>
-		        <td class="label-cell" style="width:15%;">담당자 연락처</td>
-		        <td style="width:35%;">${employee.emp_phone}</td>
-		        <td class="label-cell" style="width:15%;">담당자 메일</td>
-		        <td style="width:35%;">${employee.emp_email}</td>
-		    </tr>
-		    <tr>
-		    	<td colspan="4"></td>
-		    </tr>
- 			<tr>
-		        <td class="label-cell" style="width:15%;">기타사항</td>
-		        <td colspan="3" style="width:35%;">
-					<textarea rows="4" cols="110"></textarea>
-				</td>
-		    </tr>
-		</table>
-		<div style="text-align: center; margin-top: 20px;">
-	       		<button type="submit">등록</button>
-	      		<button type="button" onclick="history.back()">닫기</button>
-      	</div>
-	</form>
+    <div class="col-10 main" style="padding: 20px;">
+      <h3 class="fw-bold mb-4">자재소요계획 등록</h3>
+
+      <form action="${contextPath}/mrp/createMrp" method="post">
+        <input type="hidden" name="prplNo" value="${prpl.prpl_no}"/>
+        <input type="hidden" name="productNo" value="${prpl.product_no}"/>
+        <input type="hidden" name="mrpDueDate" value="${mrp_due_date}"/>
+        <input type="hidden" name="empNo" value="4"/>
+
+        <table class="table table-bordered align-middle">
+          <tbody>
+            <tr>
+              <th style="width: 15%; background-color: #EDFFF4;" class="table-success">제품명</th>
+              <td style="width: 35%;">${prpl.product_name}</td>
+              <th style="width: 15%; background-color: #EDFFF4;" class="table-success">제품코드</th>
+              <td style="width: 35%;">${prpl.product_code}</td>
+            </tr>
+            <tr>
+              <th class="table-success" style="background-color: #EDFFF4;">자재납기일</th>
+              <td colspan="3">${mrp_due_date}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="border rounded p-2 mb-3" style="max-height: 400px; overflow-y: auto;">
+          <table class="table table-bordered text-center mb-0">
+            <thead class="table-light position-sticky top-0">
+              <tr>
+                <th colspan="7" class="table-success" style="background-color: #FFFFFF;">소요자재 목록</th>
+                <th style="background-color: #FFFFFF;"><input type="button" value="자재조회" class="btn btn-outline-primary btn-sm" onclick="openMaterialModal()"></th>
+              </tr>
+              <tr>
+                <th style="background-color: #EDFFF4;">자재명</th>
+                <th style="background-color: #EDFFF4;">자재코드</th>
+                <th style="background-color: #EDFFF4;">자재창고</th>
+                <th style="background-color: #EDFFF4;">가용재고</th>
+                <th style="background-color: #EDFFF4;">총소요량</th>
+                <th style="background-color: #EDFFF4;">순소요량</th>
+                <th style="background-color: #EDFFF4;">포장단위</th>
+                <th style="background-color: #EDFFF4;">리드타임(일)</th>
+              </tr>
+            </thead>
+            <tbody id="materialBody"></tbody>
+          </table>
+        </div>
+
+        <table class="table table-bordered align-middle">
+          <tbody>
+            <tr>
+              <th class="table-success" style="width: 15%; background-color: #EDFFF4;">사원번호</th>
+              <td style="width: 35%;">${employee.emp_no}</td>
+              <th class="table-success" style="width: 15%; background-color: #EDFFF4;">담당자명</th>
+              <td style="width: 35%;">${employee.emp_name}</td>
+            </tr>
+            <tr>
+              <th class="table-success" style="background-color: #EDFFF4;">담당자 연락처</th>
+              <td>${employee.emp_phone}</td>
+              <th class="table-success" style="background-color: #EDFFF4;">담당자 메일</th>
+              <td>${employee.emp_email}</td>
+            </tr>
+            <tr>
+              <th class="table-success" style="background-color: #EDFFF4;">기타사항</th>
+              <td colspan="3">
+                <textarea class="form-control" name="etc" rows="4" placeholder="비고를 입력하세요."></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center gap-2 mt-3">
+          <button type="submit" class="btn btn-success">등록</button>
+          <button type="button" class="btn btn-secondary" onclick="history.back()">닫기</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%@ include file="../include/footer.jsp" %>
+
 	<script>
 		function openMaterialModal() {
 			window.open('${contextPath}/material/search', '자재조회', 'width=600,height=500');

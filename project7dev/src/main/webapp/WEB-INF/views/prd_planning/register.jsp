@@ -1,83 +1,121 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath }" />
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>생산계획 신규등록</title>
-</head>
+<html lang="ko">
+<%@ include file="../include/header.jsp" %>
 <body>
-	<h2>제품생산계획 등록</h2>
-	<form action="${contextPath}/prd_planning/registerSend" method="post">
-	<input type="hidden" name="product_no" value="${product_no}">
-	<input type="hidden" name="pstorage_no" value="${dto.pstorage_no}">
-	<table border="1">
-		<tr>
-			<td>작성일</td>
-			<td colspan="5"><input type="date" name="reg_date"></td>
-		</tr>
-		<tr>
-			<td>제품명</td>
-			<td colspan="2"><input type="text"  name="product_name" value="${product_name}" readonly></td>
-			<td>제품코드</td>
-			<td colspan="2"><input type="text"  name="product_code" value="${product_code}" readonly></td>
-		</tr>
-		<tr><td colspan="6"><br></td></tr>
-		<tr>
-			<td>공장</td>
-			<td colspan="2">
-				<select id = "plant" name = "prpl_plant" onchange = "changeLine()">
-					<option value="KR">KR</option>
-					<option value="CN">CN</option>
-				</select>
-			</td>
-			<td>라인</td>
-			<td colspan="2" id = "line"></td>
-		</tr>
-		<tr>
-			<td>출고계획수량</td>
-			<td><input type="number" id="plan_cnt" required></td>
-			<td><button type="button" onclick="changePlanCnt()">입력</button>
-			<td>창고재고수량</td>
-			<td colspan="2"><input type="number" id="pstorage_stock" name="pstorage_stock" value="${dto.pstorage_stock}" readonly></td>
-		</tr>
-		<tr>
-			<td>생산계획수량</td>
-			<td><input type="number" id="product_cnt" name="product_cnt" readonly></td>
-			<td>리드타임</td>
-			<td><input type="number" name="prpl_leadtime" placeholder="조립소요기간(일)" required></td>
-			<td>출고납기일</td>
-			<td><input type="date" name="prpl_due_date" required></td>
-		</tr>
-		<tr><td colspan="6"><br></td></tr>
-		<tr>
-			<td>사원번호</td>
-			<td><input type="number" id="emp_no" name="emp_no" required></td>
-			<td><button type="button" onclick="changeEmp()">입력</button></td>
-			<td>담당자명</td>
-			<td colspan="2"><input type="text" id="emp_name" name="emp_name" readonly></td>
-		</tr>
-		<tr>
-			<td>담당자 연락처</td>
-			<td colspan="2"><input type="text" id="emp_phone" name="emp_phone" readonly></td>
-			<td>담당자 이메일</td>
-			<td colspan="2"><input type="email" id="emp_email" name="emp_email" readonly></td>
-		</tr>
-		<tr><td colspan="6"><br></td></tr>
-		<tr>
-			<td>기타사항</td>
-			<td colspan="5">
-				<textarea rows="5" cols="70" name="prpl_etc"></textarea>
-			</td>
-		</tr>
-		</table>
-	<button type="submit">등록</button>
-	<button type="button" onclick="location.href='${contextPath}/prd_planning/list'">취소</button>
-	</form>
-	
+<div class="container-fluid">
+  <div class="row">
+    <%@ include file="../include/left_column.jsp" %>
+    
+    <div class="col-10 main" style="padding: 20px;">
+      <h3 class="fw-bold mb-4">제품생산계획 등록</h3>
+      
+      <form action="${contextPath}/prd_planning/registerSend" method="post">
+        <input type="hidden" name="product_no" value="${product_no}">
+        <input type="hidden" name="pstorage_no" value="${dto.pstorage_no}">
+
+        <table class="table table-bordered align-middle">
+          <tbody>
+            <tr>
+              <th style="width: 15%; background-color: #EDFFF4;">작성일</th>
+              <td colspan="5">
+                <input type="date" name="reg_date" class="form-control w-25">
+              </td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">제품명</th>
+              <td colspan="2">
+                <input type="text" name="product_name" value="${product_name}" class="form-control" readonly>
+              </td>
+              <th style="background-color: #EDFFF4;">제품코드</th>
+              <td colspan="2">
+                <input type="text" name="product_code" value="${product_code}" class="form-control" readonly>
+              </td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">공장</th>
+              <td colspan="2">
+                <select id="plant" name="prpl_plant" class="form-select w-auto" onchange="changeLine()">
+                  <option value="KR">KR</option>
+                  <option value="CN">CN</option>
+                </select>
+              </td>
+              <th style="background-color: #EDFFF4;">라인</th>
+              <td colspan="2" id="line"></td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">출고계획수량</th>
+              <td>
+                <input type="number" id="plan_cnt" class="form-control" required>
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" onclick="changePlanCnt()">입력</button>
+              </td>
+              <th style="background-color: #EDFFF4;">창고재고수량</th>
+              <td colspan="2">
+                <input type="number" id="pstorage_stock" name="pstorage_stock" value="${dto.pstorage_stock}" class="form-control" readonly>
+              </td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">생산계획수량</th>
+              <td>
+                <input type="number" id="product_cnt" name="product_cnt" class="form-control" readonly>
+              </td>
+              <th style="background-color: #EDFFF4;">리드타임</th>
+              <td>
+                <input type="number" name="prpl_leadtime" class="form-control" placeholder="조립소요기간(일)" required>
+              </td>
+              <th style="background-color: #EDFFF4;">출고납기일</th>
+              <td>
+                <input type="date" name="prpl_due_date" class="form-control" required>
+              </td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">사원번호</th>
+              <td>
+                <input type="number" id="emp_no" name="emp_no" class="form-control" required>
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" onclick="changeEmp()">입력</button>
+              </td>
+              <th style="background-color: #EDFFF4;">담당자명</th>
+              <td colspan="2">
+                <input type="text" id="emp_name" name="emp_name" class="form-control" readonly>
+              </td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">담당자 연락처</th>
+              <td colspan="2">
+                <input type="text" id="emp_phone" name="emp_phone" class="form-control" readonly>
+              </td>
+              <th style="background-color: #EDFFF4;">담당자 이메일</th>
+              <td colspan="2">
+                <input type="email" id="emp_email" name="emp_email" class="form-control" readonly>
+              </td>
+            </tr>
+            <tr>
+              <th style="background-color: #EDFFF4;">기타사항</th>
+              <td colspan="5">
+                <textarea rows="5" class="form-control" name="prpl_etc" placeholder="비고를 입력하세요."></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-success">등록</button>
+          <button type="button" class="btn btn-secondary" onclick="location.href='${contextPath}/prd_planning/list'">취소</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%@ include file="../include/footer.jsp" %>
+
 	<!-- 등록란 동적변환 -->
 	<script>
 	
@@ -144,6 +182,5 @@
 		}
 		
 	</script>
-	
-<body>
+</body>
 </html>
