@@ -82,19 +82,20 @@
 				</table>
 
 				<!-- 페이지 네비게이션 -->
-				<div class="pagination-container">
-					<c:if test="${startPage > 1}">
-						<a class="btn btn-outline-secondary" href="?page=${startPage - 1}&searchType=${searchType}&keyword=${keyword}">◀</a>
-					</c:if>
+<div class="pagination-container d-flex justify-content-center my-4">
+	<c:if test="${startPage > 1}">
+		<a class="btn btn-outline-secondary mx-1" href="?page=${startPage - 1}&searchType=${searchType}&keyword=${keyword}">◀</a>
+	</c:if>
 
-					<c:forEach begin="${startPage}" end="${endPage}" var="i">
-						<a class="btn btn-outline-secondary" href="?page=${i}&searchType=${searchType}&keyword=${keyword}">${i}</a>
-					</c:forEach>
+	<c:forEach begin="${startPage}" end="${endPage}" var="i">
+		<a class="btn btn-outline-secondary mx-1" href="?page=${i}&searchType=${searchType}&keyword=${keyword}">${i}</a>
+	</c:forEach>
 
-					<c:if test="${endPage < totalPage}">
-						<a class="btn btn-outline-secondary" href="?page=${endPage + 1}&searchType=${searchType}&keyword=${keyword}">▶</a>
-					</c:if>
-				</div>
+	<c:if test="${endPage < totalPage}">
+		<a class="btn btn-outline-secondary mx-1" href="?page=${endPage + 1}&searchType=${searchType}&keyword=${keyword}">▶</a>
+	</c:if>
+</div>
+
 			</div>
 		</div>
 	</div>

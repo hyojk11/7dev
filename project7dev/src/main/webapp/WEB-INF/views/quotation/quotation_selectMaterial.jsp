@@ -1,108 +1,75 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<%@ page session="true" %>    
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>견적 관리</title>
-<style>
-  .scroll-table {
-    width: 100%;
-    border-collapse: separate;
-    table-layout: fixed;
-  }
-
-  .scroll-table thead {
-    background-color: #f2f2f2;
-  }
-  
-  .scroll-table th,
-  .scroll-table td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
-    word-wrap: break-word;
-  }
-
-  .scroll-container {
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-  }
-  
-  .sticky-row th {
-  position: sticky;
-  background-color: #fff;
-  z-index: 2;
-}
-
- .scroll-container thead th {
-   position: sticky;
-   top: 0;
-   background-color: #fff; /* 배경 지정 안 하면 스크롤시 투명해짐 */
-   z-index: 1;
- }
- 
-   .label-cell {
-    background-color: #7EFFAF;
-    font-weight: semibold;
-  }
-</style>
-<h1>부품 선택</h1>
-</head>
+<html lang="ko">
+<%@ include file="../include/header.jsp" %>
 <body>
-<br><br><br>
-	<div class="scroll-container">
-		<table border="1" cellpadding="5" cellspacing="1" style="width: 100%;">
-			<div class="topHeader" style="color:white;">
-			   	<thead class="sticky-row">
-			        <tr style="position: sticky; top: 0; background-color: #fff; z-index: 3;">
-				        <th colspan="7">
-				        	<form action="${contextPath}/quotation/selectMaterial" method="get">
-									<select name="searchType" id="selectField">
-							            <option value="materialCode" selected>부품코드</option>
-							            <option value="materialName">부품명</option>
-							        </select>
-								  <input type="text" name="searchValue" id="inputCode">
-					            <input type="submit" value="검색">
-				            </form>
-					    </th>
-			        </tr>
-			        <tr style="position: sticky; top: 36px; background-color: #fff; z-index: 2;">
-			            <th colspan="4">부품 목록</th>
-			        </tr>
-					<tr style="position: sticky; top: 72px; background-color: #fff; z-index: 1;">
-						<th>부품코드</th>
-						<th>부품명</th>
-						<th>상세보기</th>
-						<th>등록하기</th>
-					</tr>
-				</thead>
-			</div>
-			<tbody>
-				<c:forEach var="material" items="${materialList}">
-						<tr>
-							<td>${material.materialCode}</td>
-							<td>${material.materialName}</td>
-							<td>
-			             	    <form action="#" method="get">
-			                        <input type="hidden" name="materialNo" value="${material.materialNo}" />
-			                        <button type="submit">보기</button>
-			                    </form>
-							</td>
-							<td>
-			             	    <form action="${contextPath }/quotation/getCreateQuotation" method="get">
-			                        <input type="hidden" name="materialNo" value="${material.materialNo}" />
-			                        <button type="submit">선택</button>
-			                    </form>
-							</td>
-						</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
+<div class="container-fluid">
+  <div class="row">
+    <%@ include file="../include/left_column.jsp" %>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <div class="col-10 main" style="padding: 20px;">
+      <h3 class="fw-bold mb-4">부품 선택</h3>
+
+      <div class="scroll-container" style="max-height: 600px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #fff;">
+        <table class="table table-bordered text-center align-middle scroll-table" style="width: 100%; table-layout: fixed;">
+          <thead class="sticky-row">
+            <!-- 검색 영역 -->
+            <tr style="position: sticky; top: 0; background-color: #fff; z-index: 3;">
+              <th colspan="4">
+                <form action="${contextPath}/quotation/selectMaterial" method="get" class="d-flex justify-content-center align-items-center gap-2">
+                  <select name="searchType" id="selectField" class="form-select w-auto">
+                    <option value="materialCode" selected>부품코드</option>
+                    <option value="materialName">부품명</option>
+                  </select>
+                  <input type="text" name="searchValue" id="inputCode" class="form-control w-25">
+                  <input type="submit" value="검색" class="btn btn-primary">
+                </form>
+              </th>
+            </tr>
+
+            <!-- 목록 헤더 -->
+            <tr style="position: sticky; top: 56px; background-color: #fff; z-index: 2;">
+              <th colspan="4">부품 목록</th>
+            </tr>
+
+            <!-- 실제 테이블 컬럼 헤더 -->
+            <tr style="position: sticky; top: 96px; background-color: #EDFFF4; z-index: 1;">
+              <th style="background-color: #EDFFF4;">부품코드</th>
+              <th style="background-color: #EDFFF4;">부품명</th>
+              <th style="background-color: #EDFFF4;">상세보기</th>
+              <th style="background-color: #EDFFF4;">등록하기</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <c:forEach var="material" items="${materialList}">
+              <tr>
+                <td>${material.materialCode}</td>
+                <td>${material.materialName}</td>
+                <td>
+                  <form action="#" method="get">
+                    <input type="hidden" name="materialNo" value="${material.materialNo}" />
+                    <button type="submit" class="btn btn-info btn-sm">보기</button>
+                  </form>
+                </td>
+                <td>
+                  <form action="${contextPath}/quotation/getCreateQuotation" method="get">
+                    <input type="hidden" name="materialNo" value="${material.materialNo}" />
+                    <button type="submit" class="btn btn-success btn-sm">선택</button>
+                  </form>
+                </td>
+              </tr>
+            </c:forEach>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%@ include file="../include/footer.jsp" %>
 </body>
 </html>

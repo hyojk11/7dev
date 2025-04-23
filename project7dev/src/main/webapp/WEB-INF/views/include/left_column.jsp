@@ -96,7 +96,6 @@
 
     .sidebar {
         padding: 20px;
-        max-width: 250px;
     }
 
     .user-info-box {

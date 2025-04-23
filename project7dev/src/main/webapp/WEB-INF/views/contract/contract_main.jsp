@@ -21,7 +21,7 @@
                 <div class="col-md-2">
                     <label class="form-label">검색 유형</label>
                     <select name="searchType" id="selectField" class="form-control">
-                        <option value="contCode" selected>계약코드</option>
+                        <option value="contCode" selected >계약코드</option>
                         <option value="materialCode">부품코드</option>
                         <option value="supName">거래처명</option>
                     </select>
@@ -44,17 +44,17 @@
 
             <!-- 계약 목록 테이블 -->
             <div class="scroll-container">
-                <table class="table table-bordered table-striped text-center align-middle">
-                    <thead style="background-color: #f2f2f2;">
+                <table class="table table-bordered text-center align-middle">
+                    <thead style="background-color: #ffffff;">
                         <tr>
                             <th colspan="5">계약 목록</th>
                         </tr>
                         <tr>
-                            <th>계약코드</th>
-                            <th>부품코드</th>
-                            <th>부품명</th>
-                            <th>회사명</th>
-                            <th>상세보기</th>
+                            <th style="background-color: #EDFFF4;">계약코드</th>
+                            <th style="background-color: #EDFFF4;">부품코드</th>
+                            <th style="background-color: #EDFFF4;">부품명</th>
+                            <th style="background-color: #EDFFF4;">회사명</th>
+                            <th style="background-color: #EDFFF4;">상세보기</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,7 +67,7 @@
                                 <td>
                                     <form action="${contextPath}/contract/selectContract" method="get">
                                         <input type="hidden" name="contNo" value="${contract.contNo}" />
-                                        <button type="submit" class="btn btn-info">보기</button>
+                                        <button type="submit" class="btn btn-success">보기</button>
                                     </form>
                                 </td>
                             </tr>
