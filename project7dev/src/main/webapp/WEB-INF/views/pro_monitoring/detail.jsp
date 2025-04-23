@@ -5,6 +5,26 @@
 <html lang="ko">
 
 <%@ include file="../include/header.jsp" %>
+<style>
+	.modal {
+	  display: none;
+	  position: fixed;
+	  z-index: 9999;
+	  left: 0; top: 0;
+	  width: 100%; height: 100%;
+	  background-color: rgba(0,0,0,0.5); /* 반투명 배경 */
+	}
+	
+	.modal_content {
+	  background-color: white;
+	  margin: 10% auto;
+	  padding: 20px;
+	  width: 800px;
+	  border-radius: 10px;
+	  position: relative;
+	}
+	
+</style>
 
 <body>
 <div class="container-fluid">
@@ -246,4 +266,5 @@
                 });
             }
         });
-   
+    });
+</script>
