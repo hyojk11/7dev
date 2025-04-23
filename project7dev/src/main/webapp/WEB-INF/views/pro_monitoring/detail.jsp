@@ -205,7 +205,10 @@
                 <c:forEach var="data" items="${summaryList}">
                     <tr>
                         <td>${data.material_name}</td>
-                        <td>${data.material_code}</td>
+                        <td>
+                        	${data.material_code}
+                        	<input type="hidden" name="material_nos" value="${data.material_no}" />
+                        </td>
                         <td>${data.cont_material_cnt}</td>
                         <td>${data.total_material_cnt}</td>
                         <td><input type="number" name="material_cnts" required></td>
