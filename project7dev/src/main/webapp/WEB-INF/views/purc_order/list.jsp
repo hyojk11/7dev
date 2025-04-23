@@ -24,13 +24,13 @@
 		      <option value="emp_name" ${param.searchType == 'emp_name' ? 'selected' : ''}>담당자</option>
 		      <option value="purc_order_status" ${param.searchType == 'purc_order_status' ? 'selected' : ''}>상태</option>
 		    </select>
-		
-		    <!-- 검색 input 타입 영역 -->
-		    <span id="inputType">
+
+		    <!-- 검색 input + 버튼 정렬 -->
+		    <div class="d-flex gap-2 align-items-center" id="inputType">
 		      <input type="text" name="keyword" value="${param.keyword}" class="form-control w-auto" placeholder="검색어">
-		    </span>
-		
-		    <button type="submit" class="btn btn-primary">검색</button>
+		      <button type="submit" class="btn btn-primary">검색</button>
+		    </div>
+
 		    <input type="hidden" name="page" value="1">
 		  </form>
 
@@ -114,18 +114,28 @@
     function changeInputType() {
       const searchType = document.getElementById("searchType").value;
       const inputType = document.getElementById("inputType");
-      
+
       if (searchType === "purc_order_reg_date" || searchType === "mrp_due_date") {
-        inputType.innerHTML = `<input type="date" name="keyword" value="${param.keyword}" class="form-control w-25">`;
+        inputType.innerHTML = `
+          <div class="d-flex gap-2 align-items-center">
+            <input type="date" name="keyword" value="${param.keyword}" class="form-control w-auto">
+            <button type="submit" class="btn btn-primary">검색</button>
+          </div>`;
       } else if (searchType === "purc_order_status") {
         inputType.innerHTML = `
-          <select name="keyword" class="form-select w-auto">
-            <option value="0" ${param.keyword == 0 ? 'selected' : ''}>마감 전</option>
-            <option value="1" ${param.keyword == 1 ? 'selected' : ''}>마감완료</option>
-          </select>
-        `;
+          <div class="d-flex gap-2 align-items-center">
+            <select name="keyword" class="form-select w-auto">
+              <option value="0" ${param.keyword == 0 ? 'selected' : ''}>마감 전</option>
+              <option value="1" ${param.keyword == 1 ? 'selected' : ''}>마감완료</option>
+            </select>
+            <button type="submit" class="btn btn-primary">검색</button>
+          </div>`;
       } else {
-        inputType.innerHTML = `<input type="text" name="keyword" value="${param.keyword}" class="form-control w-25" placeholder="검색어">`;
+        inputType.innerHTML = `
+          <div class="d-flex gap-2 align-items-center">
+            <input type="text" name="keyword" value="${param.keyword}" class="form-control w-auto" placeholder="검색어">
+            <button type="submit" class="btn btn-primary">검색</button>
+          </div>`;
       }
     }
     window.addEventListener("DOMContentLoaded", changeInputType);
