@@ -206,6 +206,7 @@ public class ProcurementController {
 	                                  HttpSession session) throws Exception {
 
 	    List<MrpDTO> mrpList = mrpFormDTO.getMaterials();
+	    System.out.println(mrpFormDTO);
 
 //	    System.out.println(mrpList);
 	    for (MrpDTO mrp : mrpList) {

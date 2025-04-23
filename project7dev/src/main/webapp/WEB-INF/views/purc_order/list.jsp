@@ -14,27 +14,30 @@
         <h3 class="fw-bold mb-4">구매발주 목록</h3>
 
         <!-- 검색 및 엑셀 다운로드 영역 -->
-        <div class="d-flex justify-content-between mb-4">
-          <form action="${contextPath}/purc_order/list" method="get" class="d-flex gap-2">
-            <select id="searchType" name="searchType" class="form-select">
-              <option value="purc_order_code" ${param.searchType == 'purc_order_code' ? 'selected' : ''}>발주번호</option>
-              <option value="purc_order_reg_date" ${param.searchType == 'purc_order_reg_date' ? 'selected' : ''}>발주일</option>
-              <option value="sup_name" ${param.searchType == 'sup_name' ? 'selected' : ''}>거래처명</option>
-              <option value="mrp_due_date" ${param.searchType == 'mrp_due_date' ? 'selected' : ''}>납기일</option>
-              <option value="emp_name" ${param.searchType == 'emp_name' ? 'selected' : ''}>담당자</option>
-              <option value="purc_order_status" ${param.searchType == 'purc_order_status' ? 'selected' : ''}>상태</option>
-            </select>
-            <span id="inputType">
-              <input type="text" name="keyword" value="${param.keyword}" class="form-control w-25" placeholder="검색어">
-            </span>
-            <button type="submit" class="btn btn-primary">검색</button>
-            <input type="hidden" name="page" value="1">
-          </form>
+		<div class="mb-4 d-flex justify-content-between">
+		  <form action="${contextPath}/purc_order/list" method="get" class="d-flex gap-2 align-items-center">
+		    <select id="searchType" name="searchType" class="form-select w-auto" onchange="changeInputType()">
+		      <option value="purc_order_code" ${param.searchType == 'purc_order_code' ? 'selected' : ''}>발주번호</option>
+		      <option value="purc_order_reg_date" ${param.searchType == 'purc_order_reg_date' ? 'selected' : ''}>발주일</option>
+		      <option value="sup_name" ${param.searchType == 'sup_name' ? 'selected' : ''}>거래처명</option>
+		      <option value="mrp_due_date" ${param.searchType == 'mrp_due_date' ? 'selected' : ''}>납기일</option>
+		      <option value="emp_name" ${param.searchType == 'emp_name' ? 'selected' : ''}>담당자</option>
+		      <option value="purc_order_status" ${param.searchType == 'purc_order_status' ? 'selected' : ''}>상태</option>
+		    </select>
+		
+		    <!-- 검색 input 타입 영역 -->
+		    <span id="inputType">
+		      <input type="text" name="keyword" value="${param.keyword}" class="form-control w-auto" placeholder="검색어">
+		    </span>
+		
+		    <button type="submit" class="btn btn-primary">검색</button>
+		    <input type="hidden" name="page" value="1">
+		  </form>
 
           <form action="${contextPath}/purc_order/excel" method="get">
             <input type="hidden" name="searchType" value="${param.searchType}">
             <input type="hidden" name="keyword" value="${param.keyword}">
-            <button type="submit" class="btn btn-secondary">EXCEL 다운</button>
+            <button type="submit" class="btn btn-success">EXCEL 다운</button>
           </form>
         </div>
 

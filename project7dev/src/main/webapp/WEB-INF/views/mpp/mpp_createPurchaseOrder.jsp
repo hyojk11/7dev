@@ -16,7 +16,7 @@
         <div class="col-10 main" style="padding-right: 20px;">
             <h3 class="fw-bold mb-4">구매발주서</h3>
 
-            <form action="${contextPath}/purchaseOrder/register" method="post">
+            <form action="${contextPath}/mpp/createPurchaseOrder" method="post">
                 <input type="hidden" name="emp_no" value="${mpp.empNo}"/>
                 <input type="hidden" name="purc_order_code" value="${mpp.mppCode}" />
                 <input type="hidden" name="purc_order_status" value="0" />

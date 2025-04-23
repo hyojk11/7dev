@@ -74,7 +74,7 @@
 		join quotation on contract.quot_no = quotation.quot_no
 		join material_unit_price on contract.mprice_no = material_unit_price.mprice_no
 		join material on material_unit_price.material_no = material.material_no
-		where cont_no=#{contNo}
+		where contract.cont_no=#{contNo}
 	</select>
 	<!-- 계약정보 검색조회(계약번호 사용, 계약관리 전용) -->
 	<select id="searchContract" parameterType="map" resultType="ContractDTO">
