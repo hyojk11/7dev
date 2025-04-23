@@ -21,7 +21,7 @@
           <tbody>
             <tr>
               <th style="width: 15%; background-color: #EDFFF4;">작성일</th>
-              <td colspan="5">
+              <td colspan="6">
                 <input type="date" name="reg_date" class="form-control w-25">
               </td>
             </tr>
@@ -31,7 +31,7 @@
                 <input type="text" name="product_name" value="${product_name}" class="form-control" readonly>
               </td>
               <th style="background-color: #EDFFF4;">제품코드</th>
-              <td colspan="2">
+              <td colspan="3">
                 <input type="text" name="product_code" value="${product_code}" class="form-control" readonly>
               </td>
             </tr>
@@ -44,7 +44,7 @@
                 </select>
               </td>
               <th style="background-color: #EDFFF4;">라인</th>
-              <td colspan="2" id="line"></td>
+              <td colspan="3" id="line"></td>
             </tr>
             <tr>
               <th style="background-color: #EDFFF4;">출고계획수량</th>
@@ -55,13 +55,13 @@
                 <button type="button" class="btn btn-primary btn-sm" onclick="changePlanCnt()">입력</button>
               </td>
               <th style="background-color: #EDFFF4;">창고재고수량</th>
-              <td colspan="2">
+              <td colspan="3">
                 <input type="number" id="pstorage_stock" name="pstorage_stock" value="${dto.pstorage_stock}" class="form-control" readonly>
               </td>
             </tr>
             <tr>
               <th style="background-color: #EDFFF4;">생산계획수량</th>
-              <td>
+              <td colspan="2">
                 <input type="number" id="product_cnt" name="product_cnt" class="form-control" readonly>
               </td>
               <th style="background-color: #EDFFF4;">리드타임</th>
@@ -82,7 +82,7 @@
                 <button type="button" class="btn btn-primary btn-sm" onclick="changeEmp()">입력</button>
               </td>
               <th style="background-color: #EDFFF4;">담당자명</th>
-              <td colspan="2">
+              <td colspan="3">
                 <input type="text" id="emp_name" name="emp_name" class="form-control" readonly>
               </td>
             </tr>
@@ -92,13 +92,13 @@
                 <input type="text" id="emp_phone" name="emp_phone" class="form-control" readonly>
               </td>
               <th style="background-color: #EDFFF4;">담당자 이메일</th>
-              <td colspan="2">
+              <td colspan="3">
                 <input type="email" id="emp_email" name="emp_email" class="form-control" readonly>
               </td>
             </tr>
             <tr>
               <th style="background-color: #EDFFF4;">기타사항</th>
-              <td colspan="5">
+              <td colspan="6">
                 <textarea rows="5" class="form-control" name="prpl_etc" placeholder="비고를 입력하세요."></textarea>
               </td>
             </tr>
@@ -143,12 +143,16 @@
 		window.addEventListener("DOMContentLoaded", changeLine);
 		
 		function changePlanCnt() {
-			const plan_cnt = document.getElementById("plan_cnt").value;
-			const pstorage_stock = document.getElementById("pstorage_stock").value;
+			const plan_cnt = Number(document.getElementById("plan_cnt").value);
+			const pstorage_stock = Number(document.getElementById("pstorage_stock").value);
 			const product_cnt = document.getElementById("product_cnt");
 			
 			if(plan_cnt != "" && pstorage_stock != "") {
-				product_cnt.value = plan_cnt - pstorage_stock;
+				if(plan_cnt <= pstorage_stock) {
+					product_cnt.value = 0;
+				} else {
+					product_cnt.value = plan_cnt - pstorage_stock;
+				}
 			}
 		}
 		function changeEmp() {
