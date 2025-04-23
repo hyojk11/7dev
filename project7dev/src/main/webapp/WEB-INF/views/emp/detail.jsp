@@ -15,34 +15,34 @@
       <form action="${contextPath}/emp/update" method="post">
         <table class="table table-bordered text-center">
           <tr>
-            <td>사원번호</td>
+            <td style="background-color: #EDFFF4;">사원번호</td>
             <td colspan="2"><input type="text" id="emp_no" name="emp_no" value="${dto.emp_no}" readonly class="form-control"></td>
           </tr>
           <tr>
-            <td>사원명</td>
+            <td style="background-color: #EDFFF4;">사원명</td>
             <td colspan="2"><input type="text" id="emp_name" name="emp_name" value="${dto.emp_name}" readonly class="form-control"></td>
           </tr>
           <tr>
-            <td>직책</td>
+            <td style="background-color: #EDFFF4;">직책</td>
             <td colspan="2"><input type="text" id="emp_job" name="emp_job" value="${dto.emp_job}" readonly class="form-control"></td>
           </tr>
           <tr>
-            <td>아이디</td>
+            <td style="background-color: #EDFFF4;">아이디</td>
             <td colspan="2">
               <input type="text" id="emp_id" name="emp_id" value="${dto.emp_id}" readonly class="form-control">
               <button type="button" id="idckBtn" style="display: none;" class="btn btn-secondary btn-sm">중복확인</button>
             </td>
           </tr>
           <tr>
-            <td>비밀번호</td>
+            <td style="background-color: #EDFFF4;">비밀번호</td>
             <td colspan="2"><input type="text" id="emp_password" name="emp_password" value="${dto.emp_password}" readonly class="form-control"></td>
           </tr>
           <tr>
-            <td>전화번호</td>
+            <td style="background-color: #EDFFF4;">전화번호</td>
             <td colspan="2"><input type="tel" id="emp_phone" name="emp_phone" value="${dto.emp_phone}" readonly class="form-control"></td>
           </tr>
           <tr>
-            <td>이메일</td>
+            <td style="background-color: #EDFFF4;">이메일</td>
             <td colspan="2"><input type="email" id="emp_email" name="emp_email" value="${dto.emp_email}" readonly class="form-control"></td>
           </tr>
         </table>

@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/sup_main.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
 <div class="wrapper"><!-- wrapper 시작 -->
 
     <!-- 알림 메시지 출력 -->
@@ -27,8 +27,8 @@
             <img src="${contextPath}/resources/image/7chilldevLogo_Green_Long.png" width="160" height="40">
             <div>
                 <span>안녕하세요 <strong>${sessionScope.user_name} 님</strong>&nbsp;</span>
-                <button class="btn btn-outline-success btn-sm me-2">로그아웃</button>
-                <button class="btn btn-success btn-sm">mypage</button>
+                <button class="btn btn-outline-success btn-sm me-2" onclick="location.href='${contextPath }/'">로그아웃</button>
+                <button class="btn btn-success btn-sm" onclick="location.href='${contextPath }/mypage/supDetail'">mypage</button>
             </div>
         </div>
     </div>
@@ -38,47 +38,21 @@
         <div class="container-grid">
             <div class="card">
                 <div class="card-title">
-                    <div class="card-icon"><i class="bi bi-tools"></i></div>발주 내역
+                    <div class="card-icon"><i class="bi bi-tools"></i></div>발주
                 </div>
                 <div class="card-body">
-                    <a href="#">발주 확인</a>
-                    <a href="#">발주 진행 확인</a>
+                    <a href="${contextPath}/quotation/quotation_main">견적관리</a>
+					<a href="${contextPath}/incoming/status_list">발주진행현황</a>
+					<a href="${contextPath}/purc_order/list">구매발주</a>
+					<a href="${contextPath}/pro_monitoring/list">진척검수</a>
                 </div>
             </div>
             <div class="card">
                 <div class="card-title">
-                    <div class="card-icon"><i class="bi bi-gear-wide-connected"></i></div>계약 및 견적
+                    <div class="card-icon"><i class="bi bi-gear-wide-connected"></i></div>조회
                 </div>
                 <div class="card-body">
-                    <a href="#">계약 상태 확인</a>
-                    <a href="#">견적 요청 내역</a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">
-                    <div class="card-icon"><i class="bi bi-cart-check"></i></div>배송 및 수령
-                </div>
-                <div class="card-body">
-                    <a href="#">배송 일정 확인</a>
-                    <a href="#">수령 내역</a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">
-                    <div class="card-icon"><i class="bi bi-boxes"></i></div>거래처 정보
-                </div>
-                <div class="card-body">
-                    <a href="#">회사 정보 관리</a>
-                    <a href="#">연락처 업데이트</a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">
-                    <div class="card-icon"><i class="bi bi-bar-chart-line"></i></div>현황 관리 리포트
-                </div>
-                <div class="card-body">
-                    <a href="#">거래 내역 분석</a>
-                    <a href="#">보고서 다운로드</a>
+                    <a href="${contextPath}/incoming/tp_list">거래명세서</a>
                 </div>
             </div>
             <div class="card">

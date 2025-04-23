@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 전용 페이지</title>
 </head>
 <body>
 <c:if test="${not empty resultMsg}">
@@ -14,12 +14,6 @@
     </script>
 </c:if>
 
-<!-- 새로운 관리자 페이지 내용 추가 -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html>
 <head>
     <title>관리자 전용 페이지</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,14 +27,14 @@
     <!-- 관리자 페이지 Custom CSS -->
     <link href="${contextPath}/resources/css/admin.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
 <div class="container mt-3">
     <div class="top-bar">
         <img src="${contextPath}/resources/image/7chilldevLogo_Green_Long.png" width="160" height="40">
         <div>
             <span>안녕하세요 <strong>${sessionScope.user_name} 님</strong>&nbsp;</span>
-            <button class="btn btn-outline-success btn-sm me-2">로그아웃</button>
-            <button class="btn btn-success btn-sm">mypage</button>
+            <button class="btn btn-outline-success btn-sm me-2" onclick="location.href='${contextPath }/'">로그아웃</button>
+            <button class="btn btn-success btn-sm" onclick="location.href='${contextPath }/mypage/supDetail'">mypage</button>
         </div>
     </div>
 </div>
@@ -56,8 +50,7 @@
                 사원 관리
             </div>
             <div class="manage-card-body">
-                <a href="#">사원 목록</a>
-                <a href="#">사원 추가</a>
+                <a href="${contextPath}/emp/list">사원 목록</a>
             </div>
         </div>
 
@@ -70,8 +63,7 @@
                 거래처 관리
             </div>
             <div class="manage-card-body">
-                <a href="#">거래처 목록</a>
-                <a href="#">거래처 추가</a>
+                <a href="${contextPath}/supplier/supplier_main">거래처 목록</a>
             </div>
         </div>
 
@@ -82,8 +74,8 @@
                 개발
             </div>
             <div class="card-body">
-                <a href="#">품목정보</a>
-                <a href="#">부품정보</a>
+                <a href="${contextPath}/material/material_main">부품 정보</a>
+                <a href="${contextPath}/product/product_main">제품 정보</a>
             </div>
         </div>
 
@@ -93,7 +85,9 @@
                 생산
             </div>
             <div class="card-body">
-                <a href="#">조달계획</a>
+                <a href="${contextPath}/prd_planning/list">제품 생산 계획</a>
+				<a href="${contextPath}/mrp/mrp_main">자재 소요 계획</a>
+				<a href="${contextPath}/mpp/mpp_main">부품 조달 계획</a>
             </div>
         </div>
 
@@ -103,8 +97,11 @@
                 구매
             </div>
             <div class="card-body">
-                <a href="#">견적 관리</a>
-                <a href="#">계약 관리</a>
+				<a href="${contextPath}/quotation/quotation_main">견적 관리</a>
+				<a href="${contextPath}/contract/contract_main">계약 관리</a>
+				<a href="${contextPath}/incoming/status_list">발주 진행 현황</a>
+				<a href="${contextPath}/purc_order/list">구매 발주</a>
+				<a href="${contextPath}/pro_monitoring/list">진척 검수</a>
             </div>
         </div>
 
@@ -114,22 +111,24 @@
                 자재
             </div>
             <div class="card-body">
-                <a href="#">자재 입고</a>
-                <a href="#">자재 출고</a>
-                <a href="#">재고 관리</a>
-                <a href="${contextPath}/issuing/produce">부품 출고하기</a>
-                <a href="${contextPath}/issuing/lineout">라인 출고하기</a>
+                <a href="${contextPath}/incoming/material_storage">창고별 자재 현황</a>
+				<a href="${contextPath}/incoming/expected">자재 입고 관리</a>
+				<a href="${contextPath}/incoming/material_handling">자재 통합 관리</a>
+				<a href="${contextPath}/issuing/produce">부품 출고하기</a>
+				<a href="${contextPath}/issuing/lineout">라인 출고하기</a>
             </div>
         </div>
 
         <div class="card">
             <div class="card-title">
                 <div class="card-icon"><i class="bi bi-bar-chart-line"></i></div>
-                현황 관리 리포트
+                조회
             </div>
             <div class="card-body">
-                <a href="#">발주 진행</a>
-                <a href="#">재고 금액</a>
+                <a href="${contextPath}/inventory/status">자재 재고 조회</a>
+				<a href="${contextPath}/inventory/documents">자재 입출고 조회</a>
+				<a href="${contextPath}/inventory/report">재고 현황 보고서</a>
+				<a href="${contextPath}/incoming/tp_list">거래 명세서</a>
             </div>
         </div>
 

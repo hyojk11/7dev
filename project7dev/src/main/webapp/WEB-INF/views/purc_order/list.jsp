@@ -46,16 +46,16 @@
           <table class="table table-bordered text-center">
             <thead style="background-color: #f0f0f0;">
               <tr>
-                <th>NO.</th>
-                <th>발주번호</th>
-                <th>발주일</th>
-                <th>거래처명</th>
-                <th>총 수량</th>
-                <th>총 금액</th>
-                <th>화폐단위</th>
-                <th>납기일</th>
-                <th>담당자</th>
-                <th>상태</th>
+                <th style="background-color: #EDFFF4;">NO.</th>
+                <th style="background-color: #EDFFF4;">발주번호</th>
+                <th style="background-color: #EDFFF4;">발주일</th>
+                <th style="background-color: #EDFFF4;">거래처명</th>
+                <th style="background-color: #EDFFF4;">총 수량</th>
+                <th style="background-color: #EDFFF4;">총 금액</th>
+                <th style="background-color: #EDFFF4;">화폐단위</th>
+                <th style="background-color: #EDFFF4;">납기일</th>
+                <th style="background-color: #EDFFF4;">담당자</th>
+                <th style="background-color: #EDFFF4;">상태</th>
               </tr>
             </thead>
             <tbody>

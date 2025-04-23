@@ -49,12 +49,12 @@
 
             <!-- 실제 테이블 컬럼 헤더 -->
             <tr style="background-color: #EDFFF4;">
-              <th>사원번호</th>
-              <th>사원명</th>
-              <th>직책</th>
-              <th>아이디</th>
-              <th>전화번호</th>
-              <th colspan="2">이메일</th>
+              <th style="background-color: #EDFFF4;">사원번호</th>
+              <th style="background-color: #EDFFF4;">사원명</th>
+              <th style="background-color: #EDFFF4;">직책</th>
+              <th style="background-color: #EDFFF4;">아이디</th>
+              <th style="background-color: #EDFFF4;">전화번호</th>
+              <th colspan="2" style="background-color: #EDFFF4;">이메일</th>
             </tr>
           </thead>
 

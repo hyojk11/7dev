@@ -66,7 +66,7 @@
             <!-- 입고예정 목록 테이블 -->
             <form action="${contextPath}/incoming/purchaseClose" method="post" id="myForm">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped text-center align-middle" style="background-color: #E6F7FF;">
+                    <table class="table table-bordered text-center align-middle" style="background-color: #E6F7FF;">
                         <thead style="background-color: #EDFFF4;">
                             <tr>
                                 <th style="background-color: #EDFFF4;">선택</th>

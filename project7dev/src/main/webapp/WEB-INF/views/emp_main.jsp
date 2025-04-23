@@ -41,8 +41,8 @@
                         <span>안녕하세요 <strong>사용자 님</strong>&nbsp;</span>
                     </c:otherwise>
                 </c:choose>
-                <button class="btn btn-outline-success btn-sm me-2">로그아웃</button>
-                <button class="btn btn-success btn-sm">mypage</button>
+                <button class="btn btn-outline-success btn-sm me-2" onclick="location.href='${contextPath }/'">로그아웃</button>
+                <button class="btn btn-success btn-sm" onclick="location.href='${contextPath }/mypage/empDetail'">mypage</button>
             </div>
         </div>
     </div>
@@ -55,8 +55,8 @@
                 <div class="card-icon"><i class="bi bi-tools"></i></div>개발
             </div>
             <div class="card-body">
-                <a href="${contextPath}/item">품목정보</a>
-                <a href="#">부품정보</a>
+                <a href="${contextPath}/material/material_main">부품 정보</a>
+				<a href="${contextPath}/product/product_main">제품 정보</a>
             </div>
         </div>
         <div class="card">
@@ -64,9 +64,9 @@
                 <div class="card-icon"><i class="bi bi-gear-wide-connected"></i></div>생산
             </div>
             <div class="card-body">
-                <a href="#">제품생산계획</a>
-                <a href="#">자재소요계획</a>
-                <a href="#">부품조달계획</a>
+                <a href="${contextPath}/prd_planning/list">제품 생산 계획</a>
+				<a href="${contextPath}/mrp/mrp_main">자재 소요 계획</a>
+				<a href="${contextPath}/mpp/mpp_main">부품 조달 계획</a>
             </div>
         </div>
         <div class="card">
@@ -74,12 +74,10 @@
                 <div class="card-icon"><i class="bi bi-cart-check"></i></div>구매
             </div>
             <div class="card-body">
-                <a href="#">견적관리</a>
-                <a href="#">계약관리</a>
-                <a href="#">구매발주</a>
-                <a href="#">진척검수</a>
-                <a href="#">현황관리리포트<br>(발주 진행)</a>
-                <a href="#">통합 발주마감</a>
+                <a href="${contextPath}/contract/contract_main">계약 관리</a>
+				<a href="${contextPath}/incoming/status_list">발주 진행 현황</a>
+				<a href="${contextPath}/purc_order/list">구매 발주</a>
+				<a href="${contextPath}/pro_monitoring/list">진척 검수</a>
             </div>
         </div>
         <div class="card">
@@ -87,19 +85,22 @@
                 <div class="card-icon"><i class="bi bi-boxes"></i></div>자재
             </div>
             <div class="card-body">
-                <a href="#">자재조회</a>
-                <a href="#">입고 예정목록</a>
-                <a href="${contextPath}/issuing/produce">부품 출고하기</a>
-                <a href="${contextPath}/issuing/lineout">라인 출고하기</a>
+                <a href="${contextPath}/incoming/material_storage">창고별 자재 현황</a>
+				<a href="${contextPath}/incoming/expected">자재 입고 관리</a>
+				<a href="${contextPath}/incoming/material_handling">자재 통합 관리</a>
+				<a href="${contextPath}/issuing/produce">부품 출고하기</a>
+				<a href="${contextPath}/issuing/lineout">라인 출고하기</a>
             </div>
         </div>
         <div class="card">
             <div class="card-title">
-                <div class="card-icon"><i class="bi bi-bar-chart-line"></i></div>리포트
+                <div class="card-icon"><i class="bi bi-bar-chart-line"></i></div>조회
             </div>
             <div class="card-body">
-                <a href="#">진행상황</a>
-                <a href="#">재고금액</a>
+                <a href="${contextPath}/inventory/status">자재 재고 조회</a>
+				<a href="${contextPath}/inventory/documents">자재 입출고 조회</a>
+				<a href="${contextPath}/inventory/report">재고 현황 보고서</a>
+				<a href="${contextPath}/incoming/tp_list">거래 명세서</a>
             </div>
         </div>
         <div class="card">
