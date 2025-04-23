@@ -197,6 +197,7 @@
 		join quotation on material.material_no = quotation.material_no
 		join contract on quotation.quot_no = contract.quot_no
 		where mrp_no=#{mrpNo}	
+		Limit 1
 	</select>
 	
 </mapper>

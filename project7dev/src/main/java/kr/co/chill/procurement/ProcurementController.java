@@ -124,11 +124,11 @@ public class ProcurementController {
 			, HttpServletRequest request
 			, Model model) throws Exception {
 		ProcurementDTO procurementDTO = procurementService.readMppByMppNo(mppNo);
-		System.out.println("✔"+procurementDTO);
+//		System.out.println("✔"+procurementDTO);
 		model.addAttribute("mpp", procurementDTO);
 		
 		String mrpCode = mrpService.getMrpCodeByMrpNo(procurementDTO.getMrpNo());
-		System.out.println(mrpCode);
+//		System.out.println(mrpCode);
 		
 		List<MrpDTO> mrpList = mrpService.readMrpByMrpCode(mrpCode);
 		model.addAttribute("mrpList", mrpList);
@@ -136,6 +136,7 @@ public class ProcurementController {
 	    if (!mrpList.isEmpty()) {
 	        model.addAttribute("mrp", mrpList.get(0));
 	    }
+//	    System.out.println("✔"+procurementDTO.getContNo());
 		
 		return "mpp/mpp_selectMpp";
 	}
@@ -147,6 +148,7 @@ public class ProcurementController {
 			, HttpServletRequest request
 			, Model model) throws Exception {
 	    List<MrpDTO> selectedMaterials = mrpFormDTO.getMaterials();
+//	    System.out.println(selectMaterials);
 	    ProcurementDTO mpp = procurementService.readMppByMppNo(procurementDTO.getMppNo());
 	    MrpDTO mrpDTO = mrpService.getMrpByMrpNo(procurementDTO.getMrpNo()); 
 	    CompanyDTO companyDTO = procurementService.getCompanyByEmpNo(procurementDTO.getEmpNo());
@@ -158,14 +160,14 @@ public class ProcurementController {
 	    for (MrpDTO item : selectedMaterials) {
 	        try {
 	            MrpDTO mrp = mrpService.getMrpByMrpNo(item.getMrpNo());
-	            System.out.println(item.getMrpNo());
-	            System.out.println(mrp);
+//	            System.out.println(item.getMrpNo());
+//	            System.out.println(mrp);
 	            MaterialDTO material = materialService.getMaterialByMaterialNo(mrp.getMaterialNo());
 	            SupplierDTO supplier = supplierService.readSupplierBySupNo(material.getSupNo());
 
-	            System.out.println("✔ mrp: " + mrp);
-	            System.out.println("✔ material: " + material);
-	            System.out.println("✔ supplier: " + supplier);
+//	            System.out.println("✔ mrp: " + mrp);
+//	            System.out.println("✔ material: " + material);
+//	            System.out.println("✔ supplier: " + supplier);
 
 	            mrpList.add(mrp);
 	            materialList.add(material);
@@ -202,24 +204,32 @@ public class ProcurementController {
 	                                  @RequestParam("emp_no") int empNo,
 	                                  @RequestParam("purc_order_code") String purcOrderCode,
 	                                  @RequestParam("purc_order_status") int purcOrderStatus,
+	                                  @RequestParam("purcOrderEtc") String purcOrderEtc,
+	                                  @RequestParam("cont_no") int contNo,
+	                                  @RequestParam("cont_dterms") String contDterms,
+	                                  @RequestParam("mrp_no") int mrpNo,
 	                                  HttpServletRequest request,
 	                                  HttpSession session) throws Exception {
 
 	    List<MrpDTO> mrpList = mrpFormDTO.getMaterials();
-	    System.out.println(mrpFormDTO);
+//	    System.out.println("✔"+mrpFormDTO);
 
-//	    System.out.println(mrpList);
+//	    System.out.println("✔"+mrpList);
 	    for (MrpDTO mrp : mrpList) {
 	        PurchaseorderDTO order = new PurchaseorderDTO();
-
 	        order.setMrp_no(mrp.getMrpNo());           // 자재소요계획 번호
 	        order.setCont_no(mrp.getContNo());         // 계약 번호 (MrpDTO에 포함되어 있어야 함)
 	        order.setEmp_no(empNo);
+	        order.setCont_no(contNo);
+	        order.setMrp_no(mrpNo);
+	        order.setPurc_order_dterms(contDterms);
 	        order.setPurc_order_code(purcOrderCode);
-//	        order.setPurc_order_status(purcOrderStatus);
-//	        order.setPurcOrderEtc(mrp.getPurcOrderEtc());   // 비고가 있다면
+	        order.setPurc_order_status(purcOrderStatus);
+	        order.setPurc_order_etc(purcOrderEtc);   // 비고가 있다면
+	        
+//	        System.out.println("✔"+order);
 
-//	        purchaseorderService.register(order);
+	        purchaseorderService.register(order);
 	    }
 
 	    return "redirect:/mpp/mpp_main";

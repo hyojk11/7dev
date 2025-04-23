@@ -20,7 +20,8 @@
 		material_sku_quantity as materialSkuQuantity,
 		material_etc as materialEtc,
 		product_no as productNo,
-		sup_no as supNo
+		sup_no as supNo,
+		cont_no as contNo
 		from material
 	</select>
 	<!-- 자재정보 검색조회(자재코드,자재명) -->
@@ -40,7 +41,8 @@
 		material_sku_quantity as materialSkuQuantity,
 		material_etc as materialEtc,
 		product_no as productNo,
-		sup_no as supNo
+		sup_no as supNo,
+		cont_no as contNo
 		from material 	
 		<where>
        		<if test="searchType == 'materialCode' and searchValue != null and searchValue != ''">
@@ -68,7 +70,8 @@
 		material_sku_quantity as materialSkuQuantity,
 		material_etc as materialEtc,
 		product_no as productNo,
-		sup_no as supNo		 
+		sup_no as supNo,		
+		cont_no as contNo 
 		from material
 		where material_code LIKE CONCAT('%', #{searchValue}, '%')
 	</select>
@@ -89,7 +92,8 @@
 		material_sku_quantity as materialSkuQuantity,
 		material_etc as materialEtc,
 		product_no as productNo,
-		sup_no as supNo		
+		sup_no as supNo,		
+		cont_no as contNo
 		from material
 		where product_no = #{productNo}
 	</select>
@@ -110,7 +114,8 @@
 		material_sku_quantity as materialSkuQuantity,
 		material_etc as materialEtc,
 		product_no as productNo,
-		sup_no as supNo		
+		sup_no as supNo,		
+		cont_no as contNo		
 		from material
 		where material_no = #{materialNo}
 	</select>
@@ -131,7 +136,7 @@
 	<update id="updateMaterialContract" parameterType="MaterialDTO">
 		update material
 		set material_quantity=#{materialQuantity}, material_sku=#{materialSku}, material_leadtime=#{materialLeadtime},
-		material_moq=#{materialMoq}, material_sku_quantity=#{materialSkuQuantity}, material_etc=#{materialEtc}, sup_no=#{supNo}	
+		material_moq=#{materialMoq}, material_sku_quantity=#{materialSkuQuantity}, material_etc=#{materialEtc}, sup_no=#{supNo}, cont_no=#{contNo}
 		where material_no=#{materialNo}
 	</update>
 	<!-- 자재정보 수정(전체수정) -->

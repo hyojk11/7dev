@@ -20,6 +20,8 @@ public class MaterialDTO {
 	private String materialEtc;			//기타사항
 	
 	private int supNo;					//납품 거래처 확인용
+	
+	private int contNo;					//계약 시 해당 자재에 대한 계약 정보(초기값은 0)
 
 	public MaterialDTO() {
 		super();
@@ -28,7 +30,7 @@ public class MaterialDTO {
 	public MaterialDTO(String materialNo, String materialName, String materialRawMaterial, String materialCode,
 			String materialDescription, String materialUnit, String materialFile, int materialQuantity, int productNo,
 			String materialSku, int materialLeadtime, int materialMoq, int materialSkuQuantity, String materialEtc,
-			int supNo) {
+			int supNo, int contNo) {
 		super();
 		this.materialNo = materialNo;
 		this.materialName = materialName;
@@ -45,6 +47,7 @@ public class MaterialDTO {
 		this.materialSkuQuantity = materialSkuQuantity;
 		this.materialEtc = materialEtc;
 		this.supNo = supNo;
+		this.contNo = contNo;
 	}
 
 	public String getMaterialNo() {
@@ -167,6 +170,14 @@ public class MaterialDTO {
 		this.supNo = supNo;
 	}
 
+	public int getContNo() {
+		return contNo;
+	}
+
+	public void setContNo(int contNo) {
+		this.contNo = contNo;
+	}
+
 	@Override
 	public String toString() {
 		return "MaterialDTO [materialNo=" + materialNo + ", materialName=" + materialName + ", materialRawMaterial="
@@ -174,9 +185,8 @@ public class MaterialDTO {
 				+ materialDescription + ", materialUnit=" + materialUnit + ", materialFile=" + materialFile
 				+ ", materialQuantity=" + materialQuantity + ", productNo=" + productNo + ", materialSku=" + materialSku
 				+ ", materialLeadtime=" + materialLeadtime + ", materialMoq=" + materialMoq + ", materialSkuQuantity="
-				+ materialSkuQuantity + ", materialEtc=" + materialEtc + ", supNo=" + supNo + "]";
+				+ materialSkuQuantity + ", materialEtc=" + materialEtc + ", supNo=" + supNo + ", contNo=" + contNo
+				+ "]";
 	}
-
-	
 
 }

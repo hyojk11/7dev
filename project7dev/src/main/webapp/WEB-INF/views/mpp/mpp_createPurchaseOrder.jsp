@@ -18,6 +18,9 @@
 
             <form action="${contextPath}/mpp/createPurchaseOrder" method="post">
                 <input type="hidden" name="emp_no" value="${mpp.empNo}"/>
+                <input type="hidden" name="mrp_no" value="${mrp.mrpNo}" />
+                <input type="hidden" name="cont_no" value="${mrp.contNo}" />
+                <input type="hidden" name="cont_dterms" value="${mrp.contDterms}" />
                 <input type="hidden" name="purc_order_code" value="${mpp.mppCode}" />
                 <input type="hidden" name="purc_order_status" value="0" />
 
@@ -92,22 +95,32 @@
                             <c:set var="totalCnt" value="0" />
                             <c:set var="totalPrice" value="0" />
 
-                            <c:forEach var="material" items="${mrpList}" varStatus="status">
+                            <c:forEach var="materials" items="${mrpList}" varStatus="status">
                                 <tr>
-                                    <td>${material.materialNo}</td>
-                                    <td>${material.materialName}</td>
-                                    <td>${material.materialCode}</td>
-                                    <td>${material.materialDescription}</td>
-                                    <td>${material.materialUnit}</td>
-                                    <td>${material.sellMprice}</td>
-                                    <td>${material.mrpQuantity}</td>
-                                    <td>${material.sellMprice * material.mrpQuantity}</td>
-                                    <td>${material.mpriceCurrency}</td>
+               
+                            		<input type="hidden" name="materials[${status.index}].materialNo" value="${materials.materialNo}" />
+                                    <input type="hidden" name="materials[${status.index}].materialName" value="${materials.materialName}" />
+                                    <input type="hidden" name="materials[${status.index}].materialCode" value="${materials.materialCode}" />
+                                    <input type="hidden" name="materials[${status.index}].materialDescription" value="${materials.materialDescription}" />
+                                    <input type="hidden" name="materials[${status.index}].materialUnit" value="${materials.materialUnit}" />
+                                    <input type="hidden" name="materials[${status.index}].sellMprice" value="${materials.sellMprice}" />
+                                    <input type="hidden" name="materials[${status.index}].mrpQuantity" value="${materials.mrpQuantity}" />
+                                    <input type="hidden" name="materials[${status.index}].mpriceCurrency" value="${materials.mpriceCurrency}" />
+                   
+                                    <td>${materials.materialNo}</td>
+                                    <td>${materials.materialName}</td>
+                                    <td>${materials.materialCode}</td>
+                                    <td>${materials.materialDescription}</td>
+                                    <td>${materials.materialUnit}</td>
+                                    <td>${materials.sellMprice}</td>
+                                    <td>${materials.mrpQuantity}</td>
+                                    <td>${materials.sellMprice * materials.mrpQuantity}</td>
+                                    <td>${materials.mpriceCurrency}</td>
                                     <td><input type="text" name="purcOrderEtc" class="form-control"/></td>
                                 </tr>
 
-                                <c:set var="totalCnt" value="${totalCnt + material.mrpQuantity}" />
-                                <c:set var="totalPrice" value="${totalPrice + (material.sellMprice * material.mrpQuantity)}" />
+                                <c:set var="totalCnt" value="${totalCnt + materials.mrpQuantity}" />
+                                <c:set var="totalPrice" value="${totalPrice + (materials.sellMprice * materials.mrpQuantity)}" />
                             </c:forEach>
 
                             <tr class="fw-bold">

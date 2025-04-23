@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.chill.material.MaterialDTO;
+import kr.co.chill.material.MaterialService;
 import kr.co.chill.quotation.QuotationDTO;
 import kr.co.chill.quotation.QuotationService;
 import kr.co.chill.supplier.SupplierDTO;
@@ -36,6 +38,9 @@ public class ContractController {
 	
 	@Inject
 	SupplierService supplierService;
+	
+	@Inject
+	MaterialService materialService;
 	
 	//메인화면
 	@GetMapping("contract/contract_main")
@@ -120,6 +125,18 @@ public class ContractController {
 	    
 		contractService.createMprice(contractDTO);
 		contractService.createContract(contractDTO);
+		
+		
+		MaterialDTO materialDTO = new MaterialDTO();
+		materialDTO.setMaterialSku(contractDTO.getContMaterialSku());
+		materialDTO.setMaterialLeadtime(contractDTO.getContLeadtime());
+		materialDTO.setMaterialMoq(contractDTO.getContMaterialCnt());
+		materialDTO.setMaterialSkuQuantity(1);
+		materialDTO.setSupNo(contractDTO.getSupNo());
+		materialDTO.setContNo(contractDTO.getContNo());
+		
+		materialService.updateMaterialContract(materialDTO);
+		
 		
 		//int empNo = (int) session.getAttribute("empNo");  //로그인 정보를 토대로 입력
 		//contractDTO.setEmpNo(empNo);

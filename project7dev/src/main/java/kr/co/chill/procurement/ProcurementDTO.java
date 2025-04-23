@@ -27,21 +27,25 @@ public class ProcurementDTO {
 	private String empName;			//담당자명
 	private String empPhone;		//담당자연략처
 	private String empEmail;		//담당자이메일
+	
+	private int contNo;				//계약정보 로드용
 
 	public ProcurementDTO() {
 		super();
 	}
 
-	public ProcurementDTO(int mppNo, String mppCode, int mppVer, String mppRegDate, String mppFile, int prplNo,
-			String productName, String productCode, int productCnt, int mrpNo, String materialName, String materialCode,
-			String mstorageCode, int mrpQuantity, int mstorageStock, String mrpUnit, String mrpLeadtime,
-			String mrpDueDate, int empNo, String empName, String empPhone, String empEmail, String mppEtc) {
+	public ProcurementDTO(int mppNo, String mppCode, int mppVer, String mppRegDate, String mppFile, String mppEtc,
+			int prplNo, String productName, String productCode, int productCnt, int mrpNo, String materialName,
+			String materialCode, String mstorageCode, int mrpQuantity, int mstorageStock, String mrpUnit,
+			String mrpLeadtime, String mrpDueDate, int empNo, String empName, String empPhone, String empEmail,
+			int contNo) {
 		super();
 		this.mppNo = mppNo;
 		this.mppCode = mppCode;
 		this.mppVer = mppVer;
 		this.mppRegDate = mppRegDate;
 		this.mppFile = mppFile;
+		this.mppEtc = mppEtc;
 		this.prplNo = prplNo;
 		this.productName = productName;
 		this.productCode = productCode;
@@ -59,7 +63,7 @@ public class ProcurementDTO {
 		this.empName = empName;
 		this.empPhone = empPhone;
 		this.empEmail = empEmail;
-		this.mppEtc = mppEtc;
+		this.contNo = contNo;
 	}
 
 	public int getMppNo() {
@@ -100,6 +104,14 @@ public class ProcurementDTO {
 
 	public void setMppFile(String mppFile) {
 		this.mppFile = mppFile;
+	}
+
+	public String getMppEtc() {
+		return mppEtc;
+	}
+
+	public void setMppEtc(String mppEtc) {
+		this.mppEtc = mppEtc;
 	}
 
 	public int getPrplNo() {
@@ -238,23 +250,23 @@ public class ProcurementDTO {
 		this.empEmail = empEmail;
 	}
 
-	public String getMppEtc() {
-		return mppEtc;
+	public int getContNo() {
+		return contNo;
 	}
 
-	public void setMppEtc(String mppEtc) {
-		this.mppEtc = mppEtc;
+	public void setContNo(int contNo) {
+		this.contNo = contNo;
 	}
 
 	@Override
 	public String toString() {
 		return "ProcurementDTO [mppNo=" + mppNo + ", mppCode=" + mppCode + ", mppVer=" + mppVer + ", mppRegDate="
-				+ mppRegDate + ", mppFile=" + mppFile + ", prplNo=" + prplNo + ", productName=" + productName
-				+ ", productCode=" + productCode + ", productCnt=" + productCnt + ", mrpNo=" + mrpNo + ", materialName="
-				+ materialName + ", materialCode=" + materialCode + ", mstorageCode=" + mstorageCode + ", mrpQuantity="
-				+ mrpQuantity + ", mstorageStock=" + mstorageStock + ", mrpUnit=" + mrpUnit + ", mrpLeadtime="
-				+ mrpLeadtime + ", mrpDueDate=" + mrpDueDate + ", empNo=" + empNo + ", empName=" + empName
-				+ ", empPhone=" + empPhone + ", empEmail=" + empEmail + ", mppEtc=" + mppEtc + "]"+"/n";
+				+ mppRegDate + ", mppFile=" + mppFile + ", mppEtc=" + mppEtc + ", prplNo=" + prplNo + ", productName="
+				+ productName + ", productCode=" + productCode + ", productCnt=" + productCnt + ", mrpNo=" + mrpNo
+				+ ", materialName=" + materialName + ", materialCode=" + materialCode + ", mstorageCode=" + mstorageCode
+				+ ", mrpQuantity=" + mrpQuantity + ", mstorageStock=" + mstorageStock + ", mrpUnit=" + mrpUnit
+				+ ", mrpLeadtime=" + mrpLeadtime + ", mrpDueDate=" + mrpDueDate + ", empNo=" + empNo + ", empName="
+				+ empName + ", empPhone=" + empPhone + ", empEmail=" + empEmail + ", contNo=" + contNo + "]";
 	}
 
 }
