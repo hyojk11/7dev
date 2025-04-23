@@ -92,7 +92,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">첨부파일</label>
-                        <input type="file" class="form-control" name="materialFile">
+                        <input type="file" class="form-control" name="file">
                     </div>
                 </div>
                 <div class="modal-footer">

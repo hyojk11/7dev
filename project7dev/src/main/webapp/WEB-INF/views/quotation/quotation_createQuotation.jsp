@@ -14,13 +14,14 @@
       <p class="text-muted">*표시는 필수입력입니다.</p>
 
       <form action="${contextPath}/quotation/createQuotation" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="supNo" class="form-control" required value="${sessionScope.supNo}"/>
         <table class="table table-bordered text-center align-middle" style="table-layout: fixed;">
           <tbody>
             <tr>
               <th style="width: 20%; background-color: #EDFFF4;">*사업자등록번호</th>
-              <td style="width: 30%;"><input type="text" name="supRegNo" class="form-control" required></td>
+              <td style="width: 30%;"><input type="text" name="supRegNo" class="form-control" required value="${sessionScope.supRegNo}" readonly></td>
               <th style="width: 20%; background-color: #EDFFF4;">*회사명</th>
-              <td style="width: 30%;"><input type="text" name="supName" class="form-control" required></td>
+              <td style="width: 30%;"><input type="text" name="supName" class="form-control" required value="${sessionScope.supName}" readonly></td>
             </tr>
 
             <tr>

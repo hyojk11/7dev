@@ -1,5 +1,7 @@
 package kr.co.chill.material;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MaterialDTO {
 	private String materialNo;			//부품고유번호
 	private String materialName;		//부품명

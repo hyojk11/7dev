@@ -78,8 +78,17 @@ public class QuotationController {
 			, HttpSession session
 			, HttpServletRequest request
 			, Model model) throws Exception {
+		
 		MaterialDTO materialDTO = materialService.getMaterialByMaterialNo(materialNo);
 		model.addAttribute("material", materialDTO);
+		
+		int supNo = (int) session.getAttribute("supNo");
+	    String supName = (String) session.getAttribute("supName");
+	    String supRegNo = (String) session.getAttribute("supRegNo");
+	    model.addAttribute("supNo", supNo);
+	    model.addAttribute("supName", supName);
+	    model.addAttribute("supRegNo", supRegNo);
+	    
 		return "quotation/quotation_createQuotation";
 	}
 	

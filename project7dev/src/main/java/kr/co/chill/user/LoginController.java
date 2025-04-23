@@ -81,6 +81,9 @@ public class LoginController {
 				}
 				return "redirect:/emp_main";
 			case "SUP" :
+			    session.setAttribute("supNo", user.get("user_no"));     
+			    session.setAttribute("supName", user.get("user_name"));     
+			    session.setAttribute("supRegNo", user.get("sup_reg_no"));
 				return "redirect:/sup_main";
 			}
 			return "redirect:/";

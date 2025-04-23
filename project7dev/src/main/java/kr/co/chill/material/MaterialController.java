@@ -1,21 +1,27 @@
 package kr.co.chill.material;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class MaterialController {
+	@Autowired
+	private ServletContext servletContext;
 	
 	@Inject
 	MaterialService materialService;
@@ -38,7 +44,7 @@ public class MaterialController {
 			materialList = materialService.readMaterial();
 		}
 		model.addAttribute("materialList", materialList);
-		System.out.println("리턴값"+materialList);
+//		System.out.println("리턴값"+materialList);
 		
 		return "material/material_main";
 	}
@@ -64,9 +70,20 @@ public class MaterialController {
 	}
 	//자재추가
 	@PostMapping("material/createMaterial")
-	public String createMaterial(@ModelAttribute("Material")MaterialDTO materialDTO
+	public String createMaterial(@ModelAttribute("material")MaterialDTO materialDTO
+			, @RequestParam("file") MultipartFile file
 			, HttpSession session
 			, HttpServletRequest request) throws Exception {
+	    if (!file.isEmpty()) {
+	        String uploadDir = servletContext.getRealPath("/resources/file/");
+	        
+	        String fileName = file.getOriginalFilename();
+	        File dest = new File(uploadDir + fileName);
+	        file.transferTo(dest);
+	        
+	        materialDTO.setMaterialFile(fileName); 
+	    }
+//	    System.out.println(file.getOriginalFilename());
 		materialService.createMaterial(materialDTO);
 		
 		return "redirect:/product/product_bom?productNo="+materialDTO.getProductNo();

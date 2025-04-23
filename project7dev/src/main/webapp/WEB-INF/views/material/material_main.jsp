@@ -37,9 +37,9 @@
 								</th>
 							</tr>
 							<tr>
-								<th colspan="6">부품 목록</th>
-								<th><button type="button" class="btn btn-success btn-sm"
-										onclick="openMaterialModal()">부품추가</button></th>
+								<th colspan="8">부품 목록</th>
+								<%-- <th><button type="button" class="btn btn-success btn-sm"
+										onclick="openMaterialModal()">부품추가</button></th> --%>
 							</tr>
 							<tr>
 								<th style="background-color: #EDFFF4;">부품코드</th>
@@ -49,6 +49,7 @@
 								<th style="background-color: #EDFFF4;">단위</th>
 								<th style="background-color: #EDFFF4;">소요량</th>
 								<th style="background-color: #EDFFF4;">투입레벨</th>
+								<th style="background-color: #EDFFF4;">첨부파일</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -61,6 +62,7 @@
 									<td>${material.materialUnit}</td>
 									<td>${material.materialQuantity}</td>
 									<td>L1</td>
+									<td><a href="${contextPath}/resources/file/${material.materialFile}" target="_blank">${material.materialFile}</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -81,10 +83,8 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form action="${contextPath}/material/createMaterial"
-									method="post" enctype="multipart/form-data">
-									<input type="hidden" name="productNo"
-										value="${product.productNo}" />
+								<form action="${contextPath}/material/createMaterial" method="post" enctype="multipart/form-data">
+									<input type="hidden" name="productNo" value="${product.productNo}" />
 
 									<div class="form-group">
 										<label for="materialCode">부품코드</label> <input type="text"
@@ -118,7 +118,7 @@
 									</div>
 									<div class="form-group">
 										<label for="materialFile">첨부파일</label> <input type="file"
-											name="materialFile" id="materialFile" class="form-control">
+											name="file" id="materialFile" class="form-control">
 									</div>
 
 									<div class="form-group mt-4">
