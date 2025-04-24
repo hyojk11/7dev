@@ -16,8 +16,8 @@
             <c:set var="canLineout" value="true" />
             
             <!-- 라인 재고 현황 테이블 -->
-            <div class="mb-4">
-                <label class="fw-bold">${selected.product_name} 제품의 사용부품 및 재고 현황</label>
+            <div class="mb-4 text-center">
+                <label class="fw-bold">'${selected.product_name}' 제품의 사용부품 및 재고 현황</label>
                 <br><br>
                 <table class="table table-bordered text-center align-middle" style="max-width: 1000px; margin: 0 auto; border-radius: 8px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); background-color: #DBFFE8;">
                     <thead style="background-color: #EDFFF4;">
@@ -39,7 +39,7 @@
                                 <c:set var="canLineout" value="false" />
                                 <c:set var="haveMaterial" value="false" />
                             </c:if>
-                            <tr style="background-color: #f9f9f9;">
+                            <tr style="background-color: #f9f9f9;" >
                                 <td>${linestock.material_no}</td>
                                 <td>${linestock.material_name}</td>
                                 <td>${linestock.material_code}</td>
@@ -62,8 +62,8 @@
             </div>
 
             <!-- 생산수량 표시 -->
-            <div class="mb-4">
-                <strong>생산수량:</strong> ${product_cnt} 개
+            <div class="mb-4 text-center">
+                <strong>생산수량 : </strong> ${product_cnt} 개
             </div>
 
             <!-- 라인 출고 버튼 및 취소 버튼 -->
