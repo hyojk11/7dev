@@ -19,9 +19,9 @@
           <tbody>
             <tr>
               <th style="width: 20%; background-color: #EDFFF4;">*사업자등록번호</th>
-              <td style="width: 30%;"><input type="text" name="supRegNo" class="form-control" required value="${sessionScope.supRegNo}" readonly></td>
+              <td style="width: 30%;"><input type="text" name="supRegNo" class="form-control" required value="${sessionScope.supRegNo}"></td>
               <th style="width: 20%; background-color: #EDFFF4;">*회사명</th>
-              <td style="width: 30%;"><input type="text" name="supName" class="form-control" required value="${sessionScope.supName}" readonly></td>
+              <td style="width: 30%;"><input type="text" name="supName" class="form-control" required value="${sessionScope.supName}"></td>
             </tr>
 
             <tr>
@@ -79,7 +79,7 @@
               <th style="background-color: #EDFFF4;">*견적단가</th>
               <td>
                 <div class="d-flex gap-2">
-                  <input type="text" class="form-control" name="quotPrice" required>
+                  <input type="number" id="quotPrice" class="form-control" min="0" name="quotPrice" required>
                   <select name="quotPriceCurrency" class="form-select w-auto">
                     <option value="KRW" selected>KRW</option>
                     <option value="USD">USD</option>
@@ -92,7 +92,7 @@
               <th style="background-color: #EDFFF4;">*수량</th>
               <td>
                 <div class="d-flex gap-2">
-                  <input type="text" class="form-control" name="quotMaterialCnt" required>
+                  <input type="number" id="quotMaterialCnt" class="form-control" min="0" name="quotMaterialCnt" required>
                   <select name="quotMaterialSku" class="form-select w-auto">
                     <option value="EA" selected>EA</option>
                     <option value="BOX">BOX</option>
@@ -106,7 +106,7 @@
 
             <tr>
               <th style="background-color: #EDFFF4;">총 금액</th>
-              <td colspan="1"><input type="text" class="form-control" disabled></td>
+              <td colspan="1"><input type="text" id="totalPrice" class="form-control" disabled></td>
               <th style="background-color: #EDFFF4;">*납기일</th>
               <td><input type="date" class="form-control" name="quotDueDate"></td>
             </tr>
@@ -153,6 +153,19 @@
 
     document.getElementById('quotPterms').value = method + ", " + timing;
   });
+  
+  const priceInput = document.getElementById('quotPrice');
+  const countInput = document.getElementById('quotMaterialCnt');
+  const totalPriceInput = document.getElementById('totalPrice');
+
+  function updateTotal() {
+    const price = parseFloat(priceInput.value) || 0;
+    const count = parseInt(countInput.value) || 0;
+    totalPriceInput.value = (price * count).toLocaleString();
+  }
+
+  priceInput.addEventListener('input', updateTotal);
+  countInput.addEventListener('input', updateTotal);
 </script>
 </body>
 </html>

@@ -79,6 +79,10 @@ public class LoginController {
 					//앞에 "admin01".equals(...)처럼 리터럴을 먼저 쓰는 걸 추천. user.get("user_id")가 null일 경우 NullPointerException이 발생할 수 있기 때문
 					return "redirect:/admin_main";
 				}
+				session.setAttribute("empNo", user.get("user_no"));     
+				session.setAttribute("empName", user.get("user_name"));     
+				session.setAttribute("empPhone", user.get("user_phone"));     
+				session.setAttribute("empEmail", user.get("user_email"));     
 				return "redirect:/emp_main";
 			case "SUP" :
 			    session.setAttribute("supNo", user.get("user_no"));     

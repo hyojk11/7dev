@@ -124,7 +124,7 @@
           <button class="btn btn-secondary" onclick="location.href='${contextPath}/purc_order/list'">이전으로</button>
           <div>
             <button class="btn btn-primary" onclick="window.print()">인쇄</button>
-            <button class="btn btn-info" onclick="location.href='${contextPath}/contract/contract_main?searchType=contractNo&searchValue=${dto.cont_no}'">계약 상세</button>
+            <button class="btn btn-info" onclick="location.href='${contextPath}/contract/selectContract?contNo=${dto.cont_no}'">계약 상세</button>
           </div>
         </div>
       </div>

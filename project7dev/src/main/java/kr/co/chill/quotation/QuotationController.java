@@ -78,6 +78,12 @@ public class QuotationController {
 			, HttpSession session
 			, HttpServletRequest request
 			, Model model) throws Exception {
+		String userType = (String) session.getAttribute("user_type");
+	    
+	    if (!"SUP".equals(userType)) {
+	        model.addAttribute("accessDenied", true);
+	        return "quotation/quotation_createQuotation";  // 똑같은 페이지로 이동
+	    }
 		
 		MaterialDTO materialDTO = materialService.getMaterialByMaterialNo(materialNo);
 		model.addAttribute("material", materialDTO);

@@ -88,7 +88,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">소요량</label>
-                        <input type="number" class="form-control" name="materialQuantity" required>
+                        <input type="number" class="form-control" name="materialQuantity" min="1" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">첨부파일</label>
