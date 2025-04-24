@@ -19,6 +19,10 @@ public interface ProductionPlanningDAO {
 	
 	//코드메이커
 	int codemaker(String reg_date);
+	//창고코드메이커
+	int codemakerPstorage();
+	//창고등록
+	void registerPstorage(ProductionPlanningDTO productionPlanningDTO) throws Exception;
 	
 	
 	
