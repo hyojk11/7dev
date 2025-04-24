@@ -16,7 +16,7 @@
             <c:set var="canProduce" value="true" />
 
             <!-- 재고 현황 테이블 -->
-            <div class="mb-4">
+            <div class="mb-4 text-center">
                 <label class="fw-bold">'${selected.product_name }' 제품의 사용부품 및 재고 현황</label>
                 <br><br>
                 <table class="table table-bordered text-center align-middle" style="max-width: 1000px; margin: 0 auto; border-radius: 8px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); background-color: #DBFFE8;">
@@ -61,7 +61,8 @@
                 </table>
             </div>
 
-            <div class="mb-4">생산수량 : ${product_cnt } 개</div>
+            <div class="mb-4 text-center">
+            <strong>생산수량 : </strong>${product_cnt } 개</div>
 
             <div class="d-flex justify-content-center align-items-center gap-3">
                 <c:choose>

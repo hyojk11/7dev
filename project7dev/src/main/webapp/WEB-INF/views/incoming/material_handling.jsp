@@ -12,7 +12,7 @@
 
         <!-- 메인 콘텐츠 -->
         <div class="col-10 main p-4">
-            <h3 class="fw-bold mb-4">자재 입고 관리</h3>
+            <h3 class="fw-bold mb-4">자재 통합 관리</h3>
 
             <!-- 검색 조건 -->
             <form action="${contextPath}/incoming/material_handling" method="get" class="row g-3 align-items-end mb-4">
