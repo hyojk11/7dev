@@ -27,28 +27,28 @@
 		FROM (
 			SELECT
 				po.purc_order_code
-				, po.purc_order_status
-				, sup.sup_name
-				, po.purc_order_reg_date
-				, LEAST(DATE_ADD(pm.last_date, INTERVAL 7 DAY), mrp_due_date) AS next_progress_date
-				, mrp.mrp_due_date
-				, emp.emp_name
-				, ROUND((IFNULL(pm.total_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) AS total_progress_rate
+				, MIN(po.purc_order_status) AS purc_order_status
+				, MAX(sup.sup_name) AS sup_name
+				, MIN(po.purc_order_reg_date) AS purc_order_reg_date
+				, LEAST(DATE_ADD(MIN(pm.last_date), INTERVAL 7 DAY), MIN(mrp_due_date)) AS next_progress_date
+				, MAX(mrp.mrp_due_date) AS mrp_due_date
+				, MAX(emp.emp_name) AS emp_name
+				, ROUND((SUM(IFNULL(pm.total_cnt,0)) * 1.0 / SUM(ct.cont_material_cnt)) * 100, 1) AS total_progress_rate
 				, ROUND(
-					(DATEDIFF(CURDATE(),po.purc_order_reg_date) * 1.0 /
-					DATEDIFF(mrp.mrp_due_date, po.purc_order_reg_date)) * 100, 1) AS expected_progress_rate
+					(DATEDIFF(CURDATE(),MIN(po.purc_order_reg_date)) * 1.0 /
+					DATEDIFF(MIN(mrp.mrp_due_date), MIN(po.purc_order_reg_date))) * 100, 1) AS expected_progress_rate
 				, CASE
-					WHEN ROUND((IFNULL(pm.total_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) = 100
-						AND po.purc_order_status = 1
+					WHEN ROUND((SUM(IFNULL(pm.total_cnt,0)) * 1.0 / SUM(ct.cont_material_cnt)) * 100, 1) = 100
+						AND MIN(po.purc_order_status) = 1
 					THEN 'done'
-					WHEN ROUND((IFNULL(pm.total_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) &gt;=
-						ROUND((DATEDIFF(CURDATE(),po.purc_order_reg_date) * 1.0 / DATEDIFF(mrp.mrp_due_date, po.purc_order_reg_date)) * 100, 1) 
+					WHEN ROUND((SUM(IFNULL(pm.total_cnt,0)) * 1.0 / SUM(ct.cont_material_cnt)) * 100, 1) &gt;=
+						ROUND((DATEDIFF(CURDATE(),MIN(po.purc_order_reg_date)) * 1.0 / DATEDIFF(MIN(mrp.mrp_due_date), MIN(po.purc_order_reg_date))) * 100, 1) 
 					THEN 'R0'
-					WHEN ROUND((DATEDIFF(CURDATE(),po.purc_order_reg_date) * 1.0 / DATEDIFF(mrp.mrp_due_date, po.purc_order_reg_date)) * 100, 1)  - 
-						ROUND((IFNULL(pm.total_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) &lt;= 15
+					WHEN ROUND((DATEDIFF(CURDATE(),MIN(po.purc_order_reg_date)) * 1.0 / DATEDIFF(MIN(mrp.mrp_due_date), MIN(po.purc_order_reg_date))) * 100, 1)  - 
+						ROUND((SUM(IFNULL(pm.total_cnt,0)) * 1.0 / SUM(ct.cont_material_cnt)) * 100, 1) &lt;= 15
 					THEN 'R1'
-					WHEN ROUND((DATEDIFF(CURDATE(),po.purc_order_reg_date) * 1.0 / DATEDIFF(mrp.mrp_due_date, po.purc_order_reg_date)) * 100, 1) - 
-						ROUND((IFNULL(pm.total_cnt,0) * 1.0 / ct.cont_material_cnt) * 100, 1) &lt;= 24
+					WHEN ROUND((DATEDIFF(CURDATE(),MIN(po.purc_order_reg_date)) * 1.0 / DATEDIFF(MIN(mrp.mrp_due_date), MIN(po.purc_order_reg_date))) * 100, 1) - 
+						ROUND((SUM(IFNULL(pm.total_cnt,0)) * 1.0 / SUM(ct.cont_material_cnt)) * 100, 1) &lt;= 24
 					THEN 'R2'
 					ELSE 'R3'
 				END AS progress_eval
@@ -59,6 +59,7 @@
 			JOIN employee emp ON po.emp_no = emp.emp_no
 			
 			LEFT JOIN latest_pm pm ON pm.purc_order_no = po.purc_order_no
+			GROUP BY po.purc_order_code
 		) AS base
 		<where>
 			<choose>
@@ -98,7 +99,7 @@
 				</when>
 			</choose>
 		</where>
-		ORDER BY po.purc_order_reg_date DESC
+		ORDER BY purc_order_reg_date DESC
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	
@@ -292,27 +293,28 @@
 	<!-- 진척검수 상세 기본정보 -->
 	<select id="detailOrderInfo" parameterType="String" resultType="kr.co.chill.purchaseorder.ProgressMonitoringDTO">
 		SELECT
-			po.purc_order_no
-			, po.purc_order_code
-			, po.purc_order_status
-			, DATE(po.purc_order_reg_date) AS po_date_only
-			, emp.emp_no
-			, emp.emp_name
-			, sup.sup_name
-			, sup.sup_reg_no
-			, sup.sup_ceo_name
-			, sup.sup_phone
-			, CONCAT(sup.sup_addr1, sup.sup_addr2) AS sup_total_addr
-			, sup.sup_cip
-			, sup.sup_cip_phone
-			, sup.sup_cip_email
-			, ct.cont_material_cnt
+			MAX(po.purc_order_no) AS purc_order_no
+			, MAX(po.purc_order_code) AS purc_order_code
+			, MIN(po.purc_order_status) AS purc_order_status
+			, DATE(MIN(po.purc_order_reg_date)) AS po_date_only
+			, MAX(emp.emp_no) AS emp_no
+			, MAX(emp.emp_name) AS emp_name
+			, MAX(sup.sup_name) AS sup_name
+			, MAX(sup.sup_reg_no) AS sup_reg_no
+			, MAX(sup.sup_ceo_name) AS sup_ceo_name
+			, MAX(sup.sup_phone) AS sup_phone
+			, CONCAT(MAX(sup.sup_addr1), MAX(sup.sup_addr2)) AS sup_total_addr
+			, MAX(sup.sup_cip) AS sup_cip
+			, MAX(sup.sup_cip_phone) AS sup_cip_phone
+			, MAX(sup.sup_cip_email) AS sup_cip_email
+			, MAX(ct.cont_material_cnt) AS cont_material_cnt
 		FROM purchase_order po
 		JOIN employee emp ON po.emp_no = emp.emp_no
 		JOIN contract ct ON po.cont_no = ct.cont_no
 		JOIN supplier sup ON ct.sup_no = sup.sup_no
 		
 		WHERE po.purc_order_code = #{purc_order_code}
+		GROUP BY po.purc_order_code
 	</select>
 	
 	
