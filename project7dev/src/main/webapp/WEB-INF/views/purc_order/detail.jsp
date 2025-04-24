@@ -34,33 +34,33 @@
               </td>
             </tr>
             <tr>
-              <td colspan="5" style="background-color: #EDFFF4;">공급자</td>
-              <td colspan="5" style="background-color: #EDFFF4;">공급받는자</td>
+              <th colspan="5" style="background-color: #EDFFF4;">공급자</td>
+              <th colspan="5" style="background-color: #EDFFF4;">공급받는자</td>
             </tr>
             <tr>
             
-              <td colspan="2" style="background-color: #EDFFF4;">등록번호</td>
+              <th colspan="2" style="background-color: #EDFFF4;">등록번호</td>
               <td colspan="3">${dto.sup_reg_no}</td>
-              <td colspan="2" style="background-color: #EDFFF4;">등록번호</td>
+              <th colspan="2" style="background-color: #EDFFF4;">등록번호</td>
               <td colspan="3">${dto.comp_reg_no}</td>
             </tr>
             <tr>
               <th style="background-color: #EDFFF4;">상 호</th>
-              <td colspan="2">${dto.sup_name}</td>
+              <td>${dto.sup_name}</td>
               <th style="background-color: #EDFFF4;">성 명</th>
-              <td>${dto.sup_ceo_name}</td>
+              <td colspan="2">${dto.sup_ceo_name}</td>
               <th style="background-color: #EDFFF4;">상 호</th>
-              <td colspan="2">${dto.comp_name}</td>
+              <td>${dto.comp_name}</td>
               <th style="background-color: #EDFFF4;">성 명</th>
-              <td>${dto.comp_ceo_name}</td>
+              <td colspan="2">${dto.comp_ceo_name}</td>
             </tr>
             <tr>
-            <thead style="background-color: #EDFFF4;">
+            <span style="background-color: #EDFFF4;">
               <th style="background-color: #EDFFF4;">주 소</th>
               <td colspan="4">${dto.sup_total_addr}</td>
               <th style="background-color: #EDFFF4;">주 소</th>
               <td colspan="4">${dto.comp_total_addr}</td>
-            </thead>  
+            </span>  
             </tr>
             <tr>
               <th style="background-color: #EDFFF4;">담당자</th>
@@ -76,7 +76,7 @@
               <td colspan="10"><br></td>
             </tr>
             <tr>
-            <thead style="background-color: #EDFFF4;">
+            <div style="background-color: #EDFFF4;">
               <th style="background-color: #EDFFF4;">NO</th>
               <th style="background-color: #EDFFF4;">품목</th>
               <th style="background-color: #EDFFF4;">품목번호</th>
@@ -87,6 +87,7 @@
               <th style="background-color: #EDFFF4;">소계</th>
               <th style="background-color: #EDFFF4;">화폐단위</th>
               <th style="background-color: #EDFFF4;">비고</th>
+            </div>
             </tr>
 
             <c:set var="totalCnt" value="0" />

@@ -34,7 +34,7 @@
         <div>
             <span>안녕하세요 <strong>${sessionScope.user_name} 님</strong>&nbsp;</span>
             <button class="btn btn-outline-success btn-sm me-2" onclick="location.href='${contextPath }/'">로그아웃</button>
-            <button class="btn btn-success btn-sm" onclick="location.href='${contextPath }/mypage/supDetail'">mypage</button>
+            <button class="btn btn-success btn-sm" onclick="location.href='${contextPath }/mypage/empDetail'">mypage</button>
         </div>
     </div>
 </div>
