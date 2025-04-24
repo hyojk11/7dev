@@ -20,6 +20,8 @@ public interface ProductionPlanningService {
 	
 	//코드메이커
 	String codemaker(String reg_date);
+	//창고등록
+	void registerPstorage(ProductionPlanningDTO dto) throws Exception;
 	
 	
 	

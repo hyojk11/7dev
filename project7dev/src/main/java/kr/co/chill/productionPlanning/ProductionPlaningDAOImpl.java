@@ -94,5 +94,14 @@ public class ProductionPlaningDAOImpl implements ProductionPlanningDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.chill.productionPlanningMapper.codemaker", reg_date);
 	}
-	
+	@Override
+	public void registerPstorage(ProductionPlanningDTO productionPlanningDTO) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.insert("kr.co.chill.productionPlanningMapper.registerPstorage", productionPlanningDTO);
+	}
+	@Override
+	public int codemakerPstorage() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.chill.productionPlanningMapper.codemakerPstorage");
+	}
 }

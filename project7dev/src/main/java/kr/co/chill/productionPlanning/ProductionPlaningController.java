@@ -155,15 +155,33 @@ public class ProductionPlaningController {
 			@RequestParam String product_name
 			, @RequestParam String product_code
 			, @RequestParam int product_no) throws Exception {
-		
+
 		ProductionPlanningDTO dto = productionPlanningService.searchStock(product_no);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("product_no", product_no);
 		mav.addObject("product_name", product_name);
 		mav.addObject("product_code", product_code);
-		mav.addObject("dto", dto);
 		
+		if(dto == null) {
+			mav.setViewName("prd_planning/registerPstorage");
+			return mav;
+		}
+		
+		mav.addObject("dto", dto);
+		return mav;
+	}
+	
+	@PostMapping(value="prd_planning/registerPstorageSend")
+	public ModelAndView registerPstorageSend(ProductionPlanningDTO dto) throws Exception {
+		
+		productionPlanningService.registerPstorage(dto);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("product_no",dto.getProduct_no());
+		mav.addObject("product_name", dto.getProduct_name());
+		mav.addObject("product_code", dto.getProduct_code());
+		mav.setViewName("prd_planning/register");
 		return mav;
 	}
 	

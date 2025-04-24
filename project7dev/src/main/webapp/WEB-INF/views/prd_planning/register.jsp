@@ -15,8 +15,6 @@
       
       <form action="${contextPath}/prd_planning/registerSend" method="post">
         <input type="hidden" name="product_no" value="${product_no}">
-        <input type="hidden" name="pstorage_no" value="${dto.pstorage_no}">
-
         <table class="table table-bordered align-middle">
           <tbody>
             <tr>
@@ -54,10 +52,11 @@
               <td>
                 <button type="button" class="btn btn-primary btn-sm" onclick="changePlanCnt()">입력</button>
               </td>
-              <th style="background-color: #EDFFF4;">창고재고수량</th>
-              <td colspan="3">
-                <input type="number" id="pstorage_stock" name="pstorage_stock" value="${dto.pstorage_stock}" class="form-control" readonly>
-              </td>
+				<th style="background-color: #EDFFF4;">창고재고수량</th>
+				<td colspan="3">
+					<input type="number" id="pstorage_stock" name="pstorage_stock" value="${dto.pstorage_stock}" class="form-control" readonly>
+			        <input type="hidden" name="pstorage_no" value="${dto.pstorage_no}">
+				</td>
             </tr>
             <tr>
               <th style="background-color: #EDFFF4;">생산계획수량</th>
@@ -147,7 +146,7 @@
 			const pstorage_stock = Number(document.getElementById("pstorage_stock").value);
 			const product_cnt = document.getElementById("product_cnt");
 			
-			if(plan_cnt != "" && pstorage_stock != "") {
+			if(!isNaN(plan_cnt) && !isNaN(pstorage_stock)) {
 				if(plan_cnt <= pstorage_stock) {
 					product_cnt.value = 0;
 				} else {

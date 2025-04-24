@@ -98,5 +98,13 @@ public class ProductionPlaningServiceImpl implements ProductionPlanningService {
 		String serial = String.format("%02d", count + 1);
 		return "PP" + datePart + serial;
 	}
+	@Override
+	public void registerPstorage(ProductionPlanningDTO dto) throws Exception {
+		// TODO Auto-generated method stub
+		int maxSeq = productionPlanningDAO.codemakerPstorage();
+	    String newCode = String.format("PW%03d", maxSeq + 1);
+	    dto.setPstorage_code(newCode);
+	    productionPlanningDAO.registerPstorage(dto);
+	}
 	
 }
