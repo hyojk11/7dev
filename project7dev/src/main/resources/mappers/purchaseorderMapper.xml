@@ -10,14 +10,14 @@
 	<select id="listSearchPaged" resultType="kr.co.chill.purchaseorder.PurchaseorderDTO" parameterType="map">
 		SELECT
 			po.purc_order_code
-			, po.purc_order_reg_date
-			, sup.sup_name
-			, ct.cont_material_cnt
-			, ct.cont_material_cnt * mup.cont_mprice AS total_price
-			, mup.mprice_currency
-			, mrp.mrp_due_date
-			, emp.emp_name
-			, po.purc_order_status
+			, MIN(po.purc_order_reg_date) AS purc_order_reg_date
+			, MAX(sup.sup_name) AS sup_name
+			, SUM(ct.cont_material_cnt) AS cont_material_cnt
+			, SUM(ct.cont_material_cnt * mup.cont_mprice) AS total_price
+			, MAX(mup.mprice_currency) AS mprice_currency
+			, MIN(mrp.mrp_due_date) AS mrp_due_date
+			, MAX(emp.emp_name) AS emp_name
+			, MIN(po.purc_order_status) AS purc_order_status
 		FROM purchase_order po
 		JOIN material_resource_plan mrp ON po.mrp_no = mrp.mrp_no
 		JOIN contract ct ON po.cont_no = ct.cont_no
@@ -46,6 +46,7 @@
 				</when>
 			</choose>
 		</where>
+		GROUP BY po.purc_order_code
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	
@@ -173,28 +174,29 @@
 	<!-- 구매발주서 상세 기본정보 -->
 	<select id="detailOrderInfo" parameterType="String" resultType="kr.co.chill.purchaseorder.PurchaseorderDTO">
 		SELECT
-			po.purc_order_reg_date
-			, ct.cont_no
-			, mrp.mrp_due_date
-			, po.purc_order_code
-			, sup.sup_reg_no
-			, sup.sup_name
-			, sup.sup_ceo_name
-			, CONCAT(sup.sup_addr1, sup.sup_addr2) AS sup_total_addr
-			, sup.sup_cip
-			, sup.sup_cip_email
-			, comp.comp_reg_no
-			, comp.comp_name
-			, comp.comp_ceo_name
-			, CONCAT(comp.comp_addr1, comp.comp_addr2) AS comp_total_addr
-			, emp.emp_name
-			, emp.emp_email
+			MIN(po.purc_order_reg_date) AS purc_order_reg_date
+			, MAX(ct.cont_no) AS cont_no
+			, MIN(mrp.mrp_due_date) AS mrp_due_date
+			, MAX(po.purc_order_code) AS purc_order_code
+			, MAX(sup.sup_reg_no) AS sup_reg_no
+			, MAX(sup.sup_name) AS sup_name
+			, MAX(sup.sup_ceo_name) AS sup_ceo_name
+			, MAX(CONCAT(sup.sup_addr1, sup.sup_addr2)) AS sup_total_addr
+			, MAX(sup.sup_cip) AS sup_cip
+			, MAX(sup.sup_cip_email) AS sup_cip_email
+			, MAX(comp.comp_reg_no) AS comp_reg_no
+			, MAX(comp.comp_name) AS comp_name
+			, MAX(comp.comp_ceo_name) AS comp_ceo_name
+			, MAX(CONCAT(comp.comp_addr1, comp.comp_addr2)) AS comp_total_addr
+			, MAX(emp.emp_name) AS emp_name
+			, MAX(emp.emp_email) AS emp_email
 		FROM purchase_order po
 		JOIN material_resource_plan mrp ON po.mrp_no = mrp.mrp_no
 		JOIN contract ct ON po.cont_no = ct.cont_no
 		JOIN supplier sup ON ct.sup_no = sup.sup_no
 		JOIN employee emp ON po.emp_no = emp.emp_no
 		JOIN company comp ON emp.comp_no = comp.comp_no
+		GROUP BY po.purc_order_code
 	</select>
 	
 	

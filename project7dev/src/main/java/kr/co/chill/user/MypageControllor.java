@@ -63,7 +63,7 @@ public class MypageControllor {
 	@PostMapping("mypage/empUpdate")
 	public String empUpdate(UserDTO dto) {
 		mypageService.updateEmp(dto);
-		return "redirect:/mypage/empDetail";
+		return "redirect:/mypage/empDetail?emp_no="+dto.getEmp_no();
 	}
 	
 	

@@ -25,7 +25,7 @@
               <th style="width: 15%; background-color: #EDFFF4;">제품명</th>
               <td colspan="2"><input type="text" name="product_name" value="${dto.product_name}" class="form-control" readonly></td>
               <th style="background-color: #EDFFF4;">제품코드</th>
-              <td colspan="2"><input type="text" name="product_code" value="${dto.product_code}" class="form-control" readonly></td>
+              <td colspan="3"><input type="text" name="product_code" value="${dto.product_code}" class="form-control" readonly></td>
             </tr>
             <tr>
               <th style="background-color: #EDFFF4;">공장</th>
@@ -36,7 +36,7 @@
                 </select>
               </td>
               <th style="background-color: #EDFFF4;">라인</th>
-              <td colspan="2" id="line">
+              <td colspan="3" id="line">
                 <input type="text" name="prpl_line" value="${dto.prpl_line}" class="form-control" readonly>
               </td>
             </tr>
@@ -45,11 +45,11 @@
               <td><input type="number" id="plan_cnt" name="plan_cnt" class="form-control" value="${dto.pstorage_stock + dto.product_cnt}" readonly></td>
               <td><button type="button" class="btn btn-primary btn-sm" id="planCntBtn" onclick="changePlanCnt()" disabled>입력</button></td>
               <th style="background-color: #EDFFF4;">창고재고수량</th>
-              <td colspan="2"><input type="number" id="pstorage_stock" name="pstorage_stock" value="${dto.pstorage_stock}" class="form-control" readonly></td>
+              <td colspan="3"><input type="number" id="pstorage_stock" name="pstorage_stock" value="${dto.pstorage_stock}" class="form-control" readonly></td>
             </tr>
             <tr>
               <th style="background-color: #EDFFF4;">생산계획수량</th>
-              <td><input type="number" id="product_cnt" name="product_cnt" value="${dto.product_cnt}" class="form-control" readonly></td>
+              <td colspan="2"><input type="number" id="product_cnt" name="product_cnt" value="${dto.product_cnt}" class="form-control" readonly></td>
               <th style="background-color: #EDFFF4;">출고납기일</th>
               <td><input type="date" id="prpl_due_date" name="prpl_due_date" value="${dto.prpl_due_date_only}" class="form-control" readonly></td>
               <th style="background-color: #EDFFF4;">리드타임</th>
@@ -60,17 +60,17 @@
               <td><input type="number" id="emp_no" name="emp_no" value="${dto.emp_no}" class="form-control" readonly></td>
               <td><button type="button" class="btn btn-primary btn-sm" id="empBtn" onclick="changeEmp()" disabled>입력</button></td>
               <th style="background-color: #EDFFF4;">담당자명</th>
-              <td colspan="2"><input type="text" id="emp_name" name="emp_name" value="${dto.emp_name}" class="form-control" readonly></td>
+              <td colspan="3"><input type="text" id="emp_name" name="emp_name" value="${dto.emp_name}" class="form-control" readonly></td>
             </tr>
             <tr>
               <th style="background-color: #EDFFF4;">담당자 연락처</th>
               <td colspan="2"><input type="text" id="emp_phone" name="emp_phone" value="${dto.emp_phone}" class="form-control" readonly></td>
               <th style="background-color: #EDFFF4;">담당자 이메일</th>
-              <td colspan="2"><input type="email" id="emp_email" name="emp_email" value="${dto.emp_email}" class="form-control" readonly></td>
+              <td colspan="3"><input type="email" id="emp_email" name="emp_email" value="${dto.emp_email}" class="form-control" readonly></td>
             </tr>
             <tr>
               <th style="background-color: #EDFFF4;">기타사항</th>
-              <td colspan="5">
+              <td colspan="6">
                 <textarea rows="5" class="form-control" id="prpl_etc" name="prpl_etc" readonly>${dto.prpl_etc}</textarea>
               </td>
             </tr>
@@ -91,7 +91,7 @@
 
 <%@ include file="../include/footer.jsp" %>
 
-	<!-- 등록란 동적변환 -->
+	<!-- 수정란 동적변환 -->
 	<script>
 	
 		//전체 엔터키 방지 + 입력버튼들에 엔터키 효과 삽입
@@ -136,7 +136,6 @@
 				`;
 			}
 		}
-		window.addEventListener("DOMContentLoaded", changeLine);
 		
 		function changePlanCnt() {
 			const plan_cnt = document.getElementById("plan_cnt").value;

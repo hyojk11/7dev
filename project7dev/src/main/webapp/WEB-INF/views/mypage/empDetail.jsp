@@ -29,11 +29,10 @@
               <td style="background-color: #EDFFF4;">직책</td>
               <td colspan="2"><input type="text" id="emp_job" name="emp_job" class="form-control" value="${dto.emp_job}" readonly></td>
             </tr>
-            <tr>
+            <tr id="idArea">
               <td style="background-color: #EDFFF4;">아이디</td>
               <td colspan="2">
                 <input type="text" id="emp_id" name="emp_id" class="form-control" value="${dto.emp_id}" readonly>
-                <button type="button" id="idckBtn" class="btn btn-outline-secondary" style="display: none;">중복확인</button>
               </td>
             </tr>
             <tr>
@@ -68,11 +67,12 @@
   //수정
   function updateForm() {
     const emp_job = document.getElementById("emp_job");
-    const emp_id = document.getElementById("emp_id");
+    const emp_id = document.getElementById("emp_id").value;
     const emp_password = document.getElementById("emp_password");
     const emp_phone = document.getElementById("emp_phone");
     const emp_email = document.getElementById("emp_email");
 
+    const idArea = document.getElementById("idArea");
     const idckBtn = document.getElementById("idckBtn");
     const editBtn = document.getElementById("editBtn");
     const saveBtn = document.getElementById("saveBtn");
@@ -80,23 +80,31 @@
     const cancelBtn = document.getElementById("cancelBtn");
 
     emp_job.removeAttribute("readonly");
-    emp_id.removeAttribute("readonly");
     emp_password.removeAttribute("readonly");
     emp_password.setAttribute("type", "text");
     emp_phone.removeAttribute("readonly");
     emp_email.removeAttribute("readonly");
-
-    idckBtn.style.display = "inline-block";
+	
+    idArea.innerHTML = `<td style="background-color: #EDFFF4;">아이디</td>
+    					<td>
+    					<input type="text" id="emp_id" name="emp_id" class="form-control" value="${dto.emp_id}">
+    					</td>
+    					<td>
+    					<button type="button" id="idckBtn" class="btn btn-outline-secondary">중복확인</button>
+  						</td>`;
+    
     editBtn.style.display = "none";
     saveBtn.style.display = "inline-block";
     backBtn.style.display = "none";
     cancelBtn.style.display = "inline-block";
+    
+    document.getElementById("idckBtn").onclick = checkEmpId;
   }
 
   const contextPath = "${contextPath}";
 
   //아이디 중복체크
-  document.getElementById("idckBtn").onclick = function () {
+  function checkEmpId() {
     const idInput = document.querySelector("#emp_id");
     const emp_id = idInput.value.trim();
     const idckBtn = document.getElementById("idckBtn");
